@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scalar-ruby (0.1.0)
+    scalar-api-ruby (0.1.1)
       cgi
       connection_pool
 
@@ -149,7 +149,7 @@ DEPENDENCIES
   rbs
   redcarpet
   rubocop
-  scalar-ruby!
+  scalar-api-ruby!
   sorbet
   steep
   syntax_tree
