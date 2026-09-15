@@ -1,30 +1,30 @@
 ---
 name: scalar-ruby-sdk
-description: "Ruby SDK for Scalar API. Use when writing Ruby code that calls Scalar API with the scalar-ruby package: installing it, constructing and authenticating the client, and calling API operations."
+description: "Ruby SDK for Scalar API. Use when writing Ruby code that calls Scalar API with the scalar-api-ruby package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
 # Scalar Ruby SDK
 
-Generated Ruby client for Scalar API, published as `scalar-ruby`. Use the generated client instead of hand-writing HTTP requests.
+Generated Ruby client for Scalar API, published as `scalar-api-ruby`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 
 Add the gem to your application's `Gemfile`:
 
 ```ruby
-gem "scalar-ruby", "~> 0.1.0" # x-release-please-version
+gem "scalar-api-ruby", "~> 0.1.0" # x-release-please-version
 ```
 
 Or install it directly:
 
 ```sh
-gem install scalar-ruby
+gem install scalar-api-ruby
 ```
 
 ## Client setup and authentication
 
 ```ruby
-require "scalar-ruby"
+require "scalar-api-ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
@@ -38,7 +38,7 @@ Provide credentials using the options below. Environment variables are read auto
 ## Calling operations
 
 ```ruby
-require "scalar-ruby"
+require "scalar-api-ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var

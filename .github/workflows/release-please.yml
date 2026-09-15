@@ -104,10 +104,10 @@ jobs:
         uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
       - name: Publish to RubyGems
         run: |
-          gem build *.gemspec --output scalar-ruby.gem
+          gem build *.gemspec --output scalar-api-ruby.gem
           GEM_VERSION="$(ruby -e 'puts Gem::Specification.load(Dir.glob("*.gemspec").first).version')"
-          if curl -sf -A "scalar-sdk-release" "https://rubygems.org/api/v1/versions/scalar-ruby.json" | grep -q "\"number\":\"${GEM_VERSION}\""; then
-            echo "scalar-ruby ${GEM_VERSION} already on RubyGems, skipping"
+          if curl -sf -A "scalar-sdk-release" "https://rubygems.org/api/v1/versions/scalar-api-ruby.json" | grep -q "\"number\":\"${GEM_VERSION}\""; then
+            echo "scalar-api-ruby ${GEM_VERSION} already on RubyGems, skipping"
           else
-            gem push scalar-ruby.gem
+            gem push scalar-api-ruby.gem
           fi
