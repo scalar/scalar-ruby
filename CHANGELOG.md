@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/scalar/scalar-ruby/compare/v0.1.0...v0.1.1) (2026-09-15)
+
+
+### Chores
+
+* **api:** update generated SDK content ([265a91c](https://github.com/scalar/scalar-ruby/commit/265a91c45c46999893dd90c3b7c736d24fda6f17))
+
 ## [0.1.0](https://github.com/scalar/scalar-ruby/compare/v0.1.0...v0.1.0) (2026-09-15)
 
 
