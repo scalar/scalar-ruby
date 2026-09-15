@@ -5,9 +5,9 @@ require "json"
 require "stringio"
 require "time"
 
-root = File.exist?(File.join(__dir__, "lib", "acme.rb")) ? __dir__ : File.expand_path("..", __dir__)
+root = File.exist?(File.join(__dir__, "lib", "scalar-ruby.rb")) ? __dir__ : File.expand_path("..", __dir__)
 $LOAD_PATH.unshift(File.join(root, "lib"))
-require "acme"
+require "scalar-ruby"
 
 # Smoke test: calls every generated operation once to confirm the SDK can reach each endpoint.
 # Run it from this repo with `ruby tests/smoke-test.rb`. The generator also runs this file

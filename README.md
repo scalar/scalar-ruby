@@ -26,13 +26,13 @@ The full API of this library can be found in [api.md](./api.md).
 Add the gem to your application's `Gemfile`:
 
 ```ruby
-gem "acme", "~> 0.1.0" # x-release-please-version
+gem "scalar-ruby", "~> 0.1.0" # x-release-please-version
 ```
 
 Or install it directly:
 
 ```sh
-gem install acme
+gem install scalar-ruby
 ```
 
 <br />
@@ -40,7 +40,7 @@ gem install acme
 ## Usage
 
 ```ruby
-require "acme"
+require "scalar-ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
@@ -95,7 +95,7 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ruby
-require "acme"
+require "scalar-ruby"
 
 client = Scalar::Client.new(
   timeout: 60.0,

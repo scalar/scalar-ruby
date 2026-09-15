@@ -65,7 +65,7 @@ Complete reference of every operation, grouped by resource. See [the README](./R
 ## Setup
 
 ```ruby
-require "acme"
+require "scalar-ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
@@ -82,8 +82,8 @@ List all API documents across every namespace the caller can access.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryListAllAPIDocumentsParams`](././lib/acme/models/registry_list_all_api_documents_params.rb) |
-| Response | [`RegistryListAllAPIDocumentsResponseItem`](././lib/acme/models/registry_list_all_api_documents_response.rb) |
+| Request | [`RegistryListAllAPIDocumentsParams`](././lib/scalar-ruby/models/registry_list_all_api_documents_params.rb) |
+| Response | [`RegistryListAllAPIDocumentsResponseItem`](././lib/scalar-ruby/models/registry_list_all_api_documents_response.rb) |
 
 ```ruby
 response = client.registry.list_all_api_documents
@@ -97,8 +97,8 @@ List API documents in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryListAPIDocumentsParams`](././lib/acme/models/registry_list_api_documents_params.rb) |
-| Response | [`RegistryListAPIDocumentsResponseItem`](././lib/acme/models/registry_list_api_documents_response.rb) |
+| Request | [`RegistryListAPIDocumentsParams`](././lib/scalar-ruby/models/registry_list_api_documents_params.rb) |
+| Response | [`RegistryListAPIDocumentsResponseItem`](././lib/scalar-ruby/models/registry_list_api_documents_response.rb) |
 
 ```ruby
 response = client.registry.list_api_documents("namespace")
@@ -112,8 +112,8 @@ Create an API document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryCreateAPIDocumentParams`](././lib/acme/models/registry_create_api_document_params.rb) |
-| Response | [`RegistryCreateAPIDocumentResponse`](././lib/acme/models/registry_create_api_document_response.rb) |
+| Request | [`RegistryCreateAPIDocumentParams`](././lib/scalar-ruby/models/registry_create_api_document_params.rb) |
+| Response | [`RegistryCreateAPIDocumentResponse`](././lib/scalar-ruby/models/registry_create_api_document_response.rb) |
 
 ```ruby
 response = client.registry.create_api_document("namespace", { document: "", slug: "", title: "", version: "x", description: "", is_private: false, ruleset: "" })
@@ -127,7 +127,7 @@ Update metadata for an API document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryUpdateAPIDocumentParams`](././lib/acme/models/registry_update_api_document_params.rb) |
+| Request | [`RegistryUpdateAPIDocumentParams`](././lib/scalar-ruby/models/registry_update_api_document_params.rb) |
 
 ```ruby
 response = client.registry.update_api_document("slug", { namespace: "namespace", description: "", is_private: false, ruleset: "", title: "" })
@@ -141,7 +141,7 @@ Delete an API document and all versions.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryDeleteAPIDocumentParams`](././lib/acme/models/registry_delete_api_document_params.rb) |
+| Request | [`RegistryDeleteAPIDocumentParams`](././lib/scalar-ruby/models/registry_delete_api_document_params.rb) |
 
 ```ruby
 response = client.registry.delete_api_document("slug", { namespace: "namespace" })
@@ -155,7 +155,7 @@ Get a specific API document version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryRetrieveAPIDocumentVersionParams`](././lib/acme/models/registry_retrieve_api_document_version_params.rb) |
+| Request | [`RegistryRetrieveAPIDocumentVersionParams`](././lib/scalar-ruby/models/registry_retrieve_api_document_version_params.rb) |
 
 ```ruby
 response = client.registry.retrieve_api_document_version("semver", { namespace: "namespace", slug: "slug" })
@@ -169,8 +169,8 @@ Update the registry file content for an API document version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryUpdateAPIDocumentVersionParams`](././lib/acme/models/registry_update_api_document_version_params.rb) |
-| Response | [`RegistryUpdateAPIDocumentVersionResponse`](././lib/acme/models/registry_update_api_document_version_response.rb) |
+| Request | [`RegistryUpdateAPIDocumentVersionParams`](././lib/scalar-ruby/models/registry_update_api_document_version_params.rb) |
+| Response | [`RegistryUpdateAPIDocumentVersionResponse`](././lib/scalar-ruby/models/registry_update_api_document_version_response.rb) |
 
 ```ruby
 response = client.registry.update_api_document_version("semver", { namespace: "namespace", slug: "slug", document: "", last_known_version_sha: "" })
@@ -184,7 +184,7 @@ Delete a specific API document version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryDeleteAPIDocumentVersionParams`](././lib/acme/models/registry_delete_api_document_version_params.rb) |
+| Request | [`RegistryDeleteAPIDocumentVersionParams`](././lib/scalar-ruby/models/registry_delete_api_document_version_params.rb) |
 
 ```ruby
 response = client.registry.delete_api_document_version("semver", { namespace: "namespace", slug: "slug" })
@@ -198,8 +198,8 @@ Get metadata (uid, content shas, version sha, tags) for a specific API document 
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryListAPIDocumentVersionMetadataParams`](././lib/acme/models/registry_list_api_document_version_metadata_params.rb) |
-| Response | [`ManagedDocVersion`](././lib/acme/models/managed_doc_version.rb) |
+| Request | [`RegistryListAPIDocumentVersionMetadataParams`](././lib/scalar-ruby/models/registry_list_api_document_version_metadata_params.rb) |
+| Response | [`ManagedDocVersion`](././lib/scalar-ruby/models/managed_doc_version.rb) |
 
 ```ruby
 response = client.registry.list_api_document_version_metadata("semver", { namespace: "namespace", slug: "slug" })
@@ -213,8 +213,8 @@ Create a new API document version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryCreateAPIDocumentVersionParams`](././lib/acme/models/registry_create_api_document_version_params.rb) |
-| Response | [`ManagedDocVersion`](././lib/acme/models/managed_doc_version.rb) |
+| Request | [`RegistryCreateAPIDocumentVersionParams`](././lib/scalar-ruby/models/registry_create_api_document_version_params.rb) |
+| Response | [`ManagedDocVersion`](././lib/scalar-ruby/models/managed_doc_version.rb) |
 
 ```ruby
 response = client.registry.create_api_document_version("slug", { namespace: "namespace", document: "", version: "x", force: false, last_known_version_sha: "" })
@@ -228,7 +228,7 @@ Add an access group to an API document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryCreateAPIDocumentAccessGroupParams`](././lib/acme/models/registry_create_api_document_access_group_params.rb) |
+| Request | [`RegistryCreateAPIDocumentAccessGroupParams`](././lib/scalar-ruby/models/registry_create_api_document_access_group_params.rb) |
 
 ```ruby
 response = client.registry.create_api_document_access_group("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -242,7 +242,7 @@ Remove an access group from an API document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RegistryDeleteAPIDocumentAccessGroupParams`](././lib/acme/models/registry_delete_api_document_access_group_params.rb) |
+| Request | [`RegistryDeleteAPIDocumentAccessGroupParams`](././lib/scalar-ruby/models/registry_delete_api_document_access_group_params.rb) |
 
 ```ruby
 response = client.registry.delete_api_document_access_group("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -260,8 +260,8 @@ List schemas in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaListParams`](././lib/acme/models/schema_list_params.rb) |
-| Response | [`SchemaListResponseItem`](././lib/acme/models/schema_list_response.rb) |
+| Request | [`SchemaListParams`](././lib/scalar-ruby/models/schema_list_params.rb) |
+| Response | [`SchemaListResponseItem`](././lib/scalar-ruby/models/schema_list_response.rb) |
 
 ```ruby
 response = client.schemas.list("namespace")
@@ -275,8 +275,8 @@ Create a schema in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaCreateParams`](././lib/acme/models/schema_create_params.rb) |
-| Response | [`UID`](././lib/acme/models/uid.rb) |
+| Request | [`SchemaCreateParams`](././lib/scalar-ruby/models/schema_create_params.rb) |
+| Response | [`UID`](././lib/scalar-ruby/models/uid.rb) |
 
 ```ruby
 response = client.schemas.create("namespace", { document: "", slug: "", title: "", version: "x", description: "", is_private: false })
@@ -290,7 +290,7 @@ Update schema metadata.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaUpdateParams`](././lib/acme/models/schema_update_params.rb) |
+| Request | [`SchemaUpdateParams`](././lib/scalar-ruby/models/schema_update_params.rb) |
 
 ```ruby
 response = client.schemas.update("slug", { namespace: "namespace", description: "", is_private: false, title: "" })
@@ -304,7 +304,7 @@ Delete a schema and all related versions.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`SchemaDeleteParams`](././lib/acme/models/schema_delete_params.rb) |
+| Request | [`SchemaDeleteParams`](././lib/scalar-ruby/models/schema_delete_params.rb) |
 
 ```ruby
 response = client.schemas.delete("slug", { namespace: "namespace" })
@@ -322,7 +322,7 @@ Get a specific schema version document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionRetrieveParams`](././lib/acme/models/schemas/version_retrieve_params.rb) |
+| Request | [`VersionRetrieveParams`](././lib/scalar-ruby/models/schemas/version_retrieve_params.rb) |
 
 ```ruby
 response = client.schemas.version.retrieve("semver", { namespace: "namespace", slug: "slug" })
@@ -336,7 +336,7 @@ Delete a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionDeleteParams`](././lib/acme/models/schemas/version_delete_params.rb) |
+| Request | [`VersionDeleteParams`](././lib/scalar-ruby/models/schemas/version_delete_params.rb) |
 
 ```ruby
 response = client.schemas.version.delete("semver", { namespace: "namespace", slug: "slug" })
@@ -350,8 +350,8 @@ Create a schema version.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`VersionCreateParams`](././lib/acme/models/schemas/version_create_params.rb) |
-| Response | [`UID`](././lib/acme/models/uid.rb) |
+| Request | [`VersionCreateParams`](././lib/scalar-ruby/models/schemas/version_create_params.rb) |
+| Response | [`UID`](././lib/scalar-ruby/models/uid.rb) |
 
 ```ruby
 response = client.schemas.version.create("slug", { namespace: "namespace", document: "", version: "x" })
@@ -369,7 +369,7 @@ Add an access group to a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupCreateParams`](././lib/acme/models/schemas/access_group_create_params.rb) |
+| Request | [`AccessGroupCreateParams`](././lib/scalar-ruby/models/schemas/access_group_create_params.rb) |
 
 ```ruby
 response = client.schemas.access_group.create("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -383,7 +383,7 @@ Remove an access group from a schema.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AccessGroupDeleteParams`](././lib/acme/models/schemas/access_group_delete_params.rb) |
+| Request | [`AccessGroupDeleteParams`](././lib/scalar-ruby/models/schemas/access_group_delete_params.rb) |
 
 ```ruby
 response = client.schemas.access_group.delete("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -401,8 +401,8 @@ Get a login portal by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`LoginPortalRetrieveParams`](././lib/acme/models/login_portal_retrieve_params.rb) |
-| Response | [`LoginPortalRetrieveResponse`](././lib/acme/models/login_portal_retrieve_response.rb) |
+| Request | [`LoginPortalRetrieveParams`](././lib/scalar-ruby/models/login_portal_retrieve_params.rb) |
+| Response | [`LoginPortalRetrieveResponse`](././lib/scalar-ruby/models/login_portal_retrieve_response.rb) |
 
 ```ruby
 response = client.login_portals.retrieve("slug")
@@ -416,7 +416,7 @@ Update metadata for a login portal.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`LoginPortalUpdateParams`](././lib/acme/models/login_portal_update_params.rb) |
+| Request | [`LoginPortalUpdateParams`](././lib/scalar-ruby/models/login_portal_update_params.rb) |
 
 ```ruby
 response = client.login_portals.update("slug", { title: "" })
@@ -430,7 +430,7 @@ Delete a login portal.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`LoginPortalDeleteParams`](././lib/acme/models/login_portal_delete_params.rb) |
+| Request | [`LoginPortalDeleteParams`](././lib/scalar-ruby/models/login_portal_delete_params.rb) |
 
 ```ruby
 response = client.login_portals.delete("slug")
@@ -444,8 +444,8 @@ Create a login portal for the current team.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`LoginPortalCreateParams`](././lib/acme/models/login_portal_create_params.rb) |
-| Response | [`UID`](././lib/acme/models/uid.rb) |
+| Request | [`LoginPortalCreateParams`](././lib/scalar-ruby/models/login_portal_create_params.rb) |
+| Response | [`UID`](././lib/scalar-ruby/models/uid.rb) |
 
 ```ruby
 response = client.login_portals.create({ email: { "logo" => "", "logoSize" => "100", "buttonText" => "Login", "message" => "Click to access private documentation hosted by scalar.com", "title" => "Private Docs", "mainColor" => "\#2a2f45", "mainBackground" => "\#f6f6f6", "cardColor" => "2a2f45", "cardBackground" => "\#fff", "buttonColor" => "\#fff", "buttonBackground" => "\#0f0f0f" }, page: { "title" => "Scalar Private Docs", "description" => "Login to access your documentation", "head" => "", "script" => "", "theme" => "", "companyName" => "", "logo" => "", "logoURL" => "", "favicon" => "", "termsLink" => "", "privacyLink" => "", "formTitle" => "Scalar Private Docs", "formDescription" => "Login to access your documentation", "formImage" => "" }, slug: "", title: "" })
@@ -459,8 +459,8 @@ List all login portals for the current team.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`LoginPortalListParams`](././lib/acme/models/login_portal_list_params.rb) |
-| Response | [`LoginPortalListResponseItem`](././lib/acme/models/login_portal_list_response.rb) |
+| Request | [`LoginPortalListParams`](././lib/scalar-ruby/models/login_portal_list_params.rb) |
+| Response | [`LoginPortalListResponseItem`](././lib/scalar-ruby/models/login_portal_list_response.rb) |
 
 ```ruby
 response = client.login_portals.list
@@ -478,8 +478,8 @@ List all rulesets in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleListRulesetsParams`](././lib/acme/models/rule_list_rulesets_params.rb) |
-| Response | [`RuleListRulesetsResponseItem`](././lib/acme/models/rule_list_rulesets_response.rb) |
+| Request | [`RuleListRulesetsParams`](././lib/scalar-ruby/models/rule_list_rulesets_params.rb) |
+| Response | [`RuleListRulesetsResponseItem`](././lib/scalar-ruby/models/rule_list_rulesets_response.rb) |
 
 ```ruby
 response = client.rules.list_rulesets("namespace")
@@ -493,8 +493,8 @@ Create a rule in a namespace.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleCreateRulesetParams`](././lib/acme/models/rule_create_ruleset_params.rb) |
-| Response | [`UID`](././lib/acme/models/uid.rb) |
+| Request | [`RuleCreateRulesetParams`](././lib/scalar-ruby/models/rule_create_ruleset_params.rb) |
+| Response | [`UID`](././lib/scalar-ruby/models/uid.rb) |
 
 ```ruby
 response = client.rules.create_ruleset("namespace", { document: "", slug: "", title: "", description: "", is_private: false })
@@ -508,7 +508,7 @@ Update rule metadata by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleUpdateRulesetParams`](././lib/acme/models/rule_update_ruleset_params.rb) |
+| Request | [`RuleUpdateRulesetParams`](././lib/scalar-ruby/models/rule_update_ruleset_params.rb) |
 
 ```ruby
 response = client.rules.update_ruleset("path_slug", { path_namespace: "path_namespace", description: "", is_private: false, body_namespace: "", body_slug: "", title: "" })
@@ -522,7 +522,7 @@ Delete a rule by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleDeleteRulesetParams`](././lib/acme/models/rule_delete_ruleset_params.rb) |
+| Request | [`RuleDeleteRulesetParams`](././lib/scalar-ruby/models/rule_delete_ruleset_params.rb) |
 
 ```ruby
 response = client.rules.delete_ruleset("slug", { namespace: "namespace" })
@@ -536,7 +536,7 @@ Get a rule document by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleRetrieveRulesetDocumentParams`](././lib/acme/models/rule_retrieve_ruleset_document_params.rb) |
+| Request | [`RuleRetrieveRulesetDocumentParams`](././lib/scalar-ruby/models/rule_retrieve_ruleset_document_params.rb) |
 
 ```ruby
 response = client.rules.retrieve_ruleset_document("slug", { namespace: "namespace" })
@@ -550,7 +550,7 @@ Grant an access group to a rule.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleCreateRulesetAccessGroupParams`](././lib/acme/models/rule_create_ruleset_access_group_params.rb) |
+| Request | [`RuleCreateRulesetAccessGroupParams`](././lib/scalar-ruby/models/rule_create_ruleset_access_group_params.rb) |
 
 ```ruby
 response = client.rules.create_ruleset_access_group("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -564,7 +564,7 @@ Remove an access group from a rule.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`RuleDeleteRulesetAccessGroupParams`](././lib/acme/models/rule_delete_ruleset_access_group_params.rb) |
+| Request | [`RuleDeleteRulesetAccessGroupParams`](././lib/scalar-ruby/models/rule_delete_ruleset_access_group_params.rb) |
 
 ```ruby
 response = client.rules.delete_ruleset_access_group("slug", { access_group_slug: "xxx", namespace: "namespace" })
@@ -582,8 +582,8 @@ List all team themes.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeListParams`](././lib/acme/models/theme_list_params.rb) |
-| Response | [`ThemeListResponseItem`](././lib/acme/models/theme_list_response.rb) |
+| Request | [`ThemeListParams`](././lib/scalar-ruby/models/theme_list_params.rb) |
+| Response | [`ThemeListResponseItem`](././lib/scalar-ruby/models/theme_list_response.rb) |
 
 ```ruby
 response = client.themes.list
@@ -597,8 +597,8 @@ Create a team theme.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeCreateParams`](././lib/acme/models/theme_create_params.rb) |
-| Response | [`UID`](././lib/acme/models/uid.rb) |
+| Request | [`ThemeCreateParams`](././lib/scalar-ruby/models/theme_create_params.rb) |
+| Response | [`UID`](././lib/scalar-ruby/models/uid.rb) |
 
 ```ruby
 response = client.themes.create({ document: "", name: "", slug: "", description: "" })
@@ -612,7 +612,7 @@ Update theme metadata.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeUpdateParams`](././lib/acme/models/theme_update_params.rb) |
+| Request | [`ThemeUpdateParams`](././lib/scalar-ruby/models/theme_update_params.rb) |
 
 ```ruby
 response = client.themes.update("slug", { description: "", name: "" })
@@ -626,7 +626,7 @@ Replace the theme document.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeReplaceDocumentParams`](././lib/acme/models/theme_replace_document_params.rb) |
+| Request | [`ThemeReplaceDocumentParams`](././lib/scalar-ruby/models/theme_replace_document_params.rb) |
 
 ```ruby
 response = client.themes.replace_document("slug", { document: "" })
@@ -640,7 +640,7 @@ Delete a theme by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeDeleteParams`](././lib/acme/models/theme_delete_params.rb) |
+| Request | [`ThemeDeleteParams`](././lib/scalar-ruby/models/theme_delete_params.rb) |
 
 ```ruby
 response = client.themes.delete("slug")
@@ -654,7 +654,7 @@ Get the theme document by slug.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ThemeRetrieveParams`](././lib/acme/models/theme_retrieve_params.rb) |
+| Request | [`ThemeRetrieveParams`](././lib/scalar-ruby/models/theme_retrieve_params.rb) |
 
 ```ruby
 response = client.themes.retrieve("slug")
@@ -672,8 +672,8 @@ List all available teams
 
 | Direction | Type |
 | --- | --- |
-| Request | [`TeamListParams`](././lib/acme/models/team_list_params.rb) |
-| Response | [`TeamListResponseItem`](././lib/acme/models/team_list_response.rb) |
+| Request | [`TeamListParams`](././lib/scalar-ruby/models/team_list_params.rb) |
+| Response | [`TeamListResponseItem`](././lib/scalar-ruby/models/team_list_response.rb) |
 
 ```ruby
 response = client.teams.list
@@ -691,8 +691,8 @@ List all guide projects.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ScalarDocListGuidesParams`](././lib/acme/models/scalar_doc_list_guides_params.rb) |
-| Response | [`ScalarDocListGuidesResponseItem`](././lib/acme/models/scalar_doc_list_guides_response.rb) |
+| Request | [`ScalarDocListGuidesParams`](././lib/scalar-ruby/models/scalar_doc_list_guides_params.rb) |
+| Response | [`ScalarDocListGuidesResponseItem`](././lib/scalar-ruby/models/scalar_doc_list_guides_response.rb) |
 
 ```ruby
 response = client.scalar_docs.list_guides
@@ -706,8 +706,8 @@ Create a guide project.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ScalarDocCreateGuideParams`](././lib/acme/models/scalar_doc_create_guide_params.rb) |
-| Response | [`ScalarDocCreateGuideResponse`](././lib/acme/models/scalar_doc_create_guide_response.rb) |
+| Request | [`ScalarDocCreateGuideParams`](././lib/scalar-ruby/models/scalar_doc_create_guide_params.rb) |
+| Response | [`ScalarDocCreateGuideResponse`](././lib/scalar-ruby/models/scalar_doc_create_guide_response.rb) |
 
 ```ruby
 response = client.scalar_docs.create_guide({ allowed_domains: [], allowed_users: [], is_private: false, name: "", slug: "xxx" })
@@ -721,8 +721,8 @@ Start a new publish process.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`ScalarDocPublishGuideParams`](././lib/acme/models/scalar_doc_publish_guide_params.rb) |
-| Response | [`ScalarDocPublishGuideResponse`](././lib/acme/models/scalar_doc_publish_guide_response.rb) |
+| Request | [`ScalarDocPublishGuideParams`](././lib/scalar-ruby/models/scalar_doc_publish_guide_params.rb) |
+| Response | [`ScalarDocPublishGuideResponse`](././lib/scalar-ruby/models/scalar_doc_publish_guide_response.rb) |
 
 ```ruby
 response = client.scalar_docs.publish_guide("slug")
@@ -740,7 +740,7 @@ Get all namespaces for the current team
 
 | Direction | Type |
 | --- | --- |
-| Request | [`NamespaceListParams`](././lib/acme/models/namespace_list_params.rb) |
+| Request | [`NamespaceListParams`](././lib/scalar-ruby/models/namespace_list_params.rb) |
 
 ```ruby
 response = client.namespaces.list
@@ -758,8 +758,8 @@ Exchange an API key for an access token.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AuthenticationExchangePersonalTokenParams`](././lib/acme/models/authentication_exchange_personal_token_params.rb) |
-| Response | [`AuthenticationExchangePersonalTokenResponse`](././lib/acme/models/authentication_exchange_personal_token_response.rb) |
+| Request | [`AuthenticationExchangePersonalTokenParams`](././lib/scalar-ruby/models/authentication_exchange_personal_token_params.rb) |
+| Response | [`AuthenticationExchangePersonalTokenResponse`](././lib/scalar-ruby/models/authentication_exchange_personal_token_response.rb) |
 
 ```ruby
 response = client.authentication.exchange_personal_token({ personal_token: "" })
@@ -773,8 +773,8 @@ Get the authenticated user, including their available teams and theme.
 
 | Direction | Type |
 | --- | --- |
-| Request | [`AuthenticationListCurrentUserParams`](././lib/acme/models/authentication_list_current_user_params.rb) |
-| Response | [`AuthenticationListCurrentUserResponse`](././lib/acme/models/authentication_list_current_user_response.rb) |
+| Request | [`AuthenticationListCurrentUserParams`](././lib/scalar-ruby/models/authentication_list_current_user_params.rb) |
+| Response | [`AuthenticationListCurrentUserResponse`](././lib/scalar-ruby/models/authentication_list_current_user_response.rb) |
 
 ```ruby
 response = client.authentication.list_current_user
