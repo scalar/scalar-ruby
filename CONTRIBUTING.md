@@ -26,7 +26,7 @@ Files under `examples/` are never modified by the generator.
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../lib/scalar-ruby"
+require_relative "../lib/scalar-api-ruby"
 
 # ...
 ```
@@ -40,13 +40,13 @@ $ ruby ./examples/<your-example>.rb
 To install from git in your `Gemfile`:
 
 ```ruby
-gem "scalar-ruby", git: "<repository url>"
+gem "scalar-api-ruby", git: "<repository url>"
 ```
 
 Or reference a local checkout:
 
 ```ruby
-gem "scalar-ruby", path: "/path/to/scalar-ruby"
+gem "scalar-api-ruby", path: "/path/to/scalar-api-ruby"
 ```
 
 ## Linting, formatting, and typechecking

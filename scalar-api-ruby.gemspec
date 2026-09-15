@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "lib/scalar-ruby/version"
+require_relative "lib/scalar-api-ruby/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "scalar-ruby"
+  spec.name = "scalar-api-ruby"
   spec.version = Scalar::VERSION
   spec.summary = "Ruby library to access the Scalar API"
   spec.authors = ["Scalar"]
