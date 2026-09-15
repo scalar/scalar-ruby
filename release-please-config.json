@@ -2,9 +2,9 @@
   "packages": {
     ".": {
       "release-type": "ruby",
-      "component": "scalar-ruby",
+      "component": "scalar-api-ruby",
       "extra-files": [
-        "lib/scalar-ruby/version.rb",
+        "lib/scalar-api-ruby/version.rb",
         "README.md",
         "SKILL.md",
         ".claude/skills/scalar-ruby-sdk/SKILL.md"
