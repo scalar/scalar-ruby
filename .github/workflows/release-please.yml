@@ -43,7 +43,7 @@ jobs:
           # credential (so their CI runs without manual approval); this workflow only
           # cuts the tag + GitHub Release once a release PR is merged.
           skip-github-pull-request: true
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: ${{ steps.release.outputs.release_created == 'true' }}
         with:
           fetch-depth: 0
@@ -87,7 +87,7 @@ jobs:
       # (never a reusable-workflow call). The release-please job cut the tag earlier in this
       # run; checking it out publishes exactly the released commit, not the branch head that
       # triggered the workflow.
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.release-please.outputs.tag_name }}
       - uses: ruby/setup-ruby@9eb537ca036ebaed86729dcb9309076e4c5c3b74 # v1.314.0
@@ -104,10 +104,10 @@ jobs:
         uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
       - name: Publish to RubyGems
         run: |
-          gem build *.gemspec --output scalar-api-ruby.gem
+          gem build *.gemspec --output scalar_api_ruby.gem
           GEM_VERSION="$(ruby -e 'puts Gem::Specification.load(Dir.glob("*.gemspec").first).version')"
-          if curl -sf -A "scalar-sdk-release" "https://rubygems.org/api/v1/versions/scalar-api-ruby.json" | grep -q "\"number\":\"${GEM_VERSION}\""; then
-            echo "scalar-api-ruby ${GEM_VERSION} already on RubyGems, skipping"
+          if curl -sf -A "scalar-sdk-release" "https://rubygems.org/api/v1/versions/scalar_api_ruby.json" | grep -q "\"number\":\"${GEM_VERSION}\""; then
+            echo "scalar_api_ruby ${GEM_VERSION} already on RubyGems, skipping"
           else
-            gem push scalar-api-ruby.gem
+            gem push scalar_api_ruby.gem
           fi
