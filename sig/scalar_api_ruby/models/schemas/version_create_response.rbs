@@ -1,0 +1,15 @@
+module Scalar
+  module Models
+    module Schemas
+      type version_create_response = { uid: String }
+
+      class VersionCreateResponse < Scalar::Internal::Type::BaseModel
+        attr_accessor uid: String
+
+        def initialize: (uid: String) -> void
+
+        def to_hash: -> { uid: String }
+      end
+    end
+  end
+end

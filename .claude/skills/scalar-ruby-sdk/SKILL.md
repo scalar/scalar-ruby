@@ -1,30 +1,30 @@
 ---
 name: scalar-ruby-sdk
-description: "Ruby SDK for Scalar API. Use when writing Ruby code that calls Scalar API with the scalar-api-ruby package: installing it, constructing and authenticating the client, and calling API operations."
+description: "Ruby SDK for Scalar API. Use when writing Ruby code that calls Scalar API with the scalar_api_ruby package: installing it, constructing and authenticating the client, and calling API operations."
 ---
 
 # Scalar Ruby SDK
 
-Generated Ruby client for Scalar API, published as `scalar-api-ruby`. Use the generated client instead of hand-writing HTTP requests.
+Generated Ruby client for Scalar API, published as `scalar_api_ruby`. Use the generated client instead of hand-writing HTTP requests.
 
 ## Install
 
 Add the gem to your application's `Gemfile`:
 
 ```ruby
-gem "scalar-api-ruby", "~> 0.1.0" # x-release-please-version
+gem "scalar_api_ruby", "~> 0.1.0" # x-release-please-version
 ```
 
 Or install it directly:
 
 ```sh
-gem install scalar-api-ruby
+gem install scalar_api_ruby
 ```
 
 ## Client setup and authentication
 
 ```ruby
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
@@ -34,11 +34,12 @@ client = Scalar::Client.new(
 Provide credentials using the options below. Environment variables are read automatically when the target runtime supports them:
 
 - `bearer_auth` (env: `BEARER_AUTH`) — Credential for the BearerAuth authentication scheme.
+- `o_auth2` (env: `SCALAR_O_AUTH2`) — Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
 
 ## Calling operations
 
 ```ruby
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
