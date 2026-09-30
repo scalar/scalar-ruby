@@ -6,14 +6,14 @@ require "stringio"
 require "time"
 
 root =
-  File.exist?(File.join(__dir__, "lib", "scalar-api-ruby.rb")) ? __dir__ : File.expand_path("..", __dir__)
+  File.exist?(File.join(__dir__, "lib", "scalar_api_ruby.rb")) ? __dir__ : File.expand_path("..", __dir__)
 $LOAD_PATH.unshift(File.join(root, "lib"))
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 # Smoke test: calls every generated operation once to confirm the SDK can reach each endpoint.
 # Run it from this repo with `ruby tests/smoke-test.rb`. The generator also runs this file
 # against a mock server and reads the JSON report produced via SCALAR_SMOKE_REPORT.
-client = Scalar::Client.new(max_retries: 2, timeout: 30)
+client = Scalar::Client.new(max_retries: 2, timeout: 10)
 
 cases = [
   {
@@ -44,7 +44,7 @@ cases = [
     run: -> do
       client.registry.create_api_document_access_group(
         "slug",
-        {access_group_slug: "xxx", namespace: "namespace"}
+        {access_group_slug: "x", namespace: "namespace"}
       )
     end
   },
@@ -68,7 +68,7 @@ cases = [
     run: -> do
       client.registry.create_api_document_version(
         "slug",
-        {namespace: "namespace", document: "", version: "x", force: false, last_known_version_sha: ""}
+        {namespace: "namespace", document: "", version: "x", force: false}
       )
     end
   },
@@ -85,7 +85,7 @@ cases = [
     run: -> do
       client.registry.delete_api_document_access_group(
         "slug",
-        {access_group_slug: "xxx", namespace: "namespace"}
+        {access_group_slug: "x", namespace: "namespace"}
       )
     end
   },
@@ -148,23 +148,10 @@ cases = [
     operation: "updateApiDocumentVersion",
     method: "PATCH",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
-    label: "required params",
     run: -> do
       client.registry.update_api_document_version(
         "semver",
         {namespace: "namespace", slug: "slug", document: ""}
-      )
-    end
-  },
-  {
-    operation: "updateApiDocumentVersion",
-    method: "PATCH",
-    path: "/v1/apis/{namespace}/{slug}/version/{semver}",
-    label: "all params",
-    run: -> do
-      client.registry.update_api_document_version(
-        "semver",
-        {namespace: "namespace", slug: "slug", document: "", last_known_version_sha: ""}
       )
     end
   },
@@ -219,7 +206,20 @@ cases = [
     operation: "create",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/version",
+    label: "required params",
     run: -> { client.schemas.version.create("slug", {namespace: "namespace", document: "", version: "x"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/schemas/{namespace}/{slug}/version",
+    label: "all params",
+    run: -> do
+      client.schemas.version.create(
+        "slug",
+        {namespace: "namespace", document: "", version: "x", force: false}
+      )
+    end
   },
   {
     operation: "retrieve",
@@ -237,17 +237,13 @@ cases = [
     operation: "create",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
-    run: -> do
-      client.schemas.access_group.create("slug", {access_group_slug: "xxx", namespace: "namespace"})
-    end
+    run: -> { client.schemas.access_group.create("slug", {access_group_slug: "x", namespace: "namespace"}) }
   },
   {
     operation: "delete",
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
-    run: -> do
-      client.schemas.access_group.delete("slug", {access_group_slug: "xxx", namespace: "namespace"})
-    end
+    run: -> { client.schemas.access_group.delete("slug", {access_group_slug: "x", namespace: "namespace"}) }
   },
   {
     operation: "create",
@@ -264,7 +260,7 @@ cases = [
             "title" => "Private Docs",
             "mainColor" => "\#2a2f45",
             "mainBackground" => "\#f6f6f6",
-            "cardColor" => "2a2f45",
+            "cardColor" => "\#2a2f45",
             "cardBackground" => "\#fff",
             "buttonColor" => "\#fff",
             "buttonBackground" => "\#0f0f0f"
@@ -342,7 +338,7 @@ cases = [
     method: "POST",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: -> do
-      client.rules.create_ruleset_access_group("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.rules.create_ruleset_access_group("slug", {access_group_slug: "x", namespace: "namespace"})
     end
   },
   {
@@ -356,7 +352,7 @@ cases = [
     method: "DELETE",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: -> do
-      client.rules.delete_ruleset_access_group("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.rules.delete_ruleset_access_group("slug", {access_group_slug: "x", namespace: "namespace"})
     end
   },
   {
@@ -461,7 +457,7 @@ cases = [
     label: "all params",
     run: -> do
       client.scalar_docs.create_guide(
-        {allowed_domains: [], allowed_users: [], is_private: false, name: "", slug: "xxx"}
+        {allowed_domains: [], allowed_users: [], is_private: false, name: "", slug: "x"}
       )
     end
   },
