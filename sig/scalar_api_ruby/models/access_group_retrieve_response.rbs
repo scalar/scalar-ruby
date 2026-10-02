@@ -1,0 +1,40 @@
+module Scalar
+  module Models
+    type access_group_retrieve_response =
+      {
+        allowed_domains: top,
+        allowed_emails: top,
+        name: String,
+        slug: String,
+        uid: String
+      }
+
+    class AccessGroupRetrieveResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor allowed_domains: top
+
+      attr_accessor allowed_emails: top
+
+      attr_accessor name: String
+
+      attr_accessor slug: String
+
+      attr_accessor uid: String
+
+      def initialize: (
+        allowed_domains: top,
+        allowed_emails: top,
+        name: String,
+        slug: String,
+        uid: String
+      ) -> void
+
+      def to_hash: -> {
+        allowed_domains: top,
+        allowed_emails: top,
+        name: String,
+        slug: String,
+        uid: String
+      }
+    end
+  end
+end

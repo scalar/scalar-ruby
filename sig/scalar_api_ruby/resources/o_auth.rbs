@@ -1,0 +1,33 @@
+module Scalar
+  module Resources
+    class OAuth
+      def oauth_authorization_server_metadata: (
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::OauthAuthorizationServerMetadata
+
+      def oauth_authorize: (?request_options: Scalar::request_opts) -> top
+
+      def oauth_revoke: (
+        token: String,
+        ?client_id: String,
+        ?client_secret: String,
+        ?token_type_hint: String,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::OauthError
+
+      def oauth_token: (
+        grant_type: String,
+        ?client_id: String,
+        ?client_secret: String,
+        ?code: String,
+        ?code_verifier: String,
+        ?redirect_uri: String,
+        ?refresh_token: String,
+        ?scope: String,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Models::o_auth_oauth_token_response
+
+      def initialize: (client: Scalar::Client) -> void
+    end
+  end
+end

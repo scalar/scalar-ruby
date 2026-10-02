@@ -116,14 +116,14 @@ module Scalar
       # @param namespace [String]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::RuleListRulesetsResponseItem>]
+      # @return [Array<Scalar::Models::Rule>]
       #
       # @see Scalar::Models::RuleListRulesetsParams
       def list_rulesets(namespace, params = {})
         @client.request(
           method: :get,
           path: ["v1/rulesets/%1$s", namespace],
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::RuleListRulesetsResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::Rule],
           options: params[:request_options]
         )
       end

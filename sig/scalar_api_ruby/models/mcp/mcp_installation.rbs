@@ -1,0 +1,69 @@
+module Scalar
+  module Models
+    class McpInstallation = Mcp::McpInstallation
+
+    module Mcp
+      type mcp_installation =
+        {
+          id: String,
+          access_groups: ::Array[String],
+          credential_redaction_enabled: bool,
+          is_private: bool,
+          login_portal_uid: String?,
+          mcp_server_id: String,
+          mcp_version: String?,
+          name: String,
+          pii_redaction_enabled: bool,
+          slug: String
+        }
+
+      class McpInstallation < Scalar::Internal::Type::BaseModel
+        attr_accessor id: String
+
+        attr_accessor access_groups: ::Array[String]
+
+        attr_accessor credential_redaction_enabled: bool
+
+        attr_accessor is_private: bool
+
+        attr_accessor login_portal_uid: String?
+
+        attr_accessor mcp_server_id: String
+
+        attr_accessor mcp_version: String?
+
+        attr_accessor name: String
+
+        attr_accessor pii_redaction_enabled: bool
+
+        attr_accessor slug: String
+
+        def initialize: (
+          id: String,
+          access_groups: ::Array[String],
+          credential_redaction_enabled: bool,
+          is_private: bool,
+          login_portal_uid: String?,
+          mcp_server_id: String,
+          mcp_version: String?,
+          name: String,
+          pii_redaction_enabled: bool,
+          slug: String
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          access_groups: ::Array[String],
+          credential_redaction_enabled: bool,
+          is_private: bool,
+          login_portal_uid: String?,
+          mcp_server_id: String,
+          mcp_version: String?,
+          name: String,
+          pii_redaction_enabled: bool,
+          slug: String
+        }
+      end
+    end
+  end
+end

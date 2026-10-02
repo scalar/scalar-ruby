@@ -128,7 +128,7 @@ module Scalar
       # List all API documents across every namespace the caller can access.
       sig do
         params(request_options: Scalar::RequestOptions::OrHash).returns(
-          T::Array[Scalar::Models::RegistryListAllAPIDocumentsResponseItem]
+          T::Array[Scalar::APIDocument]
         )
       end
       def list_all_api_documents(request_options: {})
@@ -157,9 +157,7 @@ module Scalar
         params(
           namespace: String,
           request_options: Scalar::RequestOptions::OrHash
-        ).returns(
-          T::Array[Scalar::Models::RegistryListAPIDocumentsResponseItem]
-        )
+        ).returns(T::Array[Scalar::APIDocument])
       end
       def list_api_documents(namespace, request_options: {})
       end

@@ -1,0 +1,30 @@
+module Scalar
+  module Resources
+    class AccessGroups
+      attr_reader domains: Scalar::Resources::AccessGroups::Domains
+
+      def create: (
+        ?allowed_domains: top,
+        ?name: String,
+        ?slug: String,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Models::AccessGroupCreateResponse
+
+      def retrieve: (
+        String slug,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Models::AccessGroupRetrieveResponse
+
+      def update: (
+        String path_slug,
+        ?name: String,
+        ?body_slug: String,
+        ?request_options: Scalar::request_opts
+      ) -> top
+
+      def delete: (String slug, ?request_options: Scalar::request_opts) -> top
+
+      def initialize: (client: Scalar::Client) -> void
+    end
+  end
+end

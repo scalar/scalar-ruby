@@ -34,7 +34,7 @@ module Scalar
       def list_rulesets: (
         String namespace,
         ?request_options: Scalar::request_opts
-      ) -> ::Array[Scalar::Models::RuleListRulesetsResponseItem]
+      ) -> ::Array[Scalar::Rule]
 
       def retrieve_ruleset_document: (
         String slug,

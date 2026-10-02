@@ -1,0 +1,11 @@
+module Scalar
+  module Models
+    type o_auth_oauth_token_response = Scalar::OauthToken | Scalar::OauthError
+
+    module OAuthOauthTokenResponse
+      extend Scalar::Internal::Type::Union
+
+      def self?.variants: -> ::Array[Scalar::Models::o_auth_oauth_token_response]
+    end
+  end
+end

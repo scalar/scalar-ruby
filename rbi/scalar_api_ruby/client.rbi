@@ -28,6 +28,10 @@ module Scalar
     sig { returns(Scalar::Resources::LoginPortals) }
     attr_reader :login_portals
 
+    # Access Groups
+    sig { returns(Scalar::Resources::AccessGroups) }
+    attr_reader :access_groups
+
     # Rules
     sig { returns(Scalar::Resources::Rules) }
     attr_reader :rules
@@ -51,6 +55,17 @@ module Scalar
     # Authentication
     sig { returns(Scalar::Resources::Authentication) }
     attr_reader :authentication
+
+    # SDKs
+    sig { returns(Scalar::Resources::Sdks) }
+    attr_reader :sdks
+
+    sig { returns(Scalar::Resources::Mcp) }
+    attr_reader :mcp
+
+    # OAuth
+    sig { returns(Scalar::Resources::OAuth) }
+    attr_reader :o_auth
 
     # @api private
     sig { override.returns(T::Hash[String, String]) }

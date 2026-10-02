@@ -1,0 +1,9 @@
+module Scalar
+  module Resources
+    class Mcp
+      attr_reader servers: Scalar::Resources::Mcp::Servers
+
+      def initialize: (client: Scalar::Client) -> void
+    end
+  end
+end

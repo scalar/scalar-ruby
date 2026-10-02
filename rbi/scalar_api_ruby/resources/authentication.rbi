@@ -17,7 +17,7 @@ module Scalar
       # Get the authenticated user, including their available teams and theme.
       sig do
         params(request_options: Scalar::RequestOptions::OrHash).returns(
-          Scalar::Models::AuthenticationListCurrentUserResponse
+          Scalar::User
         )
       end
       def list_current_user(request_options: {})

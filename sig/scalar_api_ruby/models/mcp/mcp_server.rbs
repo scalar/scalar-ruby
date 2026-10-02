@@ -1,0 +1,49 @@
+module Scalar
+  module Models
+    class McpServer = Mcp::McpServer
+
+    module Mcp
+      type mcp_server =
+        {
+          id: String,
+          auto_add_operations: bool,
+          created_at: String,
+          name: String,
+          slug: String,
+          updated_at: String
+        }
+
+      class McpServer < Scalar::Internal::Type::BaseModel
+        attr_accessor id: String
+
+        attr_accessor auto_add_operations: bool
+
+        attr_accessor created_at: String
+
+        attr_accessor name: String
+
+        attr_accessor slug: String
+
+        attr_accessor updated_at: String
+
+        def initialize: (
+          id: String,
+          auto_add_operations: bool,
+          created_at: String,
+          name: String,
+          slug: String,
+          updated_at: String
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          auto_add_operations: bool,
+          created_at: String,
+          name: String,
+          slug: String,
+          updated_at: String
+        }
+      end
+    end
+  end
+end

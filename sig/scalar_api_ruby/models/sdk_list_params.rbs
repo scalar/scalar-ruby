@@ -1,0 +1,25 @@
+module Scalar
+  module Models
+    type sdk_list_params =
+      { limit: Integer } & Scalar::Internal::Type::request_parameters
+
+    class SdkListParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      def initialize: (
+        ?limit: Integer,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        limit: Integer,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

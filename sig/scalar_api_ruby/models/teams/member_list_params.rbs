@@ -1,0 +1,17 @@
+module Scalar
+  module Models
+    module Teams
+      type member_list_params =
+        {  } & Scalar::Internal::Type::request_parameters
+
+      class MemberListParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        def initialize: (?request_options: Scalar::request_opts) -> void
+
+        def to_hash: -> { request_options: Scalar::RequestOptions }
+      end
+    end
+  end
+end

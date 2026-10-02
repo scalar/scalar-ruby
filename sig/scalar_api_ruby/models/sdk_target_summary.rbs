@@ -1,0 +1,57 @@
+module Scalar
+  module Models
+    type sdk_target_summary =
+      { language: Scalar::Models::SdkTargetSummary::language, slug: String }
+
+    class SdkTargetSummary < Scalar::Internal::Type::BaseModel
+      attr_accessor language: Scalar::Models::SdkTargetSummary::language
+
+      attr_accessor slug: String
+
+      def initialize: (
+        language: Scalar::Models::SdkTargetSummary::language,
+        slug: String
+      ) -> void
+
+      def to_hash: -> {
+        language: Scalar::Models::SdkTargetSummary::language,
+        slug: String
+      }
+
+      type language =
+        :typescript
+        | :python
+        | :cli
+        | :csharp
+        | :java
+        | :ruby
+        | :php
+        | :go
+        | :rust
+        | :kotlin
+        | :swift
+        | :cpp
+        | :dart
+
+      module Language
+        extend Scalar::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        CLI: :cli
+        CSHARP: :csharp
+        JAVA: :java
+        RUBY: :ruby
+        PHP: :php
+        GO: :go
+        RUST: :rust
+        KOTLIN: :kotlin
+        SWIFT: :swift
+        CPP: :cpp
+        DART: :dart
+
+        def self?.values: -> ::Array[Scalar::Models::SdkTargetSummary::language]
+      end
+    end
+  end
+end

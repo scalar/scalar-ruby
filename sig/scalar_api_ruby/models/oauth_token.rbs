@@ -1,0 +1,40 @@
+module Scalar
+  module Models
+    type oauth_token =
+      {
+        access_token: String,
+        expires_in: Integer,
+        refresh_token: String,
+        scope: Scalar::Models::oauth_scope,
+        token_type: :Bearer
+      }
+
+    class OauthToken < Scalar::Internal::Type::BaseModel
+      attr_accessor access_token: String
+
+      attr_accessor expires_in: Integer
+
+      attr_accessor refresh_token: String
+
+      attr_accessor scope: Scalar::Models::oauth_scope
+
+      attr_accessor token_type: :Bearer
+
+      def initialize: (
+        access_token: String,
+        expires_in: Integer,
+        refresh_token: String,
+        scope: Scalar::Models::oauth_scope,
+        ?token_type: :Bearer
+      ) -> void
+
+      def to_hash: -> {
+        access_token: String,
+        expires_in: Integer,
+        refresh_token: String,
+        scope: Scalar::Models::oauth_scope,
+        token_type: :Bearer
+      }
+    end
+  end
+end

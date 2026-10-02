@@ -1,0 +1,15 @@
+module Scalar
+  module Models
+    type oauth_scope = :read | :write | :admin
+
+    module OauthScope
+      extend Scalar::Internal::Type::Enum
+
+      READ: :read
+      WRITE: :write
+      ADMIN: :admin
+
+      def self?.values: -> ::Array[Scalar::Models::oauth_scope]
+    end
+  end
+end

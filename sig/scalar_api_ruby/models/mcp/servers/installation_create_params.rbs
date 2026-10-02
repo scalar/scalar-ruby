@@ -1,0 +1,47 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type installation_create_params =
+          {
+            id: String,
+            document_auth: ::Hash[Symbol, top],
+            name: String,
+            slug: String
+          }
+          & Scalar::Internal::Type::request_parameters
+
+        class InstallationCreateParams < Scalar::Internal::Type::BaseModel
+          extend Scalar::Internal::Type::RequestParameters::Converter
+          include Scalar::Internal::Type::RequestParameters
+
+          attr_accessor id: String
+
+          attr_accessor document_auth: ::Hash[Symbol, top]
+
+          attr_accessor name: String
+
+          attr_reader slug: String?
+
+          def slug=: (String) -> String
+
+          def initialize: (
+            id: String,
+            document_auth: ::Hash[Symbol, top],
+            name: String,
+            ?slug: String,
+            ?request_options: Scalar::request_opts
+          ) -> void
+
+          def to_hash: -> {
+            id: String,
+            document_auth: ::Hash[Symbol, top],
+            name: String,
+            slug: String,
+            request_options: Scalar::RequestOptions
+          }
+        end
+      end
+    end
+  end
+end

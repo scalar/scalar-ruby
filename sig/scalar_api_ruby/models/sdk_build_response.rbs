@@ -1,0 +1,13 @@
+module Scalar
+  module Models
+    type sdk_build_response = { version: String }
+
+    class SdkBuildResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor version: String
+
+      def initialize: (version: String) -> void
+
+      def to_hash: -> { version: String }
+    end
+  end
+end

@@ -1,0 +1,60 @@
+module Scalar
+  module Models
+    type github_project_repository =
+      {
+        id: Float,
+        branch: String,
+        config_path: String,
+        expired: bool,
+        linked_by: String,
+        name: String,
+        pr_comments: bool,
+        publish_on_merge: bool,
+        publish_previews: bool
+      }
+
+    class GithubProjectRepository < Scalar::Internal::Type::BaseModel
+      attr_accessor id: Float
+
+      attr_accessor branch: String
+
+      attr_accessor config_path: String
+
+      attr_accessor expired: bool
+
+      attr_accessor linked_by: String
+
+      attr_accessor name: String
+
+      attr_accessor pr_comments: bool
+
+      attr_accessor publish_on_merge: bool
+
+      attr_accessor publish_previews: bool
+
+      def initialize: (
+        id: Float,
+        branch: String,
+        config_path: String,
+        expired: bool,
+        linked_by: String,
+        name: String,
+        pr_comments: bool,
+        publish_on_merge: bool,
+        publish_previews: bool
+      ) -> void
+
+      def to_hash: -> {
+        id: Float,
+        branch: String,
+        config_path: String,
+        expired: bool,
+        linked_by: String,
+        name: String,
+        pr_comments: bool,
+        publish_on_merge: bool,
+        publish_previews: bool
+      }
+    end
+  end
+end

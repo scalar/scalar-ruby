@@ -42,7 +42,7 @@ module Scalar
       # List all team themes.
       sig do
         params(request_options: Scalar::RequestOptions::OrHash).returns(
-          T::Array[Scalar::Models::ThemeListResponseItem]
+          T::Array[Scalar::Theme]
         )
       end
       def list(request_options: {})

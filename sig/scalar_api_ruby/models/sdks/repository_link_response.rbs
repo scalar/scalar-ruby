@@ -1,0 +1,17 @@
+module Scalar
+  module Models
+    module Sdks
+      type repository_link_response = { branch: String, repo: String }
+
+      class RepositoryLinkResponse < Scalar::Internal::Type::BaseModel
+        attr_accessor branch: String
+
+        attr_accessor repo: String
+
+        def initialize: (branch: String, repo: String) -> void
+
+        def to_hash: -> { branch: String, repo: String }
+      end
+    end
+  end
+end

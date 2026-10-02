@@ -1,0 +1,70 @@
+module Scalar
+  module Models
+    type sdk =
+      {
+        api_uid: String?,
+        current_version: String,
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        targets: ::Array[Scalar::SdkTargetSummary],
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::SdkVersion],
+        api_version: String?
+      }
+
+    class Sdk < Scalar::Internal::Type::BaseModel
+      attr_accessor api_uid: String?
+
+      attr_accessor current_version: String
+
+      attr_accessor description: String
+
+      attr_accessor is_private: bool
+
+      attr_accessor namespace: String
+
+      attr_accessor slug: String
+
+      attr_accessor targets: ::Array[Scalar::SdkTargetSummary]
+
+      attr_accessor title: String
+
+      attr_accessor uid: String
+
+      attr_accessor versions: ::Array[Scalar::SdkVersion]
+
+      attr_accessor api_version: String?
+
+      def initialize: (
+        api_uid: String?,
+        current_version: String,
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        targets: ::Array[Scalar::SdkTargetSummary],
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::SdkVersion],
+        ?api_version: String?
+      ) -> void
+
+      def to_hash: -> {
+        api_uid: String?,
+        current_version: String,
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        targets: ::Array[Scalar::SdkTargetSummary],
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::SdkVersion],
+        api_version: String?
+      }
+    end
+  end
+end

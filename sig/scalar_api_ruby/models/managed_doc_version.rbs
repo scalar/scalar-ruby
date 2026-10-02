@@ -83,26 +83,26 @@ module Scalar
       type tool =
         {
           enabled_tools: ::Array[Scalar::Models::ManagedDocVersion::Tool::enabled_tool],
-          method_: Scalar::Models::ManagedDocVersion::Tool::method_,
+          method_: Scalar::Models::method_,
           path: String
         }
 
       class Tool < Scalar::Internal::Type::BaseModel
         attr_accessor enabled_tools: ::Array[Scalar::Models::ManagedDocVersion::Tool::enabled_tool]
 
-        attr_accessor method_: Scalar::Models::ManagedDocVersion::Tool::method_
+        attr_accessor method_: Scalar::Models::method_
 
         attr_accessor path: String
 
         def initialize: (
           enabled_tools: ::Array[Scalar::Models::ManagedDocVersion::Tool::enabled_tool],
-          method_: Scalar::Models::ManagedDocVersion::Tool::method_,
+          method_: Scalar::Models::method_,
           path: String
         ) -> void
 
         def to_hash: -> {
           enabled_tools: ::Array[Scalar::Models::ManagedDocVersion::Tool::enabled_tool],
-          method_: Scalar::Models::ManagedDocVersion::Tool::method_,
+          method_: Scalar::Models::method_,
           path: String
         }
 
@@ -115,33 +115,6 @@ module Scalar
           GET_MINI_OPENAPI_SPEC: :"get-mini-openapi-spec"
 
           def self?.values: -> ::Array[Scalar::Models::ManagedDocVersion::Tool::enabled_tool]
-        end
-
-        type method_ =
-          :delete
-          | :get
-          | :head
-          | :options
-          | :patch
-          | :post
-          | :put
-          | :query
-          | :trace
-
-        module Method
-          extend Scalar::Internal::Type::Enum
-
-          DELETE: :delete
-          GET: :get
-          HEAD: :head
-          OPTIONS: :options
-          PATCH: :patch
-          POST: :post
-          PUT: :put
-          QUERY: :query
-          TRACE: :trace
-
-          def self?.values: -> ::Array[Scalar::Models::ManagedDocVersion::Tool::method_]
         end
       end
     end

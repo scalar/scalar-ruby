@@ -1,0 +1,77 @@
+module Scalar
+  module Models
+    type sdk_build_params =
+      {
+        uid: String,
+        languages: ::Array[Scalar::Models::SdkBuildParams::language],
+        version: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class SdkBuildParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor uid: String
+
+      attr_reader languages: ::Array[Scalar::Models::SdkBuildParams::language]?
+
+      def languages=: (
+        ::Array[Scalar::Models::SdkBuildParams::language]
+      ) -> ::Array[Scalar::Models::SdkBuildParams::language]
+
+      attr_reader version: String?
+
+      def version=: (String) -> String
+
+      def initialize: (
+        uid: String,
+        ?languages: ::Array[Scalar::Models::SdkBuildParams::language],
+        ?version: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        uid: String,
+        languages: ::Array[Scalar::Models::SdkBuildParams::language],
+        version: String,
+        request_options: Scalar::RequestOptions
+      }
+
+      type language =
+        :typescript
+        | :python
+        | :cli
+        | :csharp
+        | :java
+        | :ruby
+        | :php
+        | :go
+        | :rust
+        | :kotlin
+        | :swift
+        | :cpp
+        | :dart
+
+      module Language
+        extend Scalar::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        CLI: :cli
+        CSHARP: :csharp
+        JAVA: :java
+        RUBY: :ruby
+        PHP: :php
+        GO: :go
+        RUST: :rust
+        KOTLIN: :kotlin
+        SWIFT: :swift
+        CPP: :cpp
+        DART: :dart
+
+        def self?.values: -> ::Array[Scalar::Models::SdkBuildParams::language]
+      end
+    end
+  end
+end

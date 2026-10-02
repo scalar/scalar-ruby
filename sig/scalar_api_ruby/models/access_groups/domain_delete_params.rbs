@@ -1,0 +1,30 @@
+module Scalar
+  module Models
+    module AccessGroups
+      type domain_delete_params =
+        { slug: String, domain: String }
+        & Scalar::Internal::Type::request_parameters
+
+      class DomainDeleteParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor slug: String
+
+        attr_accessor domain: String
+
+        def initialize: (
+          slug: String,
+          domain: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          slug: String,
+          domain: String,
+          request_options: Scalar::RequestOptions
+        }
+      end
+    end
+  end
+end

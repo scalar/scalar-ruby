@@ -1,0 +1,29 @@
+module Scalar
+  module Models
+    type scalar_doc_list_project_config_params =
+      { slug: String, ref: String } & Scalar::Internal::Type::request_parameters
+
+    class ScalarDocListProjectConfigParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor slug: String
+
+      attr_reader ref: String?
+
+      def ref=: (String) -> String
+
+      def initialize: (
+        slug: String,
+        ?ref: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        slug: String,
+        ref: String,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

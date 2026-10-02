@@ -174,14 +174,14 @@ module Scalar
       #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::RegistryListAllAPIDocumentsResponseItem>]
+      # @return [Array<Scalar::Models::APIDocument>]
       #
       # @see Scalar::Models::RegistryListAllAPIDocumentsParams
       def list_all_api_documents(params = {})
         @client.request(
           method: :get,
           path: "v1/apis",
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::RegistryListAllAPIDocumentsResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::APIDocument],
           options: params[:request_options]
         )
       end
@@ -219,14 +219,14 @@ module Scalar
       # @param namespace [String]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::RegistryListAPIDocumentsResponseItem>]
+      # @return [Array<Scalar::Models::APIDocument>]
       #
       # @see Scalar::Models::RegistryListAPIDocumentsParams
       def list_api_documents(namespace, params = {})
         @client.request(
           method: :get,
           path: ["v1/apis/%1$s", namespace],
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::RegistryListAPIDocumentsResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::APIDocument],
           options: params[:request_options]
         )
       end

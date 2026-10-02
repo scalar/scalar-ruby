@@ -73,14 +73,14 @@ module Scalar
       #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::ThemeListResponseItem>]
+      # @return [Array<Scalar::Models::Theme>]
       #
       # @see Scalar::Models::ThemeListParams
       def list(params = {})
         @client.request(
           method: :get,
           path: "v1/themes",
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::ThemeListResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::Theme],
           options: params[:request_options]
         )
       end

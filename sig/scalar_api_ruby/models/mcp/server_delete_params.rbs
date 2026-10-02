@@ -1,0 +1,22 @@
+module Scalar
+  module Models
+    module Mcp
+      type server_delete_params =
+        { id: String } & Scalar::Internal::Type::request_parameters
+
+      class ServerDeleteParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor id: String
+
+        def initialize: (
+          id: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> { id: String, request_options: Scalar::RequestOptions }
+      end
+    end
+  end
+end

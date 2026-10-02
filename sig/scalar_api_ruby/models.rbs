@@ -1,9 +1,33 @@
 module Scalar
   class AccessGroup = Scalar::Models::AccessGroup
 
+  class AccessGroupCreateParams = Scalar::Models::AccessGroupCreateParams
+
+  class AccessGroupDeleteParams = Scalar::Models::AccessGroupDeleteParams
+
+  class AccessGroupName = Scalar::Models::AccessGroupName
+
+  class AccessGroupRetrieveParams = Scalar::Models::AccessGroupRetrieveParams
+
+  module AccessGroups = Scalar::Models::AccessGroups
+
+  class AccessGroupUpdateParams = Scalar::Models::AccessGroupUpdateParams
+
+  class ActiveDeployment = Scalar::Models::ActiveDeployment
+
+  class APIDocument = Scalar::Models::APIDocument
+
   class AuthenticationExchangePersonalTokenParams = Scalar::Models::AuthenticationExchangePersonalTokenParams
 
   class AuthenticationListCurrentUserParams = Scalar::Models::AuthenticationListCurrentUserParams
+
+  class DocsProject = Scalar::Models::DocsProject
+
+  class GithubProject = Scalar::Models::GithubProject
+
+  class GithubProjectRepository = Scalar::Models::GithubProjectRepository
+
+  class LoginPortal = Scalar::Models::LoginPortal
 
   class LoginPortalCreateParams = Scalar::Models::LoginPortalCreateParams
 
@@ -21,11 +45,33 @@ module Scalar
 
   class ManagedDocVersion = Scalar::Models::ManagedDocVersion
 
+  class ManagedSchemaVersion = Scalar::Models::ManagedSchemaVersion
+
+  module Mcp = Scalar::Models::Mcp
+
+  module Method = Scalar::Models::Method
+
   class Namespace = Scalar::Models::Namespace
 
   class NamespaceListParams = Scalar::Models::NamespaceListParams
 
   class Nanoid = Scalar::Models::Nanoid
+
+  class OauthAuthorizationServerMetadata = Scalar::Models::OauthAuthorizationServerMetadata
+
+  class OauthError = Scalar::Models::OauthError
+
+  class OAuthOauthAuthorizationServerMetadataParams = Scalar::Models::OAuthOauthAuthorizationServerMetadataParams
+
+  class OAuthOauthAuthorizeParams = Scalar::Models::OAuthOauthAuthorizeParams
+
+  class OAuthOauthRevokeParams = Scalar::Models::OAuthOauthRevokeParams
+
+  class OAuthOauthTokenParams = Scalar::Models::OAuthOauthTokenParams
+
+  module OauthScope = Scalar::Models::OauthScope
+
+  class OauthToken = Scalar::Models::OauthToken
 
   class RegistryCreateAPIDocumentAccessGroupParams = Scalar::Models::RegistryCreateAPIDocumentAccessGroupParams
 
@@ -51,6 +97,8 @@ module Scalar
 
   class RegistryUpdateAPIDocumentVersionParams = Scalar::Models::RegistryUpdateAPIDocumentVersionParams
 
+  class Rule = Scalar::Models::Rule
+
   class RuleCreateRulesetAccessGroupParams = Scalar::Models::RuleCreateRulesetAccessGroupParams
 
   class RuleCreateRulesetParams = Scalar::Models::RuleCreateRulesetParams
@@ -67,9 +115,31 @@ module Scalar
 
   class ScalarDocCreateGuideParams = Scalar::Models::ScalarDocCreateGuideParams
 
+  class ScalarDocCreateProjectParams = Scalar::Models::ScalarDocCreateProjectParams
+
+  class ScalarDocDeleteProjectParams = Scalar::Models::ScalarDocDeleteProjectParams
+
   class ScalarDocListGuidesParams = Scalar::Models::ScalarDocListGuidesParams
 
+  class ScalarDocListProjectConfigParams = Scalar::Models::ScalarDocListProjectConfigParams
+
+  class ScalarDocListProjectDomainParams = Scalar::Models::ScalarDocListProjectDomainParams
+
+  class ScalarDocListProjectDomainStatusParams = Scalar::Models::ScalarDocListProjectDomainStatusParams
+
+  class ScalarDocListProjectsParams = Scalar::Models::ScalarDocListProjectsParams
+
   class ScalarDocPublishGuideParams = Scalar::Models::ScalarDocPublishGuideParams
+
+  class ScalarDocPublishProjectParams = Scalar::Models::ScalarDocPublishProjectParams
+
+  class ScalarDocRetrieveProjectParams = Scalar::Models::ScalarDocRetrieveProjectParams
+
+  class ScalarDocUpdateProjectConfigParams = Scalar::Models::ScalarDocUpdateProjectConfigParams
+
+  class ScalarDocUpdateProjectParams = Scalar::Models::ScalarDocUpdateProjectParams
+
+  class Schema = Scalar::Models::Schema
 
   class SchemaCreateParams = Scalar::Models::SchemaCreateParams
 
@@ -81,9 +151,41 @@ module Scalar
 
   class SchemaUpdateParams = Scalar::Models::SchemaUpdateParams
 
+  class Sdk = Scalar::Models::Sdk
+
+  class SdkBuildParams = Scalar::Models::SdkBuildParams
+
+  class SdkCreateParams = Scalar::Models::SdkCreateParams
+
+  class SdkDeleteParams = Scalar::Models::SdkDeleteParams
+
+  class SdkListParams = Scalar::Models::SdkListParams
+
+  class SdkRetrieveParams = Scalar::Models::SdkRetrieveParams
+
+  module Sdks = Scalar::Models::Sdks
+
+  class SdkTargetSummary = Scalar::Models::SdkTargetSummary
+
+  class SdkUpdateParams = Scalar::Models::SdkUpdateParams
+
+  class SdkVersion = Scalar::Models::SdkVersion
+
   class Slug = Scalar::Models::Slug
 
+  class Team = Scalar::Models::Team
+
+  class TeamImage = Scalar::Models::TeamImage
+
   class TeamListParams = Scalar::Models::TeamListParams
+
+  class TeamName = Scalar::Models::TeamName
+
+  module Teams = Scalar::Models::Teams
+
+  class TeamSummary = Scalar::Models::TeamSummary
+
+  class Theme = Scalar::Models::Theme
 
   class ThemeCreateParams = Scalar::Models::ThemeCreateParams
 
@@ -100,6 +202,8 @@ module Scalar
   class Timestamp = Scalar::Models::Timestamp
 
   class UID = Scalar::Models::UID
+
+  class User = Scalar::Models::User
 
   class Value400 = Scalar::Models::Value400
 

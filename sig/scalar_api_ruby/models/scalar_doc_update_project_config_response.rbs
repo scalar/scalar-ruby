@@ -1,0 +1,22 @@
+module Scalar
+  module Models
+    type scalar_doc_update_project_config_response =
+      { base_token: String, commit_sha: String?, ref: String }
+
+    class ScalarDocUpdateProjectConfigResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor base_token: String
+
+      attr_accessor commit_sha: String?
+
+      attr_accessor ref: String
+
+      def initialize: (
+        base_token: String,
+        commit_sha: String?,
+        ref: String
+      ) -> void
+
+      def to_hash: -> { base_token: String, commit_sha: String?, ref: String }
+    end
+  end
+end

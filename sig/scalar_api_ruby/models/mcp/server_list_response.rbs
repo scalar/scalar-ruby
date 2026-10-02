@@ -1,0 +1,9 @@
+module Scalar
+  module Models
+    module Mcp
+      type server_list_response = ::Array[Scalar::Mcp::McpServer]
+
+      ServerListResponse: Scalar::Internal::Type::Converter
+    end
+  end
+end
