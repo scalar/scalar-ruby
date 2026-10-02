@@ -18,8 +18,6 @@ module Scalar
     # @return [String, nil]
     attr_reader :bearer_auth
 
-    # Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user.
-    # Each scope implies the weaker ones.
     # @return [String, nil]
     attr_reader :o_auth2
 
@@ -70,10 +68,6 @@ module Scalar
     # @return [Scalar::Resources::Mcp]
     attr_reader :mcp
 
-    # OAuth
-    # @return [Scalar::Resources::OAuth]
-    attr_reader :o_auth
-
     # @api private
     #
     # @return [Hash{String=>String}]
@@ -99,8 +93,7 @@ module Scalar
     #
     # @param bearer_auth [String, nil] Defaults to `ENV["BEARER_AUTH"]`
     #
-    # @param o_auth2 [String, nil] Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user.
-    # Each scope implies the weaker ones. Defaults to `ENV["SCALAR_O_AUTH2"]`
+    # @param o_auth2 [String, nil] Defaults to `ENV["SCALAR_OAUTH_TOKEN"]`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["SCALAR_BASE_URL"]`
@@ -114,7 +107,7 @@ module Scalar
     # @param max_retry_delay [Float]
     def initialize(
       bearer_auth: ENV["BEARER_AUTH"],
-      o_auth2: ENV["SCALAR_O_AUTH2"],
+      o_auth2: ENV["SCALAR_OAUTH_TOKEN"],
       base_url: ENV["SCALAR_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
@@ -160,7 +153,6 @@ module Scalar
       @authentication = Scalar::Resources::Authentication.new(client: self)
       @sdks = Scalar::Resources::Sdks.new(client: self)
       @mcp = Scalar::Resources::Mcp.new(client: self)
-      @o_auth = Scalar::Resources::OAuth.new(client: self)
     end
   end
 end

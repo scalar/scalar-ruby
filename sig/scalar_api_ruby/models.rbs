@@ -57,22 +57,6 @@ module Scalar
 
   class Nanoid = Scalar::Models::Nanoid
 
-  class OauthAuthorizationServerMetadata = Scalar::Models::OauthAuthorizationServerMetadata
-
-  class OauthError = Scalar::Models::OauthError
-
-  class OAuthOauthAuthorizationServerMetadataParams = Scalar::Models::OAuthOauthAuthorizationServerMetadataParams
-
-  class OAuthOauthAuthorizeParams = Scalar::Models::OAuthOauthAuthorizeParams
-
-  class OAuthOauthRevokeParams = Scalar::Models::OAuthOauthRevokeParams
-
-  class OAuthOauthTokenParams = Scalar::Models::OAuthOauthTokenParams
-
-  module OauthScope = Scalar::Models::OauthScope
-
-  class OauthToken = Scalar::Models::OauthToken
-
   class RegistryCreateAPIDocumentAccessGroupParams = Scalar::Models::RegistryCreateAPIDocumentAccessGroupParams
 
   class RegistryCreateAPIDocumentParams = Scalar::Models::RegistryCreateAPIDocumentParams

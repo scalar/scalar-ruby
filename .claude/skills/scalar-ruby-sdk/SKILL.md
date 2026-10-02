@@ -34,7 +34,7 @@ client = Scalar::Client.new(
 Provide credentials using the options below. Environment variables are read automatically when the target runtime supports them:
 
 - `bearer_auth` (env: `BEARER_AUTH`) — Credential for the BearerAuth authentication scheme.
-- `o_auth2` (env: `SCALAR_O_AUTH2`) — Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
+- `o_auth2` (env: `SCALAR_OAUTH_TOKEN`) — Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones.
 
 ## Calling operations
 

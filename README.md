@@ -64,7 +64,7 @@ Pass credentials to the generated client constructor. Environment variables are 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearer_auth` | `String \| nil` | - | Credential for the BearerAuth authentication scheme. Defaults to BEARER_AUTH. |
-| `o_auth2` | `String \| nil` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_O_AUTH2. |
+| `o_auth2` | `String \| nil` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_OAUTH_TOKEN. |
 
 Declared schemes:
 
@@ -108,7 +108,7 @@ client = Scalar::Client.new(
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearer_auth` | `String \| nil` | `ENV["BEARER_AUTH"]` | Credential for the BearerAuth authentication scheme. |
-| `o_auth2` | `String \| nil` | `ENV["SCALAR_O_AUTH2"]` | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. |
+| `o_auth2` | `String \| nil` | `ENV["SCALAR_OAUTH_TOKEN"]` | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. |
 | `base_url` | `String \| nil` | `ENV["SCALAR_BASE_URL"]` | Override the default API base URL. |
 | `max_retries` | `Integer` | `2` | Max number of retries to attempt after a failed retryable request. |
 | `timeout` | `Float` | `60.0` | Seconds to wait for a response before timing out. |

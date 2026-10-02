@@ -36,8 +36,6 @@ module Scalar
 
     attr_reader mcp: Scalar::Resources::Mcp
 
-    attr_reader o_auth: Scalar::Resources::OAuth
-
     private def auth_headers: -> ::Hash[String, String]
 
     def initialize: (
