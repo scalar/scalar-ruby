@@ -134,7 +134,7 @@ module Scalar
         end
         attr_accessor :enabled_tools
 
-        sig { returns(Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol) }
+        sig { returns(Scalar::Method::TaggedSymbol) }
         attr_accessor :method_
 
         sig { returns(String) }
@@ -144,7 +144,7 @@ module Scalar
           params(
             enabled_tools:
               T::Array[Scalar::ManagedDocVersion::Tool::EnabledTool::OrSymbol],
-            method_: Scalar::ManagedDocVersion::Tool::Method::OrSymbol,
+            method_: Scalar::Method::OrSymbol,
             path: String
           ).returns(T.attached_class)
         end
@@ -158,7 +158,7 @@ module Scalar
                 T::Array[
                   Scalar::ManagedDocVersion::Tool::EnabledTool::TaggedSymbol
                 ],
-              method_: Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol,
+              method_: Scalar::Method::TaggedSymbol,
               path: String
             }
           )
@@ -191,49 +191,6 @@ module Scalar
               T::Array[
                 Scalar::ManagedDocVersion::Tool::EnabledTool::TaggedSymbol
               ]
-            )
-          end
-          def self.values
-          end
-        end
-
-        module Method
-          extend Scalar::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, Scalar::ManagedDocVersion::Tool::Method)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          DELETE =
-            T.let(
-              :delete,
-              Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol
-            )
-          GET =
-            T.let(:get, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          HEAD =
-            T.let(:head, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          OPTIONS =
-            T.let(
-              :options,
-              Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol
-            )
-          PATCH =
-            T.let(:patch, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          POST =
-            T.let(:post, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          PUT =
-            T.let(:put, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          QUERY =
-            T.let(:query, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-          TRACE =
-            T.let(:trace, Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol)
-
-          sig do
-            override.returns(
-              T::Array[Scalar::ManagedDocVersion::Tool::Method::TaggedSymbol]
             )
           end
           def self.values

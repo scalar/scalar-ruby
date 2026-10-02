@@ -1,0 +1,120 @@
+module Scalar
+  module Models
+    module Sdks
+      type repository_update_publishing_params =
+        {
+          uid: String,
+          language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
+          publish_on_merge: bool,
+          access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          tag: String
+        }
+        & Scalar::Internal::Type::request_parameters
+
+      class RepositoryUpdatePublishingParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor uid: String
+
+        attr_accessor language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language
+
+        attr_accessor publish_on_merge: bool
+
+        attr_reader access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access?
+
+        def access=: (
+          Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access
+        ) -> Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access
+
+        attr_reader auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method?
+
+        def auth_method=: (
+          Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
+        ) -> Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
+
+        attr_reader tag: String?
+
+        def tag=: (String) -> String
+
+        def initialize: (
+          uid: String,
+          language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
+          publish_on_merge: bool,
+          ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?tag: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          uid: String,
+          language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
+          publish_on_merge: bool,
+          access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          tag: String,
+          request_options: Scalar::RequestOptions
+        }
+
+        type language =
+          :typescript
+          | :python
+          | :cli
+          | :csharp
+          | :java
+          | :ruby
+          | :php
+          | :go
+          | :rust
+          | :kotlin
+          | :swift
+          | :cpp
+          | :dart
+
+        module Language
+          extend Scalar::Internal::Type::Enum
+
+          TYPESCRIPT: :typescript
+          PYTHON: :python
+          CLI: :cli
+          CSHARP: :csharp
+          JAVA: :java
+          RUBY: :ruby
+          PHP: :php
+          GO: :go
+          RUST: :rust
+          KOTLIN: :kotlin
+          SWIFT: :swift
+          CPP: :cpp
+          DART: :dart
+
+          def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language]
+        end
+
+        type access = :public | :restricted
+
+        module Access
+          extend Scalar::Internal::Type::Enum
+
+          PUBLIC: :public
+          RESTRICTED: :restricted
+
+          def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access]
+        end
+
+        type auth_method = :oidc | :"access-token"
+
+        module AuthMethod
+          extend Scalar::Internal::Type::Enum
+
+          OIDC: :oidc
+          ACCESS_TOKEN: :"access-token"
+
+          def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method]
+        end
+      end
+    end
+  end
+end

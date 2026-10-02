@@ -1,0 +1,30 @@
+module Scalar
+  module Models
+    module Sdks
+      type version_delete_params =
+        { uid: String, version: String }
+        & Scalar::Internal::Type::request_parameters
+
+      class VersionDeleteParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor uid: String
+
+        attr_accessor version: String
+
+        def initialize: (
+          uid: String,
+          version: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          uid: String,
+          version: String,
+          request_options: Scalar::RequestOptions
+        }
+      end
+    end
+  end
+end

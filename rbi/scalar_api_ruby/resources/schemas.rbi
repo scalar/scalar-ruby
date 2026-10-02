@@ -68,7 +68,7 @@ module Scalar
         params(
           namespace: String,
           request_options: Scalar::RequestOptions::OrHash
-        ).returns(T::Array[Scalar::Models::SchemaListResponseItem])
+        ).returns(T::Array[Scalar::Schema])
       end
       def list(namespace, request_options: {})
       end

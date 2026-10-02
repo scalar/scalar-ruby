@@ -1,0 +1,41 @@
+module Scalar
+  module Models
+    class TeamInvite = Teams::TeamInvite
+
+    module Teams
+      type team_invite =
+        {
+          email: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          expires: Float
+        }
+
+      class TeamInvite < Scalar::Internal::Type::BaseModel
+        attr_accessor email: String
+
+        attr_accessor role: Scalar::Models::Teams::role
+
+        attr_accessor uid: String
+
+        attr_reader expires: Float?
+
+        def expires=: (Float) -> Float
+
+        def initialize: (
+          email: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          ?expires: Float
+        ) -> void
+
+        def to_hash: -> {
+          email: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          expires: Float
+        }
+      end
+    end
+  end
+end

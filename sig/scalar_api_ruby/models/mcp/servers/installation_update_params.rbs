@@ -1,0 +1,73 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type installation_update_params =
+          {
+            id: String,
+            installation_id: String,
+            document_auth: ::Hash[Symbol, top],
+            is_private: bool,
+            login_portal_uid: String?,
+            mcp_version: String?,
+            name: String,
+            slug: String
+          }
+          & Scalar::Internal::Type::request_parameters
+
+        class InstallationUpdateParams < Scalar::Internal::Type::BaseModel
+          extend Scalar::Internal::Type::RequestParameters::Converter
+          include Scalar::Internal::Type::RequestParameters
+
+          attr_accessor id: String
+
+          attr_accessor installation_id: String
+
+          attr_reader document_auth: ::Hash[Symbol, top]?
+
+          def document_auth=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+          attr_reader is_private: bool?
+
+          def is_private=: (bool) -> bool
+
+          attr_accessor login_portal_uid: String?
+
+          attr_accessor mcp_version: String?
+
+          attr_reader name: String?
+
+          def name=: (String) -> String
+
+          attr_reader slug: String?
+
+          def slug=: (String) -> String
+
+          def initialize: (
+            id: String,
+            installation_id: String,
+            ?document_auth: ::Hash[Symbol, top],
+            ?is_private: bool,
+            ?login_portal_uid: String?,
+            ?mcp_version: String?,
+            ?name: String,
+            ?slug: String,
+            ?request_options: Scalar::request_opts
+          ) -> void
+
+          def to_hash: -> {
+            id: String,
+            installation_id: String,
+            document_auth: ::Hash[Symbol, top],
+            is_private: bool,
+            login_portal_uid: String?,
+            mcp_version: String?,
+            name: String,
+            slug: String,
+            request_options: Scalar::RequestOptions
+          }
+        end
+      end
+    end
+  end
+end

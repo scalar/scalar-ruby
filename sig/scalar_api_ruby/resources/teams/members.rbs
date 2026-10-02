@@ -1,0 +1,21 @@
+module Scalar
+  module Resources
+    class Teams
+      class Members
+        def update: (
+          String uid,
+          role: Scalar::Models::Teams::role,
+          ?request_options: Scalar::request_opts
+        ) -> top
+
+        def list: (
+          ?request_options: Scalar::request_opts
+        ) -> Scalar::Models::Teams::MemberListResponse
+
+        def delete: (String uid, ?request_options: Scalar::request_opts) -> top
+
+        def initialize: (client: Scalar::Client) -> void
+      end
+    end
+  end
+end

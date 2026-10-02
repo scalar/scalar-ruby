@@ -1,0 +1,27 @@
+module Scalar
+  module Models
+    module Mcp
+      type server_create_response =
+        {
+          installation: Scalar::Mcp::McpInstallation,
+          server: Scalar::Mcp::McpServer
+        }
+
+      class ServerCreateResponse < Scalar::Internal::Type::BaseModel
+        attr_accessor installation: Scalar::Mcp::McpInstallation
+
+        attr_accessor server: Scalar::Mcp::McpServer
+
+        def initialize: (
+          installation: Scalar::Mcp::McpInstallation,
+          server: Scalar::Mcp::McpServer
+        ) -> void
+
+        def to_hash: -> {
+          installation: Scalar::Mcp::McpInstallation,
+          server: Scalar::Mcp::McpServer
+        }
+      end
+    end
+  end
+end

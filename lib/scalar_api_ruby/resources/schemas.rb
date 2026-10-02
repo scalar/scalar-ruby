@@ -78,14 +78,14 @@ module Scalar
       # @param namespace [String]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::SchemaListResponseItem>]
+      # @return [Array<Scalar::Models::Schema>]
       #
       # @see Scalar::Models::SchemaListParams
       def list(namespace, params = {})
         @client.request(
           method: :get,
           path: ["v1/schemas/%1$s", namespace],
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::SchemaListResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::Schema],
           options: params[:request_options]
         )
       end

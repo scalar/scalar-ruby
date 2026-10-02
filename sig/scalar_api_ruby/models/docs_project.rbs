@@ -1,0 +1,70 @@
+module Scalar
+  module Models
+    type docs_project =
+      {
+        access_groups: top,
+        active_theme_id: String,
+        agent_enabled: bool,
+        analytics_enabled: bool,
+        is_private: bool,
+        last_published: Integer?,
+        login_portal_uid: String,
+        name: String,
+        publish_status: String,
+        slug: String,
+        uid: String
+      }
+
+    class DocsProject < Scalar::Internal::Type::BaseModel
+      attr_accessor access_groups: top
+
+      attr_accessor active_theme_id: String
+
+      attr_accessor agent_enabled: bool
+
+      attr_accessor analytics_enabled: bool
+
+      attr_accessor is_private: bool
+
+      attr_accessor last_published: Integer?
+
+      attr_accessor login_portal_uid: String
+
+      attr_accessor name: String
+
+      attr_accessor publish_status: String
+
+      attr_accessor slug: String
+
+      attr_accessor uid: String
+
+      def initialize: (
+        access_groups: top,
+        active_theme_id: String,
+        agent_enabled: bool,
+        analytics_enabled: bool,
+        is_private: bool,
+        last_published: Integer?,
+        login_portal_uid: String,
+        name: String,
+        publish_status: String,
+        slug: String,
+        uid: String
+      ) -> void
+
+      def to_hash: -> {
+        access_groups: top,
+        active_theme_id: String,
+        agent_enabled: bool,
+        analytics_enabled: bool,
+        is_private: bool,
+        last_published: Integer?,
+        login_portal_uid: String,
+        name: String,
+        publish_status: String,
+        slug: String,
+        uid: String
+      }
+    end
+  end
+end

@@ -31,14 +31,14 @@ module Scalar
       #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Scalar::Models::AuthenticationListCurrentUserResponse]
+      # @return [Scalar::Models::User]
       #
       # @see Scalar::Models::AuthenticationListCurrentUserParams
       def list_current_user(params = {})
         @client.request(
           method: :get,
           path: "v1/auth/me",
-          model: Scalar::Models::AuthenticationListCurrentUserResponse,
+          model: Scalar::User,
           options: params[:request_options]
         )
       end

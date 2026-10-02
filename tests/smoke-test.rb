@@ -315,6 +315,58 @@ cases = [
     run: -> { client.login_portals.delete("slug") }
   },
   {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups",
+    label: "required params",
+    run: -> { client.access_groups.create }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups",
+    label: "all params",
+    run: -> { client.access_groups.create({allowed_domains: {}, name: "", slug: "x"}) }
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/access-groups/{slug}",
+    run: -> { client.access_groups.retrieve("slug") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/access-groups/{slug}",
+    label: "required params",
+    run: -> { client.access_groups.update("path_slug") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/access-groups/{slug}",
+    label: "all params",
+    run: -> { client.access_groups.update("path_slug", {name: "", body_slug: "x"}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/access-groups/{slug}",
+    run: -> { client.access_groups.delete("slug") }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups/{slug}/domains",
+    run: -> { client.access_groups.domains.create("slug", {domain: ""}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/access-groups/{slug}/domains",
+    run: -> { client.access_groups.domains.delete("slug", {domain: ""}) }
+  },
+  {
     operation: "createRuleset",
     method: "POST",
     path: "/v1/rulesets/{namespace}",
@@ -442,6 +494,37 @@ cases = [
   },
   {operation: "list", method: "GET", path: "/v1/teams", run: -> { client.teams.list }},
   {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/teams/members/{uid}",
+    run: -> { client.teams.members.update("uidxx", {role: "owner"}) }
+  },
+  {operation: "list", method: "GET", path: "/v1/teams/members", run: -> { client.teams.members.list }},
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/teams/members/{uid}",
+    run: -> { client.teams.members.delete("uidxx") }
+  },
+  {
+    operation: "cancel",
+    method: "DELETE",
+    path: "/v1/teams/invites/{uid}",
+    run: -> { client.teams.invites.cancel("uidxx") }
+  },
+  {
+    operation: "member",
+    method: "POST",
+    path: "/v1/teams/invites",
+    run: -> { client.teams.invites.member({email: "user@example.com", role: "owner"}) }
+  },
+  {
+    operation: "resend",
+    method: "PATCH",
+    path: "/v1/teams/invites/{uid}",
+    run: -> { client.teams.invites.resend("uidxx") }
+  },
+  {
     operation: "createGuide",
     method: "POST",
     path: "/v1/guides",
@@ -461,12 +544,158 @@ cases = [
       )
     end
   },
+  {
+    operation: "createProject",
+    method: "POST",
+    path: "/v1/docs",
+    label: "required params",
+    run: -> { client.scalar_docs.create_project({name: "", provider: "forgejo"}) }
+  },
+  {
+    operation: "createProject",
+    method: "POST",
+    path: "/v1/docs",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.create_project(
+        {
+          name: "",
+          provider: "forgejo",
+          bitbucket_repository: {
+            "workspaceUuid" => "",
+            "repoUuid" => ""
+          },
+          blank: false,
+          github_repository: {
+            "installationId" => 0,
+            "repoId" => 0
+          },
+          is_private: false,
+          slug: "x"
+        }
+      )
+    end
+  },
+  {
+    operation: "deleteProject",
+    method: "DELETE",
+    path: "/v1/docs/{slug}",
+    run: -> { client.scalar_docs.delete_project("slug") }
+  },
   {operation: "listGuides", method: "GET", path: "/v1/guides", run: -> { client.scalar_docs.list_guides }},
+  {
+    operation: "listProjectConfig",
+    method: "GET",
+    path: "/v1/docs/{slug}/config",
+    label: "required params",
+    run: -> { client.scalar_docs.list_project_config("slug") }
+  },
+  {
+    operation: "listProjectConfig",
+    method: "GET",
+    path: "/v1/docs/{slug}/config",
+    label: "all params",
+    run: -> { client.scalar_docs.list_project_config("slug", {ref: "ref"}) }
+  },
+  {
+    operation: "listProjectDomain",
+    method: "GET",
+    path: "/v1/docs/{slug}/domain",
+    run: -> { client.scalar_docs.list_project_domain("slug") }
+  },
+  {
+    operation: "listProjectDomainStatus",
+    method: "GET",
+    path: "/v1/docs/{slug}/domain/status",
+    run: -> { client.scalar_docs.list_project_domain_status("slug") }
+  },
+  {
+    operation: "listProjects",
+    method: "GET",
+    path: "/v1/docs",
+    label: "required params",
+    run: -> { client.scalar_docs.list_projects }
+  },
+  {
+    operation: "listProjects",
+    method: "GET",
+    path: "/v1/docs",
+    label: "all params",
+    run: -> { client.scalar_docs.list_projects({limit: 1}) }
+  },
   {
     operation: "publishGuide",
     method: "POST",
     path: "/v1/guides/{slug}/publish",
     run: -> { client.scalar_docs.publish_guide("slug") }
+  },
+  {
+    operation: "publishProject",
+    method: "POST",
+    path: "/v1/docs/{slug}/publish",
+    label: "required params",
+    run: -> { client.scalar_docs.publish_project("slug") }
+  },
+  {
+    operation: "publishProject",
+    method: "POST",
+    path: "/v1/docs/{slug}/publish",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.publish_project("slug", {commit_sha: "", config_path: "", preview: false})
+    end
+  },
+  {
+    operation: "retrieveProject",
+    method: "GET",
+    path: "/v1/docs/{slug}",
+    run: -> { client.scalar_docs.retrieve_project("slug") }
+  },
+  {
+    operation: "updateProject",
+    method: "PATCH",
+    path: "/v1/docs/{slug}",
+    label: "required params",
+    run: -> { client.scalar_docs.update_project("slug") }
+  },
+  {
+    operation: "updateProject",
+    method: "PATCH",
+    path: "/v1/docs/{slug}",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.update_project(
+        "slug",
+        {
+          access_groups: ["xxxxx"],
+          active_theme_id: "xxxxx",
+          agent_enabled: false,
+          analytics_enabled: false,
+          is_private: false,
+          login_portal_uid: "xxxxx",
+          name: ""
+        }
+      )
+    end
+  },
+  {
+    operation: "updateProjectConfig",
+    method: "PUT",
+    path: "/v1/docs/{slug}/config",
+    label: "required params",
+    run: -> { client.scalar_docs.update_project_config("slug", {content: ""}) }
+  },
+  {
+    operation: "updateProjectConfig",
+    method: "PUT",
+    path: "/v1/docs/{slug}/config",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.update_project_config(
+        "slug",
+        {content: "", base_token: "", message: "", path: "", ref: ""}
+      )
+    end
   },
   {operation: "list", method: "GET", path: "/v1/namespaces", run: -> { client.namespaces.list }},
   {
@@ -480,6 +709,315 @@ cases = [
     method: "GET",
     path: "/v1/auth/me",
     run: -> { client.authentication.list_current_user }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks",
+    label: "required params",
+    run: -> { client.sdks.create({api_uid: "xxxxx", languages: ["typescript"]}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks",
+    label: "all params",
+    run: -> do
+      client.sdks.create(
+        {api_uid: "xxxxx", languages: ["typescript"], class_name: "", config: "", slug: "x", title: ""}
+      )
+    end
+  },
+  {operation: "retrieve", method: "GET", path: "/v1/sdks/{uid}", run: -> { client.sdks.retrieve("uidxx") }},
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/sdks/{uid}",
+    label: "required params",
+    run: -> { client.sdks.update("uidxx") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/sdks/{uid}",
+    label: "all params",
+    run: -> do
+      client.sdks.update(
+        "uidxx",
+        {api_uid: "xxxxx", api_version: "", config: "", is_private: false, slug: "x", title: ""}
+      )
+    end
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/sdks",
+    label: "required params",
+    run: -> { client.sdks.list }
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/sdks",
+    label: "all params",
+    run: -> { client.sdks.list({limit: 1}) }
+  },
+  {operation: "delete", method: "DELETE", path: "/v1/sdks/{uid}", run: -> { client.sdks.delete("uidxx") }},
+  {
+    operation: "build",
+    method: "POST",
+    path: "/v1/sdks/{uid}/build",
+    label: "required params",
+    run: -> { client.sdks.build("uidxx") }
+  },
+  {
+    operation: "build",
+    method: "POST",
+    path: "/v1/sdks/{uid}/build",
+    label: "all params",
+    run: -> { client.sdks.build("uidxx", {languages: ["typescript"], version: ""}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks/{uid}/versions",
+    run: -> { client.sdks.versions.create("uidxx", {api_version: "", version: ""}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/sdks/{uid}/versions/{version}",
+    run: -> { client.sdks.versions.delete("version", {uid: "uidxx"}) }
+  },
+  {
+    operation: "link",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories",
+    label: "required params",
+    run: -> do
+      client.sdks.repositories.link("uidxx", {base_branch: "", language: "typescript", repository_id: 0})
+    end
+  },
+  {
+    operation: "link",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories",
+    label: "all params",
+    run: -> do
+      client.sdks.repositories.link(
+        "uidxx",
+        {base_branch: "", language: "typescript", repository_id: 0, prerelease_type: ""}
+      )
+    end
+  },
+  {
+    operation: "unlink",
+    method: "DELETE",
+    path: "/v1/sdks/{uid}/repositories/{language}",
+    run: -> { client.sdks.repositories.unlink("typescript", {uid: "uidxx"}) }
+  },
+  {
+    operation: "updatePublishing",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories/{language}/publishing",
+    label: "required params",
+    run: -> do
+      client.sdks.repositories.update_publishing("typescript", {uid: "uidxx", publish_on_merge: false})
+    end
+  },
+  {
+    operation: "updatePublishing",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories/{language}/publishing",
+    label: "all params",
+    run: -> do
+      client.sdks.repositories.update_publishing(
+        "typescript",
+        {uid: "uidxx", publish_on_merge: false, access: "public", auth_method: "oidc", tag: ""}
+      )
+    end
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers",
+    label: "required params",
+    run: -> { client.mcp.servers.create({name: "x"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers",
+    label: "all params",
+    run: -> { client.mcp.servers.create({name: "x", project_uids: [""], slug: "x", version_uids: [""]}) }
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}",
+    run: -> { client.mcp.servers.retrieve("id") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}",
+    label: "required params",
+    run: -> { client.mcp.servers.update("id") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.update(
+        "id",
+        {auto_add_operations: false, docs_pages: [""], name: "x", operations: [""], slug: "x"}
+      )
+    end
+  },
+  {operation: "list", method: "GET", path: "/v1/mcp/servers", run: -> { client.mcp.servers.list }},
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}",
+    run: -> { client.mcp.servers.delete("id") }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations",
+    label: "required params",
+    run: -> { client.mcp.servers.installations.create("id", {document_auth: {}, name: "x"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations",
+    label: "all params",
+    run: -> { client.mcp.servers.installations.create("id", {document_auth: {}, name: "x", slug: "x"}) }
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    run: -> { client.mcp.servers.installations.retrieve("installation_id", {id: "id"}) }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    label: "required params",
+    run: -> { client.mcp.servers.installations.update("installation_id", {id: "id"}) }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.installations.update(
+        "installation_id",
+        {
+          id: "id",
+          document_auth: {},
+          is_private: false,
+          login_portal_uid: "",
+          mcp_version: "",
+          name: "x",
+          slug: "x"
+        }
+      )
+    end
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}/installations",
+    run: -> { client.mcp.servers.installations.list("id") }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    run: -> { client.mcp.servers.installations.delete("installation_id", {id: "id"}) }
+  },
+  {
+    operation: "createAccessGroup",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
+    run: -> do
+      client.mcp.servers.installations.create_access_group(
+        "installation_id",
+        {id: "id", access_group_uid: "xxxxx"}
+      )
+    end
+  },
+  {
+    operation: "deleteAccessGroup",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
+    run: -> do
+      client.mcp.servers.installations.delete_access_group(
+        "installation_id",
+        {id: "id", access_group_uid: "xxxxx"}
+      )
+    end
+  },
+  {
+    operation: "oauthAuthorizationServerMetadata",
+    method: "GET",
+    path: "/.well-known/oauth-authorization-server",
+    run: -> { client.o_auth.oauth_authorization_server_metadata }
+  },
+  {
+    operation: "oauthAuthorize",
+    method: "GET",
+    path: "/v1/oauth/authorize",
+    run: -> { client.o_auth.oauth_authorize }
+  },
+  {
+    operation: "oauthRevoke",
+    method: "POST",
+    path: "/v1/oauth/revoke",
+    label: "required params",
+    run: -> { client.o_auth.oauth_revoke({token: ""}) }
+  },
+  {
+    operation: "oauthRevoke",
+    method: "POST",
+    path: "/v1/oauth/revoke",
+    label: "all params",
+    run: -> do
+      client.o_auth.oauth_revoke({token: "", client_id: "", client_secret: "", token_type_hint: ""})
+    end
+  },
+  {
+    operation: "oauthToken",
+    method: "POST",
+    path: "/v1/oauth/token",
+    label: "required params",
+    run: -> { client.o_auth.oauth_token({grant_type: ""}) }
+  },
+  {
+    operation: "oauthToken",
+    method: "POST",
+    path: "/v1/oauth/token",
+    label: "all params",
+    run: -> do
+      client.o_auth.oauth_token(
+        {
+          grant_type: "",
+          client_id: "",
+          client_secret: "",
+          code: "",
+          code_verifier: "",
+          redirect_uri: "",
+          refresh_token: "",
+          scope: ""
+        }
+      )
+    end
   }
 ]
 

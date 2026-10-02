@@ -41,7 +41,7 @@ module Scalar
       # List all login portals for the current team.
       sig do
         params(request_options: Scalar::RequestOptions::OrHash).returns(
-          T::Array[Scalar::Models::LoginPortalListResponseItem]
+          T::Array[Scalar::LoginPortal]
         )
       end
       def list(request_options: {})

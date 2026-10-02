@@ -89,8 +89,8 @@ module Scalar
 
         # @!attribute method_
         #
-        #   @return [Symbol, Scalar::Models::ManagedDocVersion::Tool::Method]
-        required :method_, enum: -> { Scalar::ManagedDocVersion::Tool::Method }, api_name: :method
+        #   @return [Symbol, Scalar::Models::Method]
+        required :method_, enum: -> { Scalar::Method }, api_name: :method
 
         # @!attribute path
         #
@@ -99,7 +99,7 @@ module Scalar
 
         # @!method initialize(enabled_tools:, method_:, path:)
         #   @param enabled_tools [Array<Symbol, Scalar::Models::ManagedDocVersion::Tool::EnabledTool>]
-        #   @param method_ [Symbol, Scalar::Models::ManagedDocVersion::Tool::Method]
+        #   @param method_ [Symbol, Scalar::Models::Method]
         #   @param path [String]
 
         module EnabledTool
@@ -107,24 +107,6 @@ module Scalar
 
           EXECUTE_REQUEST = :"execute-request"
           GET_MINI_OPENAPI_SPEC = :"get-mini-openapi-spec"
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
-
-        # @see Scalar::Models::ManagedDocVersion::Tool#method_
-        module Method
-          extend Scalar::Internal::Type::Enum
-
-          DELETE = :delete
-          GET = :get
-          HEAD = :head
-          OPTIONS = :options
-          PATCH = :patch
-          POST = :post
-          PUT = :put
-          QUERY = :query
-          TRACE = :trace
 
           # @!method self.values
           #   @return [Array<Symbol>]

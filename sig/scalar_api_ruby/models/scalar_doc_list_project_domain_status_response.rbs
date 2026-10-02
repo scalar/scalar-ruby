@@ -1,0 +1,59 @@
+module Scalar
+  module Models
+    type scalar_doc_list_project_domain_status_response =
+      {
+        domain: String?,
+        expected: Scalar::Models::ScalarDocListProjectDomainStatusResponse::Expected?,
+        found: ::Array[String],
+        status: Scalar::Models::ScalarDocListProjectDomainStatusResponse::status
+      }
+
+    class ScalarDocListProjectDomainStatusResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor domain: String?
+
+      attr_accessor expected: Scalar::Models::ScalarDocListProjectDomainStatusResponse::Expected?
+
+      attr_accessor found: ::Array[String]
+
+      attr_accessor status: Scalar::Models::ScalarDocListProjectDomainStatusResponse::status
+
+      def initialize: (
+        domain: String?,
+        expected: Scalar::Models::ScalarDocListProjectDomainStatusResponse::Expected?,
+        found: ::Array[String],
+        status: Scalar::Models::ScalarDocListProjectDomainStatusResponse::status
+      ) -> void
+
+      def to_hash: -> {
+        domain: String?,
+        expected: Scalar::Models::ScalarDocListProjectDomainStatusResponse::Expected?,
+        found: ::Array[String],
+        status: Scalar::Models::ScalarDocListProjectDomainStatusResponse::status
+      }
+
+      type expected = { target: String, type: :CNAME }
+
+      class Expected < Scalar::Internal::Type::BaseModel
+        attr_accessor target: String
+
+        attr_accessor type: :CNAME
+
+        def initialize: (target: String, ?type: :CNAME) -> void
+
+        def to_hash: -> { target: String, type: :CNAME }
+      end
+
+      type status = :verified | :pending | :misconfigured
+
+      module Status
+        extend Scalar::Internal::Type::Enum
+
+        VERIFIED: :verified
+        PENDING: :pending
+        MISCONFIGURED: :misconfigured
+
+        def self?.values: -> ::Array[Scalar::Models::ScalarDocListProjectDomainStatusResponse::status]
+      end
+    end
+  end
+end

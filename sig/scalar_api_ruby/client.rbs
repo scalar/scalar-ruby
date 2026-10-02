@@ -18,6 +18,8 @@ module Scalar
 
     attr_reader login_portals: Scalar::Resources::LoginPortals
 
+    attr_reader access_groups: Scalar::Resources::AccessGroups
+
     attr_reader rules: Scalar::Resources::Rules
 
     attr_reader themes: Scalar::Resources::Themes
@@ -29,6 +31,12 @@ module Scalar
     attr_reader namespaces: Scalar::Resources::Namespaces
 
     attr_reader authentication: Scalar::Resources::Authentication
+
+    attr_reader sdks: Scalar::Resources::Sdks
+
+    attr_reader mcp: Scalar::Resources::Mcp
+
+    attr_reader o_auth: Scalar::Resources::OAuth
 
     private def auth_headers: -> ::Hash[String, String]
 

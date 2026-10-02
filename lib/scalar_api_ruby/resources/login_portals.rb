@@ -75,14 +75,14 @@ module Scalar
       #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Array<Scalar::Models::LoginPortalListResponseItem>]
+      # @return [Array<Scalar::Models::LoginPortal>]
       #
       # @see Scalar::Models::LoginPortalListParams
       def list(params = {})
         @client.request(
           method: :get,
           path: "v1/login-portals",
-          model: Scalar::Internal::Type::ArrayOf[Scalar::Models::LoginPortalListResponseItem],
+          model: Scalar::Internal::Type::ArrayOf[Scalar::LoginPortal],
           options: params[:request_options]
         )
       end

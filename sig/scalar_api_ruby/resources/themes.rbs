@@ -23,7 +23,7 @@ module Scalar
 
       def list: (
         ?request_options: Scalar::request_opts
-      ) -> ::Array[Scalar::Models::ThemeListResponseItem]
+      ) -> ::Array[Scalar::Theme]
 
       def delete: (String slug, ?request_options: Scalar::request_opts) -> top
 

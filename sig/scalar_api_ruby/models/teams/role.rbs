@@ -1,0 +1,18 @@
+module Scalar
+  module Models
+    module Teams
+      type role = :owner | :admin | :editor | :viewer
+
+      module Role
+        extend Scalar::Internal::Type::Enum
+
+        OWNER: :owner
+        ADMIN: :admin
+        EDITOR: :editor
+        VIEWER: :viewer
+
+        def self?.values: -> ::Array[Scalar::Models::Teams::role]
+      end
+    end
+  end
+end

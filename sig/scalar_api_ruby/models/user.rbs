@@ -1,0 +1,57 @@
+module Scalar
+  module Models
+    type user =
+      {
+        active_team_id: String?,
+        created_at: Integer,
+        email: String,
+        has_github: bool,
+        teams: ::Array[Scalar::TeamSummary],
+        uid: String,
+        updated_at: Integer,
+        theme: String
+      }
+
+    class User < Scalar::Internal::Type::BaseModel
+      attr_accessor active_team_id: String?
+
+      attr_accessor created_at: Integer
+
+      attr_accessor email: String
+
+      attr_accessor has_github: bool
+
+      attr_accessor teams: ::Array[Scalar::TeamSummary]
+
+      attr_accessor uid: String
+
+      attr_accessor updated_at: Integer
+
+      attr_reader theme: String?
+
+      def theme=: (String) -> String
+
+      def initialize: (
+        active_team_id: String?,
+        created_at: Integer,
+        email: String,
+        has_github: bool,
+        teams: ::Array[Scalar::TeamSummary],
+        uid: String,
+        updated_at: Integer,
+        ?theme: String
+      ) -> void
+
+      def to_hash: -> {
+        active_team_id: String?,
+        created_at: Integer,
+        email: String,
+        has_github: bool,
+        teams: ::Array[Scalar::TeamSummary],
+        uid: String,
+        updated_at: Integer,
+        theme: String
+      }
+    end
+  end
+end

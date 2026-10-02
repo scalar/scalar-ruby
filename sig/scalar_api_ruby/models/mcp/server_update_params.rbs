@@ -1,0 +1,63 @@
+module Scalar
+  module Models
+    module Mcp
+      type server_update_params =
+        {
+          id: String,
+          auto_add_operations: bool,
+          docs_pages: ::Array[String],
+          name: String,
+          operations: ::Array[String],
+          slug: String
+        }
+        & Scalar::Internal::Type::request_parameters
+
+      class ServerUpdateParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor id: String
+
+        attr_reader auto_add_operations: bool?
+
+        def auto_add_operations=: (bool) -> bool
+
+        attr_reader docs_pages: ::Array[String]?
+
+        def docs_pages=: (::Array[String]) -> ::Array[String]
+
+        attr_reader name: String?
+
+        def name=: (String) -> String
+
+        attr_reader operations: ::Array[String]?
+
+        def operations=: (::Array[String]) -> ::Array[String]
+
+        attr_reader slug: String?
+
+        def slug=: (String) -> String
+
+        def initialize: (
+          id: String,
+          ?auto_add_operations: bool,
+          ?docs_pages: ::Array[String],
+          ?name: String,
+          ?operations: ::Array[String],
+          ?slug: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          auto_add_operations: bool,
+          docs_pages: ::Array[String],
+          name: String,
+          operations: ::Array[String],
+          slug: String,
+          request_options: Scalar::RequestOptions
+        }
+      end
+    end
+  end
+end

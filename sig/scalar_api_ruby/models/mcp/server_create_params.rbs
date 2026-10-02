@@ -1,0 +1,49 @@
+module Scalar
+  module Models
+    module Mcp
+      type server_create_params =
+        {
+          name: String,
+          project_uids: ::Array[String],
+          slug: String,
+          version_uids: ::Array[String]
+        }
+        & Scalar::Internal::Type::request_parameters
+
+      class ServerCreateParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor name: String
+
+        attr_reader project_uids: ::Array[String]?
+
+        def project_uids=: (::Array[String]) -> ::Array[String]
+
+        attr_reader slug: String?
+
+        def slug=: (String) -> String
+
+        attr_reader version_uids: ::Array[String]?
+
+        def version_uids=: (::Array[String]) -> ::Array[String]
+
+        def initialize: (
+          name: String,
+          ?project_uids: ::Array[String],
+          ?slug: String,
+          ?version_uids: ::Array[String],
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          name: String,
+          project_uids: ::Array[String],
+          slug: String,
+          version_uids: ::Array[String],
+          request_options: Scalar::RequestOptions
+        }
+      end
+    end
+  end
+end

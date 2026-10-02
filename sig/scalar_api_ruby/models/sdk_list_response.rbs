@@ -1,0 +1,15 @@
+module Scalar
+  module Models
+    type sdk_list_response = { data: ::Array[Scalar::Sdk], has_more: bool }
+
+    class SdkListResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor data: ::Array[Scalar::Sdk]
+
+      attr_accessor has_more: bool
+
+      def initialize: (data: ::Array[Scalar::Sdk], has_more: bool) -> void
+
+      def to_hash: -> { data: ::Array[Scalar::Sdk], has_more: bool }
+    end
+  end
+end

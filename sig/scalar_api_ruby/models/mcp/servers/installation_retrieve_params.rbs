@@ -1,0 +1,32 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type installation_retrieve_params =
+          { id: String, installation_id: String }
+          & Scalar::Internal::Type::request_parameters
+
+        class InstallationRetrieveParams < Scalar::Internal::Type::BaseModel
+          extend Scalar::Internal::Type::RequestParameters::Converter
+          include Scalar::Internal::Type::RequestParameters
+
+          attr_accessor id: String
+
+          attr_accessor installation_id: String
+
+          def initialize: (
+            id: String,
+            installation_id: String,
+            ?request_options: Scalar::request_opts
+          ) -> void
+
+          def to_hash: -> {
+            id: String,
+            installation_id: String,
+            request_options: Scalar::RequestOptions
+          }
+        end
+      end
+    end
+  end
+end

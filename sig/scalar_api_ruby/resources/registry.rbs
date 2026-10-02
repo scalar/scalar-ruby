@@ -51,7 +51,7 @@ module Scalar
 
       def list_all_api_documents: (
         ?request_options: Scalar::request_opts
-      ) -> ::Array[Scalar::Models::RegistryListAllAPIDocumentsResponseItem]
+      ) -> ::Array[Scalar::APIDocument]
 
       def list_api_document_version_metadata: (
         String semver,
@@ -63,7 +63,7 @@ module Scalar
       def list_api_documents: (
         String namespace,
         ?request_options: Scalar::request_opts
-      ) -> ::Array[Scalar::Models::RegistryListAPIDocumentsResponseItem]
+      ) -> ::Array[Scalar::APIDocument]
 
       def retrieve_api_document_version: (
         String semver,

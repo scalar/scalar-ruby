@@ -1,0 +1,95 @@
+module Scalar
+  module Models
+    type sdk_version =
+      {
+        api_version: String,
+        languages: ::Array[Scalar::Models::SdkVersion::language],
+        status: Scalar::Models::SdkVersion::status,
+        version: String,
+        created_at: Integer,
+        published_at: Integer
+      }
+
+    class SdkVersion < Scalar::Internal::Type::BaseModel
+      attr_accessor api_version: String
+
+      attr_accessor languages: ::Array[Scalar::Models::SdkVersion::language]
+
+      attr_accessor status: Scalar::Models::SdkVersion::status
+
+      attr_accessor version: String
+
+      attr_reader created_at: Integer?
+
+      def created_at=: (Integer) -> Integer
+
+      attr_reader published_at: Integer?
+
+      def published_at=: (Integer) -> Integer
+
+      def initialize: (
+        api_version: String,
+        languages: ::Array[Scalar::Models::SdkVersion::language],
+        status: Scalar::Models::SdkVersion::status,
+        version: String,
+        ?created_at: Integer,
+        ?published_at: Integer
+      ) -> void
+
+      def to_hash: -> {
+        api_version: String,
+        languages: ::Array[Scalar::Models::SdkVersion::language],
+        status: Scalar::Models::SdkVersion::status,
+        version: String,
+        created_at: Integer,
+        published_at: Integer
+      }
+
+      type language =
+        :typescript
+        | :python
+        | :cli
+        | :csharp
+        | :java
+        | :ruby
+        | :php
+        | :go
+        | :rust
+        | :kotlin
+        | :swift
+        | :cpp
+        | :dart
+
+      module Language
+        extend Scalar::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        CLI: :cli
+        CSHARP: :csharp
+        JAVA: :java
+        RUBY: :ruby
+        PHP: :php
+        GO: :go
+        RUST: :rust
+        KOTLIN: :kotlin
+        SWIFT: :swift
+        CPP: :cpp
+        DART: :dart
+
+        def self?.values: -> ::Array[Scalar::Models::SdkVersion::language]
+      end
+
+      type status = :draft | :published
+
+      module Status
+        extend Scalar::Internal::Type::Enum
+
+        DRAFT: :draft
+        PUBLISHED: :published
+
+        def self?.values: -> ::Array[Scalar::Models::SdkVersion::status]
+      end
+    end
+  end
+end

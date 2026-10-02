@@ -35,6 +35,10 @@ module Scalar
     # @return [Scalar::Resources::LoginPortals]
     attr_reader :login_portals
 
+    # Access Groups
+    # @return [Scalar::Resources::AccessGroups]
+    attr_reader :access_groups
+
     # Rules
     # @return [Scalar::Resources::Rules]
     attr_reader :rules
@@ -58,6 +62,17 @@ module Scalar
     # Authentication
     # @return [Scalar::Resources::Authentication]
     attr_reader :authentication
+
+    # SDKs
+    # @return [Scalar::Resources::Sdks]
+    attr_reader :sdks
+
+    # @return [Scalar::Resources::Mcp]
+    attr_reader :mcp
+
+    # OAuth
+    # @return [Scalar::Resources::OAuth]
+    attr_reader :o_auth
 
     # @api private
     #
@@ -136,12 +151,16 @@ module Scalar
       @registry = Scalar::Resources::Registry.new(client: self)
       @schemas = Scalar::Resources::Schemas.new(client: self)
       @login_portals = Scalar::Resources::LoginPortals.new(client: self)
+      @access_groups = Scalar::Resources::AccessGroups.new(client: self)
       @rules = Scalar::Resources::Rules.new(client: self)
       @themes = Scalar::Resources::Themes.new(client: self)
       @teams = Scalar::Resources::Teams.new(client: self)
       @scalar_docs = Scalar::Resources::ScalarDocs.new(client: self)
       @namespaces = Scalar::Resources::Namespaces.new(client: self)
       @authentication = Scalar::Resources::Authentication.new(client: self)
+      @sdks = Scalar::Resources::Sdks.new(client: self)
+      @mcp = Scalar::Resources::Mcp.new(client: self)
+      @o_auth = Scalar::Resources::OAuth.new(client: self)
     end
   end
 end

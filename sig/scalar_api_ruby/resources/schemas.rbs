@@ -28,7 +28,7 @@ module Scalar
       def list: (
         String namespace,
         ?request_options: Scalar::request_opts
-      ) -> ::Array[Scalar::Models::SchemaListResponseItem]
+      ) -> ::Array[Scalar::Schema]
 
       def delete: (
         String slug,

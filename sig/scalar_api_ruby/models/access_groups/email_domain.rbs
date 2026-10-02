@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    module AccessGroups
+      class EmailDomain = String
+    end
+  end
+end
