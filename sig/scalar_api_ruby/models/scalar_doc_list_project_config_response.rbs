@@ -1,0 +1,30 @@
+module Scalar
+  module Models
+    type scalar_doc_list_project_config_response =
+      { base_token: String, content: String, path: String, ref: String }
+
+    class ScalarDocListProjectConfigResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor base_token: String
+
+      attr_accessor content: String
+
+      attr_accessor path: String
+
+      attr_accessor ref: String
+
+      def initialize: (
+        base_token: String,
+        content: String,
+        path: String,
+        ref: String
+      ) -> void
+
+      def to_hash: -> {
+        base_token: String,
+        content: String,
+        path: String,
+        ref: String
+      }
+    end
+  end
+end

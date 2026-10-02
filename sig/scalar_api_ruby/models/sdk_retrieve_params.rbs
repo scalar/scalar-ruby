@@ -1,0 +1,20 @@
+module Scalar
+  module Models
+    type sdk_retrieve_params =
+      { uid: String } & Scalar::Internal::Type::request_parameters
+
+    class SdkRetrieveParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor uid: String
+
+      def initialize: (
+        uid: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> { uid: String, request_options: Scalar::RequestOptions }
+    end
+  end
+end

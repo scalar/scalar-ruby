@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type login_portal_list_response = ::Array[Scalar::LoginPortal]
+
+    LoginPortalListResponse: Scalar::Internal::Type::Converter
+  end
+end

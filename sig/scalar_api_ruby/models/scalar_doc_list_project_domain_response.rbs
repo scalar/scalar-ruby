@@ -1,0 +1,16 @@
+module Scalar
+  module Models
+    type scalar_doc_list_project_domain_response =
+      { custom_domain: String?, scalar_domain: String? }
+
+    class ScalarDocListProjectDomainResponse < Scalar::Internal::Type::BaseModel
+      attr_accessor custom_domain: String?
+
+      attr_accessor scalar_domain: String?
+
+      def initialize: (custom_domain: String?, scalar_domain: String?) -> void
+
+      def to_hash: -> { custom_domain: String?, scalar_domain: String? }
+    end
+  end
+end

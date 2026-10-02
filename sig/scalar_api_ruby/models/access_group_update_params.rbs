@@ -1,0 +1,36 @@
+module Scalar
+  module Models
+    type access_group_update_params =
+      { path_slug: String, name: String, body_slug: String }
+      & Scalar::Internal::Type::request_parameters
+
+    class AccessGroupUpdateParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor path_slug: String
+
+      attr_reader name: String?
+
+      def name=: (String) -> String
+
+      attr_reader body_slug: String?
+
+      def body_slug=: (String) -> String
+
+      def initialize: (
+        path_slug: String,
+        ?name: String,
+        ?body_slug: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        path_slug: String,
+        name: String,
+        body_slug: String,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

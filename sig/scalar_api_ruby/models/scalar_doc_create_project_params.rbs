@@ -1,0 +1,106 @@
+module Scalar
+  module Models
+    type scalar_doc_create_project_params =
+      {
+        name: String,
+        provider: Scalar::Models::ScalarDocCreateProjectParams::provider,
+        bitbucket_repository: Scalar::ScalarDocCreateProjectParams::BitbucketRepository,
+        blank: bool,
+        github_repository: Scalar::ScalarDocCreateProjectParams::GithubRepository,
+        is_private: bool,
+        slug: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class ScalarDocCreateProjectParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor name: String
+
+      attr_accessor provider: Scalar::Models::ScalarDocCreateProjectParams::provider
+
+      attr_reader bitbucket_repository: Scalar::ScalarDocCreateProjectParams::BitbucketRepository?
+
+      def bitbucket_repository=: (
+        Scalar::ScalarDocCreateProjectParams::BitbucketRepository
+      ) -> Scalar::ScalarDocCreateProjectParams::BitbucketRepository
+
+      attr_reader blank: bool?
+
+      def blank=: (bool) -> bool
+
+      attr_reader github_repository: Scalar::ScalarDocCreateProjectParams::GithubRepository?
+
+      def github_repository=: (
+        Scalar::ScalarDocCreateProjectParams::GithubRepository
+      ) -> Scalar::ScalarDocCreateProjectParams::GithubRepository
+
+      attr_reader is_private: bool?
+
+      def is_private=: (bool) -> bool
+
+      attr_reader slug: String?
+
+      def slug=: (String) -> String
+
+      def initialize: (
+        name: String,
+        provider: Scalar::Models::ScalarDocCreateProjectParams::provider,
+        ?bitbucket_repository: Scalar::ScalarDocCreateProjectParams::BitbucketRepository,
+        ?blank: bool,
+        ?github_repository: Scalar::ScalarDocCreateProjectParams::GithubRepository,
+        ?is_private: bool,
+        ?slug: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        name: String,
+        provider: Scalar::Models::ScalarDocCreateProjectParams::provider,
+        bitbucket_repository: Scalar::ScalarDocCreateProjectParams::BitbucketRepository,
+        blank: bool,
+        github_repository: Scalar::ScalarDocCreateProjectParams::GithubRepository,
+        is_private: bool,
+        slug: String,
+        request_options: Scalar::RequestOptions
+      }
+
+      type provider = :forgejo | :github | :bitbucket
+
+      module Provider
+        extend Scalar::Internal::Type::Enum
+
+        FORGEJO: :forgejo
+        GITHUB: :github
+        BITBUCKET: :bitbucket
+
+        def self?.values: -> ::Array[Scalar::Models::ScalarDocCreateProjectParams::provider]
+      end
+
+      type bitbucket_repository = { repo_uuid: String, workspace_uuid: String }
+
+      class BitbucketRepository < Scalar::Internal::Type::BaseModel
+        attr_accessor repo_uuid: String
+
+        attr_accessor workspace_uuid: String
+
+        def initialize: (repo_uuid: String, workspace_uuid: String) -> void
+
+        def to_hash: -> { repo_uuid: String, workspace_uuid: String }
+      end
+
+      type github_repository = { installation_id: Integer, repo_id: Integer }
+
+      class GithubRepository < Scalar::Internal::Type::BaseModel
+        attr_accessor installation_id: Integer
+
+        attr_accessor repo_id: Integer
+
+        def initialize: (installation_id: Integer, repo_id: Integer) -> void
+
+        def to_hash: -> { installation_id: Integer, repo_id: Integer }
+      end
+    end
+  end
+end

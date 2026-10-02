@@ -1,0 +1,64 @@
+module Scalar
+  module Models
+    type sdk_update_params =
+      {
+        uid: String,
+        api_uid: String?,
+        api_version: String?,
+        config: String,
+        is_private: bool,
+        slug: String,
+        title: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class SdkUpdateParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor uid: String
+
+      attr_accessor api_uid: String?
+
+      attr_accessor api_version: String?
+
+      attr_reader config: String?
+
+      def config=: (String) -> String
+
+      attr_reader is_private: bool?
+
+      def is_private=: (bool) -> bool
+
+      attr_reader slug: String?
+
+      def slug=: (String) -> String
+
+      attr_reader title: String?
+
+      def title=: (String) -> String
+
+      def initialize: (
+        uid: String,
+        ?api_uid: String?,
+        ?api_version: String?,
+        ?config: String,
+        ?is_private: bool,
+        ?slug: String,
+        ?title: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        uid: String,
+        api_uid: String?,
+        api_version: String?,
+        config: String,
+        is_private: bool,
+        slug: String,
+        title: String,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

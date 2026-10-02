@@ -1,0 +1,94 @@
+module Scalar
+  module Models
+    type sdk_create_params =
+      {
+        api_uid: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
+        class_name: String,
+        config: String,
+        slug: String,
+        title: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class SdkCreateParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor api_uid: String
+
+      attr_accessor languages: ::Array[Scalar::Models::SdkCreateParams::language]
+
+      attr_reader class_name: String?
+
+      def class_name=: (String) -> String
+
+      attr_reader config: String?
+
+      def config=: (String) -> String
+
+      attr_reader slug: String?
+
+      def slug=: (String) -> String
+
+      attr_reader title: String?
+
+      def title=: (String) -> String
+
+      def initialize: (
+        api_uid: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
+        ?class_name: String,
+        ?config: String,
+        ?slug: String,
+        ?title: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        api_uid: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
+        class_name: String,
+        config: String,
+        slug: String,
+        title: String,
+        request_options: Scalar::RequestOptions
+      }
+
+      type language =
+        :typescript
+        | :python
+        | :cli
+        | :csharp
+        | :java
+        | :ruby
+        | :php
+        | :go
+        | :rust
+        | :kotlin
+        | :swift
+        | :cpp
+        | :dart
+
+      module Language
+        extend Scalar::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        CLI: :cli
+        CSHARP: :csharp
+        JAVA: :java
+        RUBY: :ruby
+        PHP: :php
+        GO: :go
+        RUST: :rust
+        KOTLIN: :kotlin
+        SWIFT: :swift
+        CPP: :cpp
+        DART: :dart
+
+        def self?.values: -> ::Array[Scalar::Models::SdkCreateParams::language]
+      end
+    end
+  end
+end

@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type registry_list_api_documents_response = ::Array[Scalar::APIDocument]
+
+    RegistryListAPIDocumentsResponse: Scalar::Internal::Type::Converter
+  end
+end

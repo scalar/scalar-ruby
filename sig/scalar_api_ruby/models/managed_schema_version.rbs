@@ -1,0 +1,49 @@
+module Scalar
+  module Models
+    type managed_schema_version =
+      {
+        created_at: Integer,
+        uid: String,
+        updated_at: Integer,
+        version: String,
+        json_sha: String,
+        yaml_sha: String
+      }
+
+    class ManagedSchemaVersion < Scalar::Internal::Type::BaseModel
+      attr_accessor created_at: Integer
+
+      attr_accessor uid: String
+
+      attr_accessor updated_at: Integer
+
+      attr_accessor version: String
+
+      attr_reader json_sha: String?
+
+      def json_sha=: (String) -> String
+
+      attr_reader yaml_sha: String?
+
+      def yaml_sha=: (String) -> String
+
+      def initialize: (
+        created_at: Integer,
+        uid: String,
+        updated_at: Integer,
+        version: String,
+        ?json_sha: String,
+        ?yaml_sha: String
+      ) -> void
+
+      def to_hash: -> {
+        created_at: Integer,
+        uid: String,
+        updated_at: Integer,
+        version: String,
+        json_sha: String,
+        yaml_sha: String
+      }
+    end
+  end
+end

@@ -1,0 +1,21 @@
+module Scalar
+  module Resources
+    class AccessGroups
+      class Domains
+        def create: (
+          String slug,
+          domain: String,
+          ?request_options: Scalar::request_opts
+        ) -> top
+
+        def delete: (
+          String slug,
+          domain: String,
+          ?request_options: Scalar::request_opts
+        ) -> top
+
+        def initialize: (client: Scalar::Client) -> void
+      end
+    end
+  end
+end

@@ -1,0 +1,22 @@
+module Scalar
+  module Models
+    type active_deployment =
+      { domain: String, published_at: Integer, uid: String }
+
+    class ActiveDeployment < Scalar::Internal::Type::BaseModel
+      attr_accessor domain: String
+
+      attr_accessor published_at: Integer
+
+      attr_accessor uid: String
+
+      def initialize: (
+        domain: String,
+        published_at: Integer,
+        uid: String
+      ) -> void
+
+      def to_hash: -> { domain: String, published_at: Integer, uid: String }
+    end
+  end
+end

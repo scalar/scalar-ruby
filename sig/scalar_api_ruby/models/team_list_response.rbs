@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type team_list_response = ::Array[Scalar::Team]
+
+    TeamListResponse: Scalar::Internal::Type::Converter
+  end
+end

@@ -1,0 +1,36 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type installation_delete_access_group_params =
+          { id: String, installation_id: String, access_group_uid: String }
+          & Scalar::Internal::Type::request_parameters
+
+        class InstallationDeleteAccessGroupParams < Scalar::Internal::Type::BaseModel
+          extend Scalar::Internal::Type::RequestParameters::Converter
+          include Scalar::Internal::Type::RequestParameters
+
+          attr_accessor id: String
+
+          attr_accessor installation_id: String
+
+          attr_accessor access_group_uid: String
+
+          def initialize: (
+            id: String,
+            installation_id: String,
+            access_group_uid: String,
+            ?request_options: Scalar::request_opts
+          ) -> void
+
+          def to_hash: -> {
+            id: String,
+            installation_id: String,
+            access_group_uid: String,
+            request_options: Scalar::RequestOptions
+          }
+        end
+      end
+    end
+  end
+end

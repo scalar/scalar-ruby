@@ -1,0 +1,12 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type installation_list_response =
+          ::Array[Scalar::Mcp::Servers::McpInstallationListItem]
+
+        InstallationListResponse: Scalar::Internal::Type::Converter
+      end
+    end
+  end
+end
