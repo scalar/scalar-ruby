@@ -11,10 +11,10 @@ module Scalar
           T.any(Scalar::AccessGroupCreateParams, Scalar::Internal::AnyHash)
         end
 
-      sig { returns(T.nilable(T.anything)) }
+      sig { returns(T.nilable(String)) }
       attr_reader :allowed_domains
 
-      sig { params(allowed_domains: T.anything).void }
+      sig { params(allowed_domains: String).void }
       attr_writer :allowed_domains
 
       sig { returns(T.nilable(String)) }
@@ -31,7 +31,7 @@ module Scalar
 
       sig do
         params(
-          allowed_domains: T.anything,
+          allowed_domains: String,
           name: String,
           slug: String,
           request_options: Scalar::RequestOptions::OrHash
@@ -48,7 +48,7 @@ module Scalar
       sig do
         override.returns(
           {
-            allowed_domains: T.anything,
+            allowed_domains: String,
             name: String,
             slug: String,
             request_options: Scalar::RequestOptions

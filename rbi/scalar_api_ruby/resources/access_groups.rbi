@@ -13,7 +13,7 @@ module Scalar
       # wildcards or implicit subdomain matching.
       sig do
         params(
-          allowed_domains: T.anything,
+          allowed_domains: String,
           name: String,
           slug: String,
           request_options: Scalar::RequestOptions::OrHash

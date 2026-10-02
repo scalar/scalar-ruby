@@ -2,7 +2,7 @@ module Scalar
   module Models
     type docs_project =
       {
-        access_groups: top,
+        access_groups: String,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
@@ -16,7 +16,7 @@ module Scalar
       }
 
     class DocsProject < Scalar::Internal::Type::BaseModel
-      attr_accessor access_groups: top
+      attr_accessor access_groups: String
 
       attr_accessor active_theme_id: String
 
@@ -39,7 +39,7 @@ module Scalar
       attr_accessor uid: String
 
       def initialize: (
-        access_groups: top,
+        access_groups: String,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
@@ -53,7 +53,7 @@ module Scalar
       ) -> void
 
       def to_hash: -> {
-        access_groups: top,
+        access_groups: String,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,

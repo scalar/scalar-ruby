@@ -11,10 +11,10 @@ module Scalar
           )
         end
 
-      sig { returns(T.anything) }
+      sig { returns(String) }
       attr_accessor :allowed_domains
 
-      sig { returns(T.anything) }
+      sig { returns(String) }
       attr_accessor :allowed_emails
 
       sig { returns(String) }
@@ -28,8 +28,8 @@ module Scalar
 
       sig do
         params(
-          allowed_domains: T.anything,
-          allowed_emails: T.anything,
+          allowed_domains: String,
+          allowed_emails: String,
           name: String,
           slug: String,
           uid: String
@@ -41,8 +41,8 @@ module Scalar
       sig do
         override.returns(
           {
-            allowed_domains: T.anything,
-            allowed_emails: T.anything,
+            allowed_domains: String,
+            allowed_emails: String,
             name: String,
             slug: String,
             uid: String

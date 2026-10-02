@@ -1,16 +1,16 @@
 module Scalar
   module Models
     type access_group_create_params =
-      { allowed_domains: top, name: String, slug: String }
+      { allowed_domains: String, name: String, slug: String }
       & Scalar::Internal::Type::request_parameters
 
     class AccessGroupCreateParams < Scalar::Internal::Type::BaseModel
       extend Scalar::Internal::Type::RequestParameters::Converter
       include Scalar::Internal::Type::RequestParameters
 
-      attr_reader allowed_domains: top?
+      attr_reader allowed_domains: String?
 
-      def allowed_domains=: (top) -> top
+      def allowed_domains=: (String) -> String
 
       attr_reader name: String?
 
@@ -21,14 +21,14 @@ module Scalar
       def slug=: (String) -> String
 
       def initialize: (
-        ?allowed_domains: top,
+        ?allowed_domains: String,
         ?name: String,
         ?slug: String,
         ?request_options: Scalar::request_opts
       ) -> void
 
       def to_hash: -> {
-        allowed_domains: top,
+        allowed_domains: String,
         name: String,
         slug: String,
         request_options: Scalar::RequestOptions
