@@ -14,7 +14,7 @@ module Scalar
       #
       # @overload create(allowed_domains: nil, name: nil, slug: nil, request_options: {})
       #
-      # @param allowed_domains [Object]
+      # @param allowed_domains [String]
       # @param name [String]
       # @param slug [String]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]

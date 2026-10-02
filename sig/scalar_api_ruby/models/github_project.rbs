@@ -2,7 +2,7 @@ module Scalar
   module Models
     type github_project =
       {
-        access_groups: top,
+        access_groups: String,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
@@ -24,7 +24,7 @@ module Scalar
       }
 
     class GithubProject < Scalar::Internal::Type::BaseModel
-      attr_accessor access_groups: top
+      attr_accessor access_groups: String
 
       attr_accessor active_deployment: Scalar::ActiveDeployment?
 
@@ -65,7 +65,7 @@ module Scalar
       def typesense_id=: (Float) -> Float
 
       def initialize: (
-        access_groups: top,
+        access_groups: String,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
@@ -87,7 +87,7 @@ module Scalar
       ) -> void
 
       def to_hash: -> {
-        access_groups: top,
+        access_groups: String,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,

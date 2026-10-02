@@ -4,7 +4,7 @@ module Scalar
       attr_reader domains: Scalar::Resources::AccessGroups::Domains
 
       def create: (
-        ?allowed_domains: top,
+        ?allowed_domains: String,
         ?name: String,
         ?slug: String,
         ?request_options: Scalar::request_opts

@@ -6,8 +6,8 @@ module Scalar
     class DocsProject < Scalar::Internal::Type::BaseModel
       # @!attribute access_groups
       #
-      #   @return [Object]
-      required :access_groups, Scalar::Internal::Type::Unknown, api_name: :accessGroups
+      #   @return [String]
+      required :access_groups, String, api_name: :accessGroups
 
       # @!attribute active_theme_id
       #
@@ -60,7 +60,7 @@ module Scalar
       required :uid, String
 
       # @!method initialize(access_groups:, active_theme_id:, agent_enabled:, analytics_enabled:, is_private:, last_published:, login_portal_uid:, name:, publish_status:, slug:, uid:)
-      #   @param access_groups [Object]
+      #   @param access_groups [String]
       #   @param active_theme_id [String]
       #   @param agent_enabled [Boolean]
       #   @param analytics_enabled [Boolean]

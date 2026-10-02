@@ -18,7 +18,7 @@ module Scalar
       sig { returns(String) }
       attr_accessor :slug
 
-      sig { returns(T.anything) }
+      sig { returns(String) }
       attr_accessor :tags
 
       sig { returns(String) }
@@ -39,7 +39,7 @@ module Scalar
           is_private: T::Boolean,
           namespace: String,
           slug: String,
-          tags: T.anything,
+          tags: String,
           title: String,
           uid: String,
           version: String,
@@ -66,7 +66,7 @@ module Scalar
             is_private: T::Boolean,
             namespace: String,
             slug: String,
-            tags: T.anything,
+            tags: String,
             title: String,
             uid: String,
             version: String,

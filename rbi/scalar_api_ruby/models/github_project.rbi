@@ -6,7 +6,7 @@ module Scalar
       OrHash =
         T.type_alias { T.any(Scalar::GithubProject, Scalar::Internal::AnyHash) }
 
-      sig { returns(T.anything) }
+      sig { returns(String) }
       attr_accessor :access_groups
 
       sig { returns(T.nilable(Scalar::ActiveDeployment)) }
@@ -82,7 +82,7 @@ module Scalar
 
       sig do
         params(
-          access_groups: T.anything,
+          access_groups: String,
           active_deployment: T.nilable(Scalar::ActiveDeployment::OrHash),
           active_theme_id: String,
           agent_enabled: T::Boolean,
@@ -129,7 +129,7 @@ module Scalar
       sig do
         override.returns(
           {
-            access_groups: T.anything,
+            access_groups: String,
             active_deployment: T.nilable(Scalar::ActiveDeployment),
             active_theme_id: String,
             agent_enabled: T::Boolean,

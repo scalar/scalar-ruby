@@ -9,8 +9,8 @@ module Scalar
 
       # @!attribute allowed_domains
       #
-      #   @return [Object, nil]
-      optional :allowed_domains, Scalar::Internal::Type::Unknown, api_name: :allowedDomains
+      #   @return [String, nil]
+      optional :allowed_domains, String, api_name: :allowedDomains
 
       # @!attribute name
       #
@@ -23,7 +23,7 @@ module Scalar
       optional :slug, String
 
       # @!method initialize(allowed_domains: nil, name: nil, slug: nil, request_options: {})
-      #   @param allowed_domains [Object]
+      #   @param allowed_domains [String]
       #   @param name [String]
       #   @param slug [String]
       #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
