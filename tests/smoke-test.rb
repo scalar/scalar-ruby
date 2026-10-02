@@ -1160,61 +1160,6 @@ cases = [
         {id: "42", access_group_uid: "UakgbKJ5m9gl0JDMbcJqL"}
       )
     end
-  },
-  {
-    operation: "oauthAuthorizationServerMetadata",
-    method: "GET",
-    path: "/.well-known/oauth-authorization-server",
-    run: -> { client.o_auth.oauth_authorization_server_metadata }
-  },
-  {
-    operation: "oauthAuthorize",
-    method: "GET",
-    path: "/v1/oauth/authorize",
-    run: -> { client.o_auth.oauth_authorize }
-  },
-  {
-    operation: "oauthRevoke",
-    method: "POST",
-    path: "/v1/oauth/revoke",
-    label: "required params",
-    run: -> { client.o_auth.oauth_revoke({token: ""}) }
-  },
-  {
-    operation: "oauthRevoke",
-    method: "POST",
-    path: "/v1/oauth/revoke",
-    label: "all params",
-    run: -> do
-      client.o_auth.oauth_revoke({token: "", client_id: "", client_secret: "", token_type_hint: ""})
-    end
-  },
-  {
-    operation: "oauthToken",
-    method: "POST",
-    path: "/v1/oauth/token",
-    label: "required params",
-    run: -> { client.o_auth.oauth_token({grant_type: ""}) }
-  },
-  {
-    operation: "oauthToken",
-    method: "POST",
-    path: "/v1/oauth/token",
-    label: "all params",
-    run: -> do
-      client.o_auth.oauth_token(
-        {
-          grant_type: "",
-          client_id: "",
-          client_secret: "",
-          code: "",
-          code_verifier: "",
-          redirect_uri: "",
-          refresh_token: "",
-          scope: ""
-        }
-      )
-    end
   }
 ]
 

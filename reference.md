@@ -93,7 +93,3 @@
 - `mcp.servers.installations.delete(...)` — `DELETE /v1/mcp/servers/{id}/installations/{installationId}`
 - `mcp.servers.installations.create_access_group(...)` — `POST /v1/mcp/servers/{id}/installations/{installationId}/access-group`
 - `mcp.servers.installations.delete_access_group(...)` — `DELETE /v1/mcp/servers/{id}/installations/{installationId}/access-group`
-- `o_auth.oauth_authorization_server_metadata(...)` — `GET /.well-known/oauth-authorization-server`
-- `o_auth.oauth_authorize(...)` — `GET /v1/oauth/authorize`
-- `o_auth.oauth_revoke(...)` — `POST /v1/oauth/revoke`
-- `o_auth.oauth_token(...)` — `POST /v1/oauth/token`

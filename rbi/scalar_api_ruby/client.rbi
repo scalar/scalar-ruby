@@ -63,10 +63,6 @@ module Scalar
     sig { returns(Scalar::Resources::Mcp) }
     attr_reader :mcp
 
-    # OAuth
-    sig { returns(Scalar::Resources::OAuth) }
-    attr_reader :o_auth
-
     # @api private
     sig { override.returns(T::Hash[String, String]) }
     private def auth_headers
@@ -87,9 +83,8 @@ module Scalar
     def self.new(
       # Defaults to `ENV["BEARER_AUTH"]`
       bearer_auth: ENV["BEARER_AUTH"],
-      # Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user.
-      # Each scope implies the weaker ones. Defaults to `ENV["SCALAR_O_AUTH2"]`
-      o_auth2: ENV["SCALAR_O_AUTH2"],
+      # Defaults to `ENV["SCALAR_OAUTH_TOKEN"]`
+      o_auth2: ENV["SCALAR_OAUTH_TOKEN"],
       # Override the default base URL for the API, e.g.,
       # `"https://api.example.com/v2/"`. Defaults to `ENV["SCALAR_BASE_URL"]`
       base_url: ENV["SCALAR_BASE_URL"],
