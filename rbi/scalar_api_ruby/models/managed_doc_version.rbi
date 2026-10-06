@@ -134,7 +134,7 @@ module Scalar
         end
         attr_accessor :enabled_tools
 
-        sig { returns(Scalar::Method::TaggedSymbol) }
+        sig { returns(String) }
         attr_accessor :method_
 
         sig { returns(String) }
@@ -144,7 +144,7 @@ module Scalar
           params(
             enabled_tools:
               T::Array[Scalar::ManagedDocVersion::Tool::EnabledTool::OrSymbol],
-            method_: Scalar::Method::OrSymbol,
+            method_: String,
             path: String
           ).returns(T.attached_class)
         end
@@ -158,7 +158,7 @@ module Scalar
                 T::Array[
                   Scalar::ManagedDocVersion::Tool::EnabledTool::TaggedSymbol
                 ],
-              method_: Scalar::Method::TaggedSymbol,
+              method_: String,
               path: String
             }
           )

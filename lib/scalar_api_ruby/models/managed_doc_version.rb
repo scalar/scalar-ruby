@@ -89,8 +89,8 @@ module Scalar
 
         # @!attribute method_
         #
-        #   @return [Symbol, Scalar::Models::Method]
-        required :method_, enum: -> { Scalar::Method }, api_name: :method
+        #   @return [String]
+        required :method_, String, api_name: :method
 
         # @!attribute path
         #
@@ -99,7 +99,7 @@ module Scalar
 
         # @!method initialize(enabled_tools:, method_:, path:)
         #   @param enabled_tools [Array<Symbol, Scalar::Models::ManagedDocVersion::Tool::EnabledTool>]
-        #   @param method_ [Symbol, Scalar::Models::Method]
+        #   @param method_ [String]
         #   @param path [String]
 
         module EnabledTool
