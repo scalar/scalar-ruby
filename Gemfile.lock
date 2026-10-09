@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scalar_api_ruby (0.1.0)
+    scalar_api_ruby (0.2.0)
       cgi
       connection_pool
 
