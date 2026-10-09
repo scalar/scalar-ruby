@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type scalar_doc_list_guides_response = ::Array[Scalar::GithubProject]
+
+    ScalarDocListGuidesResponse: Scalar::Internal::Type::Converter
+  end
+end

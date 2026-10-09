@@ -1,0 +1,85 @@
+module Scalar
+  module Models
+    module Sdks
+      type repository_link_params =
+        {
+          uid: String,
+          base_branch: String,
+          language: Scalar::Models::Sdks::RepositoryLinkParams::language,
+          repository_id: Integer,
+          prerelease_type: String
+        }
+        & Scalar::Internal::Type::request_parameters
+
+      class RepositoryLinkParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor uid: String
+
+        attr_accessor base_branch: String
+
+        attr_accessor language: Scalar::Models::Sdks::RepositoryLinkParams::language
+
+        attr_accessor repository_id: Integer
+
+        attr_reader prerelease_type: String?
+
+        def prerelease_type=: (String) -> String
+
+        def initialize: (
+          uid: String,
+          base_branch: String,
+          language: Scalar::Models::Sdks::RepositoryLinkParams::language,
+          repository_id: Integer,
+          ?prerelease_type: String,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          uid: String,
+          base_branch: String,
+          language: Scalar::Models::Sdks::RepositoryLinkParams::language,
+          repository_id: Integer,
+          prerelease_type: String,
+          request_options: Scalar::RequestOptions
+        }
+
+        type language =
+          :typescript
+          | :python
+          | :cli
+          | :csharp
+          | :java
+          | :ruby
+          | :php
+          | :go
+          | :rust
+          | :kotlin
+          | :swift
+          | :cpp
+          | :dart
+
+        module Language
+          extend Scalar::Internal::Type::Enum
+
+          TYPESCRIPT: :typescript
+          PYTHON: :python
+          CLI: :cli
+          CSHARP: :csharp
+          JAVA: :java
+          RUBY: :ruby
+          PHP: :php
+          GO: :go
+          RUST: :rust
+          KOTLIN: :kotlin
+          SWIFT: :swift
+          CPP: :cpp
+          DART: :dart
+
+          def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryLinkParams::language]
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,19 @@
+module Scalar
+  module Models
+    type team_summary = { name: String, uid: String, image_uri: String }
+
+    class TeamSummary < Scalar::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_accessor uid: String
+
+      attr_reader image_uri: String?
+
+      def image_uri=: (String) -> String
+
+      def initialize: (name: String, uid: String, ?image_uri: String) -> void
+
+      def to_hash: -> { name: String, uid: String, image_uri: String }
+    end
+  end
+end

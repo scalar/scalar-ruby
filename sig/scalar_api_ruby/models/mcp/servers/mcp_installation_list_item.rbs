@@ -1,0 +1,44 @@
+module Scalar
+  module Models
+    module Mcp
+      module Servers
+        type mcp_installation_list_item =
+          {
+            id: String,
+            is_private: bool,
+            mcp_version: String?,
+            name: String,
+            slug: String
+          }
+
+        class McpInstallationListItem < Scalar::Internal::Type::BaseModel
+          attr_accessor id: String
+
+          attr_accessor is_private: bool
+
+          attr_accessor mcp_version: String?
+
+          attr_accessor name: String
+
+          attr_accessor slug: String
+
+          def initialize: (
+            id: String,
+            is_private: bool,
+            mcp_version: String?,
+            name: String,
+            slug: String
+          ) -> void
+
+          def to_hash: -> {
+            id: String,
+            is_private: bool,
+            mcp_version: String?,
+            name: String,
+            slug: String
+          }
+        end
+      end
+    end
+  end
+end

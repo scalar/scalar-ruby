@@ -1,0 +1,30 @@
+module Scalar
+  module Models
+    module Teams
+      type invite_member_params =
+        { email: String, role: Scalar::Models::Teams::role }
+        & Scalar::Internal::Type::request_parameters
+
+      class InviteMemberParams < Scalar::Internal::Type::BaseModel
+        extend Scalar::Internal::Type::RequestParameters::Converter
+        include Scalar::Internal::Type::RequestParameters
+
+        attr_accessor email: String
+
+        attr_accessor role: Scalar::Models::Teams::role
+
+        def initialize: (
+          email: String,
+          role: Scalar::Models::Teams::role,
+          ?request_options: Scalar::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          email: String,
+          role: Scalar::Models::Teams::role,
+          request_options: Scalar::RequestOptions
+        }
+      end
+    end
+  end
+end

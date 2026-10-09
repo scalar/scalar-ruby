@@ -1,0 +1,41 @@
+module Scalar
+  module Models
+    class TeamMember = Teams::TeamMember
+
+    module Teams
+      type team_member =
+        {
+          display_name: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          image_uri: String
+        }
+
+      class TeamMember < Scalar::Internal::Type::BaseModel
+        attr_accessor display_name: String
+
+        attr_accessor role: Scalar::Models::Teams::role
+
+        attr_accessor uid: String
+
+        attr_reader image_uri: String?
+
+        def image_uri=: (String) -> String
+
+        def initialize: (
+          display_name: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          ?image_uri: String
+        ) -> void
+
+        def to_hash: -> {
+          display_name: String,
+          role: Scalar::Models::Teams::role,
+          uid: String,
+          image_uri: String
+        }
+      end
+    end
+  end
+end

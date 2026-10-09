@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type theme_list_response = ::Array[Scalar::Theme]
+
+    ThemeListResponse: Scalar::Internal::Type::Converter
+  end
+end

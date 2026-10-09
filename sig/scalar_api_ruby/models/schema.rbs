@@ -1,0 +1,50 @@
+module Scalar
+  module Models
+    type schema =
+      {
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::ManagedSchemaVersion]
+      }
+
+    class Schema < Scalar::Internal::Type::BaseModel
+      attr_accessor description: String
+
+      attr_accessor is_private: bool
+
+      attr_accessor namespace: String
+
+      attr_accessor slug: String
+
+      attr_accessor title: String
+
+      attr_accessor uid: String
+
+      attr_accessor versions: ::Array[Scalar::ManagedSchemaVersion]
+
+      def initialize: (
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::ManagedSchemaVersion]
+      ) -> void
+
+      def to_hash: -> {
+        description: String,
+        is_private: bool,
+        namespace: String,
+        slug: String,
+        title: String,
+        uid: String,
+        versions: ::Array[Scalar::ManagedSchemaVersion]
+      }
+    end
+  end
+end

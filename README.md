@@ -26,13 +26,13 @@ The full API of this library can be found in [api.md](./api.md).
 Add the gem to your application's `Gemfile`:
 
 ```ruby
-gem "scalar-api-ruby", "~> 0.1.1" # x-release-please-version
+gem "scalar_api_ruby", "~> 0.2.0" # x-release-please-version
 ```
 
 Or install it directly:
 
 ```sh
-gem install scalar-api-ruby
+gem install scalar_api_ruby
 ```
 
 <br />
@@ -40,7 +40,7 @@ gem install scalar-api-ruby
 ## Usage
 
 ```ruby
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 client = Scalar::Client.new(
   bearer_auth: ENV["BEARER_AUTH"], # defaults to the BEARER_AUTH env var
@@ -64,10 +64,12 @@ Pass credentials to the generated client constructor. Environment variables are 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearer_auth` | `String \| nil` | - | Credential for the BearerAuth authentication scheme. Defaults to BEARER_AUTH. |
+| `o_auth2` | `String \| nil` | - | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. Defaults to SCALAR_OAUTH_TOKEN. |
 
 Declared schemes:
 
 - `BearerAuth` bearer token
+- `OAuth2` OAuth2/OpenID Connect
 
 <br />
 
@@ -95,7 +97,7 @@ Documented error statuses: `400`, `401`, `403`, `404`, `422`, `500`.
 Configure the generated client by setting any of these options when you create it.
 
 ```ruby
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 client = Scalar::Client.new(
   timeout: 60.0,
@@ -106,6 +108,7 @@ client = Scalar::Client.new(
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `bearer_auth` | `String \| nil` | `ENV["BEARER_AUTH"]` | Credential for the BearerAuth authentication scheme. |
+| `o_auth2` | `String \| nil` | `ENV["SCALAR_OAUTH_TOKEN"]` | Authorization code with PKCE (S256), for apps acting on behalf of a Scalar user. Each scope implies the weaker ones. |
 | `base_url` | `String \| nil` | `ENV["SCALAR_BASE_URL"]` | Override the default API base URL. |
 | `max_retries` | `Integer` | `2` | Max number of retries to attempt after a failed retryable request. |
 | `timeout` | `Float` | `60.0` | Seconds to wait for a response before timing out. |

@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type schema_list_response = ::Array[Scalar::Schema]
+
+    SchemaListResponse: Scalar::Internal::Type::Converter
+  end
+end

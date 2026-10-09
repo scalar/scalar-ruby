@@ -1,0 +1,85 @@
+module Scalar
+  module Models
+    type scalar_doc_update_project_params =
+      {
+        slug: String,
+        access_groups: ::Array[String],
+        active_theme_id: String,
+        agent_enabled: bool,
+        analytics_enabled: bool,
+        is_private: bool,
+        login_portal_uid: Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid,
+        name: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class ScalarDocUpdateProjectParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor slug: String
+
+      attr_reader access_groups: ::Array[String]?
+
+      def access_groups=: (::Array[String]) -> ::Array[String]
+
+      attr_reader active_theme_id: String?
+
+      def active_theme_id=: (String) -> String
+
+      attr_reader agent_enabled: bool?
+
+      def agent_enabled=: (bool) -> bool
+
+      attr_reader analytics_enabled: bool?
+
+      def analytics_enabled=: (bool) -> bool
+
+      attr_reader is_private: bool?
+
+      def is_private=: (bool) -> bool
+
+      attr_reader login_portal_uid: Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid?
+
+      def login_portal_uid=: (
+        Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid
+      ) -> Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid
+
+      attr_reader name: String?
+
+      def name=: (String) -> String
+
+      def initialize: (
+        slug: String,
+        ?access_groups: ::Array[String],
+        ?active_theme_id: String,
+        ?agent_enabled: bool,
+        ?analytics_enabled: bool,
+        ?is_private: bool,
+        ?login_portal_uid: Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid,
+        ?name: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        slug: String,
+        access_groups: ::Array[String],
+        active_theme_id: String,
+        agent_enabled: bool,
+        analytics_enabled: bool,
+        is_private: bool,
+        login_portal_uid: Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid,
+        name: String,
+        request_options: Scalar::RequestOptions
+      }
+
+      type login_portal_uid = String | :""
+
+      module LoginPortalUID
+        extend Scalar::Internal::Type::Union
+
+        def self?.variants: -> ::Array[Scalar::Models::ScalarDocUpdateProjectParams::login_portal_uid]
+      end
+    end
+  end
+end

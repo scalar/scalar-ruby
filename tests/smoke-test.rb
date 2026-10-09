@@ -6,14 +6,14 @@ require "stringio"
 require "time"
 
 root =
-  File.exist?(File.join(__dir__, "lib", "scalar-api-ruby.rb")) ? __dir__ : File.expand_path("..", __dir__)
+  File.exist?(File.join(__dir__, "lib", "scalar_api_ruby.rb")) ? __dir__ : File.expand_path("..", __dir__)
 $LOAD_PATH.unshift(File.join(root, "lib"))
-require "scalar-api-ruby"
+require "scalar_api_ruby"
 
 # Smoke test: calls every generated operation once to confirm the SDK can reach each endpoint.
 # Run it from this repo with `ruby tests/smoke-test.rb`. The generator also runs this file
 # against a mock server and reads the JSON report produced via SCALAR_SMOKE_REPORT.
-client = Scalar::Client.new(max_retries: 2, timeout: 30)
+client = Scalar::Client.new(max_retries: 2, timeout: 10)
 
 cases = [
   {
@@ -22,7 +22,16 @@ cases = [
     path: "/v1/apis/{namespace}",
     label: "required params",
     run: -> do
-      client.registry.create_api_document("namespace", {document: "", slug: "", title: "", version: "x"})
+      client.registry.create_api_document(
+        "acme",
+        {
+          document:
+            "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Acme API\",\"version\":\"1.2.0\"},\"paths\":{}}",
+          slug: "acme-api",
+          title: "Acme API",
+          version: "1.2.0"
+        }
+      )
     end
   },
   {
@@ -32,8 +41,17 @@ cases = [
     label: "all params",
     run: -> do
       client.registry.create_api_document(
-        "namespace",
-        {document: "", slug: "", title: "", version: "x", description: "", is_private: false, ruleset: ""}
+        "acme",
+        {
+          document:
+            "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Acme API\",\"version\":\"1.2.0\"},\"paths\":{}}",
+          slug: "acme-api",
+          title: "Acme API",
+          version: "1.2.0",
+          description: "API for managing Acme products and orders.",
+          is_private: false,
+          ruleset: "extends: [\"spectral:oas\"]"
+        }
       )
     end
   },
@@ -43,8 +61,8 @@ cases = [
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: -> do
       client.registry.create_api_document_access_group(
-        "slug",
-        {access_group_slug: "xxx", namespace: "namespace"}
+        "acme-api",
+        {access_group_slug: "acme-api", namespace: "acme"}
       )
     end
   },
@@ -55,8 +73,13 @@ cases = [
     label: "required params",
     run: -> do
       client.registry.create_api_document_version(
-        "slug",
-        {namespace: "namespace", document: "", version: "x"}
+        "acme-api",
+        {
+          namespace: "acme",
+          document:
+            "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Acme API\",\"version\":\"1.2.0\"},\"paths\":{}}",
+          version: "1.2.0"
+        }
       )
     end
   },
@@ -67,8 +90,14 @@ cases = [
     label: "all params",
     run: -> do
       client.registry.create_api_document_version(
-        "slug",
-        {namespace: "namespace", document: "", version: "x", force: false, last_known_version_sha: ""}
+        "acme-api",
+        {
+          namespace: "acme",
+          document:
+            "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Acme API\",\"version\":\"1.2.0\"},\"paths\":{}}",
+          version: "1.2.0",
+          force: false
+        }
       )
     end
   },
@@ -76,7 +105,7 @@ cases = [
     operation: "deleteApiDocument",
     method: "DELETE",
     path: "/v1/apis/{namespace}/{slug}",
-    run: -> { client.registry.delete_api_document("slug", {namespace: "namespace"}) }
+    run: -> { client.registry.delete_api_document("acme-api", {namespace: "acme"}) }
   },
   {
     operation: "deleteApiDocumentAccessGroup",
@@ -84,8 +113,8 @@ cases = [
     path: "/v1/apis/{namespace}/{slug}/access-group",
     run: -> do
       client.registry.delete_api_document_access_group(
-        "slug",
-        {access_group_slug: "xxx", namespace: "namespace"}
+        "acme-api",
+        {access_group_slug: "acme-api", namespace: "acme"}
       )
     end
   },
@@ -93,9 +122,7 @@ cases = [
     operation: "deleteApiDocumentVersion",
     method: "DELETE",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
-    run: -> do
-      client.registry.delete_api_document_version("semver", {namespace: "namespace", slug: "slug"})
-    end
+    run: -> { client.registry.delete_api_document_version("1.2.0", {namespace: "acme", slug: "acme-api"}) }
   },
   {
     operation: "listAllApiDocuments",
@@ -108,21 +135,21 @@ cases = [
     method: "GET",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}/metadata",
     run: -> do
-      client.registry.list_api_document_version_metadata("semver", {namespace: "namespace", slug: "slug"})
+      client.registry.list_api_document_version_metadata("1.2.0", {namespace: "acme", slug: "acme-api"})
     end
   },
   {
     operation: "listApiDocuments",
     method: "GET",
     path: "/v1/apis/{namespace}",
-    run: -> { client.registry.list_api_documents("namespace") }
+    run: -> { client.registry.list_api_documents("acme") }
   },
   {
     operation: "retrieveApiDocumentVersion",
     method: "GET",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
     run: -> do
-      client.registry.retrieve_api_document_version("semver", {namespace: "namespace", slug: "slug"})
+      client.registry.retrieve_api_document_version("1.2.0", {namespace: "acme", slug: "acme-api"})
     end
   },
   {
@@ -130,7 +157,7 @@ cases = [
     method: "PATCH",
     path: "/v1/apis/{namespace}/{slug}",
     label: "required params",
-    run: -> { client.registry.update_api_document("slug", {namespace: "namespace"}) }
+    run: -> { client.registry.update_api_document("acme-api", {namespace: "acme"}) }
   },
   {
     operation: "updateApiDocument",
@@ -139,8 +166,14 @@ cases = [
     label: "all params",
     run: -> do
       client.registry.update_api_document(
-        "slug",
-        {namespace: "namespace", description: "", is_private: false, ruleset: "", title: ""}
+        "acme-api",
+        {
+          namespace: "acme",
+          description: "API for managing Acme products and orders.",
+          is_private: false,
+          ruleset: "extends: [\"spectral:oas\"]",
+          title: "Acme API"
+        }
       )
     end
   },
@@ -148,23 +181,15 @@ cases = [
     operation: "updateApiDocumentVersion",
     method: "PATCH",
     path: "/v1/apis/{namespace}/{slug}/version/{semver}",
-    label: "required params",
     run: -> do
       client.registry.update_api_document_version(
-        "semver",
-        {namespace: "namespace", slug: "slug", document: ""}
-      )
-    end
-  },
-  {
-    operation: "updateApiDocumentVersion",
-    method: "PATCH",
-    path: "/v1/apis/{namespace}/{slug}/version/{semver}",
-    label: "all params",
-    run: -> do
-      client.registry.update_api_document_version(
-        "semver",
-        {namespace: "namespace", slug: "slug", document: "", last_known_version_sha: ""}
+        "1.2.0",
+        {
+          namespace: "acme",
+          slug: "acme-api",
+          document:
+            "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Acme API\",\"version\":\"1.2.0\"},\"paths\":{}}"
+        }
       )
     end
   },
@@ -173,7 +198,18 @@ cases = [
     method: "POST",
     path: "/v1/schemas/{namespace}",
     label: "required params",
-    run: -> { client.schemas.create("namespace", {document: "", slug: "", title: "", version: "x"}) }
+    run: -> do
+      client.schemas.create(
+        "acme",
+        {
+          document:
+            "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"examples\":[\"Acme\"]}}}",
+          slug: "customer",
+          title: "Customer",
+          version: "1.2.0"
+        }
+      )
+    end
   },
   {
     operation: "create",
@@ -182,8 +218,16 @@ cases = [
     label: "all params",
     run: -> do
       client.schemas.create(
-        "namespace",
-        {document: "", slug: "", title: "", version: "x", description: "", is_private: false}
+        "acme",
+        {
+          document:
+            "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"examples\":[\"Acme\"]}}}",
+          slug: "customer",
+          title: "Customer",
+          version: "1.2.0",
+          description: "API for managing Acme products and orders.",
+          is_private: false
+        }
       )
     end
   },
@@ -192,7 +236,7 @@ cases = [
     method: "PATCH",
     path: "/v1/schemas/{namespace}/{slug}",
     label: "required params",
-    run: -> { client.schemas.update("slug", {namespace: "namespace"}) }
+    run: -> { client.schemas.update("customer", {namespace: "acme"}) }
   },
   {
     operation: "update",
@@ -200,45 +244,82 @@ cases = [
     path: "/v1/schemas/{namespace}/{slug}",
     label: "all params",
     run: -> do
-      client.schemas.update("slug", {namespace: "namespace", description: "", is_private: false, title: ""})
+      client.schemas.update(
+        "customer",
+        {
+          namespace: "acme",
+          description: "API for managing Acme products and orders.",
+          is_private: false,
+          title: "Customer"
+        }
+      )
     end
   },
   {
     operation: "list",
     method: "GET",
     path: "/v1/schemas/{namespace}",
-    run: -> { client.schemas.list("namespace") }
+    run: -> { client.schemas.list("acme") }
   },
   {
     operation: "delete",
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}",
-    run: -> { client.schemas.delete("slug", {namespace: "namespace"}) }
+    run: -> { client.schemas.delete("customer", {namespace: "acme"}) }
   },
   {
     operation: "create",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/version",
-    run: -> { client.schemas.version.create("slug", {namespace: "namespace", document: "", version: "x"}) }
+    label: "required params",
+    run: -> do
+      client.schemas.version.create(
+        "customer",
+        {
+          namespace: "acme",
+          document:
+            "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"examples\":[\"Acme\"]}}}",
+          version: "1.2.0"
+        }
+      )
+    end
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/schemas/{namespace}/{slug}/version",
+    label: "all params",
+    run: -> do
+      client.schemas.version.create(
+        "customer",
+        {
+          namespace: "acme",
+          document:
+            "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"examples\":[\"Acme\"]}}}",
+          version: "1.2.0",
+          force: false
+        }
+      )
+    end
   },
   {
     operation: "retrieve",
     method: "GET",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
-    run: -> { client.schemas.version.retrieve("semver", {namespace: "namespace", slug: "slug"}) }
+    run: -> { client.schemas.version.retrieve("1.2.0", {namespace: "acme", slug: "customer"}) }
   },
   {
     operation: "delete",
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/version/{semver}",
-    run: -> { client.schemas.version.delete("semver", {namespace: "namespace", slug: "slug"}) }
+    run: -> { client.schemas.version.delete("1.2.0", {namespace: "acme", slug: "customer"}) }
   },
   {
     operation: "create",
     method: "POST",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: -> do
-      client.schemas.access_group.create("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.schemas.access_group.create("customer", {access_group_slug: "acme-api", namespace: "acme"})
     end
   },
   {
@@ -246,7 +327,7 @@ cases = [
     method: "DELETE",
     path: "/v1/schemas/{namespace}/{slug}/access-group",
     run: -> do
-      client.schemas.access_group.delete("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.schemas.access_group.delete("customer", {access_group_slug: "acme-api", namespace: "acme"})
     end
   },
   {
@@ -264,7 +345,7 @@ cases = [
             "title" => "Private Docs",
             "mainColor" => "\#2a2f45",
             "mainBackground" => "\#f6f6f6",
-            "cardColor" => "2a2f45",
+            "cardColor" => "\#2a2f45",
             "cardBackground" => "\#fff",
             "buttonColor" => "\#fff",
             "buttonBackground" => "\#0f0f0f"
@@ -285,8 +366,8 @@ cases = [
             "formDescription" => "Login to access your documentation",
             "formImage" => ""
           },
-          slug: "",
-          title: ""
+          slug: "acme-login",
+          title: "Acme Private Documentation"
         }
       )
     end
@@ -295,35 +376,98 @@ cases = [
     operation: "retrieve",
     method: "GET",
     path: "/v1/login-portals/{slug}",
-    run: -> { client.login_portals.retrieve("slug") }
+    run: -> { client.login_portals.retrieve("acme-login") }
   },
   {
     operation: "update",
     method: "PATCH",
     path: "/v1/login-portals/{slug}",
     label: "required params",
-    run: -> { client.login_portals.update("slug") }
+    run: -> { client.login_portals.update("acme-login") }
   },
   {
     operation: "update",
     method: "PATCH",
     path: "/v1/login-portals/{slug}",
     label: "all params",
-    run: -> { client.login_portals.update("slug", {title: ""}) }
+    run: -> { client.login_portals.update("acme-login", {title: "Acme Private Documentation"}) }
   },
   {operation: "list", method: "GET", path: "/v1/login-portals", run: -> { client.login_portals.list }},
   {
     operation: "delete",
     method: "DELETE",
     path: "/v1/login-portals/{slug}",
-    run: -> { client.login_portals.delete("slug") }
+    run: -> { client.login_portals.delete("acme-login") }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups",
+    label: "required params",
+    run: -> { client.access_groups.create }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups",
+    label: "all params",
+    run: -> do
+      client.access_groups.create({allowed_domains: "example.com", name: "Engineering", slug: "acme-api"})
+    end
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/access-groups/{slug}",
+    run: -> { client.access_groups.retrieve("acme-api") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/access-groups/{slug}",
+    label: "required params",
+    run: -> { client.access_groups.update("acme-api") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/access-groups/{slug}",
+    label: "all params",
+    run: -> { client.access_groups.update("acme-api", {name: "Engineering", body_slug: "acme-api"}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/access-groups/{slug}",
+    run: -> { client.access_groups.delete("acme-api") }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/access-groups/{slug}/domains",
+    run: -> { client.access_groups.domains.create("acme-api", {domain: "example.com"}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/access-groups/{slug}/domains",
+    run: -> { client.access_groups.domains.delete("acme-api", {domain: "example.com"}) }
   },
   {
     operation: "createRuleset",
     method: "POST",
     path: "/v1/rulesets/{namespace}",
     label: "required params",
-    run: -> { client.rules.create_ruleset("namespace", {document: "", slug: "", title: ""}) }
+    run: -> do
+      client.rules.create_ruleset(
+        "acme",
+        {
+          document: "extends: [\"spectral:oas\"]\nrules:\n  info-contact: warn\n",
+          slug: "acme-rules",
+          title: "Acme API Rules"
+        }
+      )
+    end
   },
   {
     operation: "createRuleset",
@@ -332,8 +476,14 @@ cases = [
     label: "all params",
     run: -> do
       client.rules.create_ruleset(
-        "namespace",
-        {document: "", slug: "", title: "", description: "", is_private: false}
+        "acme",
+        {
+          document: "extends: [\"spectral:oas\"]\nrules:\n  info-contact: warn\n",
+          slug: "acme-rules",
+          title: "Acme API Rules",
+          description: "API for managing Acme products and orders.",
+          is_private: false
+        }
       )
     end
   },
@@ -342,41 +492,47 @@ cases = [
     method: "POST",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: -> do
-      client.rules.create_ruleset_access_group("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.rules.create_ruleset_access_group(
+        "acme-rules",
+        {access_group_slug: "acme-api", namespace: "acme"}
+      )
     end
   },
   {
     operation: "deleteRuleset",
     method: "DELETE",
     path: "/v1/rulesets/{namespace}/{slug}",
-    run: -> { client.rules.delete_ruleset("slug", {namespace: "namespace"}) }
+    run: -> { client.rules.delete_ruleset("acme-rules", {namespace: "acme"}) }
   },
   {
     operation: "deleteRulesetAccessGroup",
     method: "DELETE",
     path: "/v1/rulesets/{namespace}/{slug}/access-group",
     run: -> do
-      client.rules.delete_ruleset_access_group("slug", {access_group_slug: "xxx", namespace: "namespace"})
+      client.rules.delete_ruleset_access_group(
+        "acme-rules",
+        {access_group_slug: "acme-api", namespace: "acme"}
+      )
     end
   },
   {
     operation: "listRulesets",
     method: "GET",
     path: "/v1/rulesets/{namespace}",
-    run: -> { client.rules.list_rulesets("namespace") }
+    run: -> { client.rules.list_rulesets("acme") }
   },
   {
     operation: "retrieveRulesetDocument",
     method: "GET",
     path: "/v1/rulesets/{namespace}/{slug}",
-    run: -> { client.rules.retrieve_ruleset_document("slug", {namespace: "namespace"}) }
+    run: -> { client.rules.retrieve_ruleset_document("acme-rules", {namespace: "acme"}) }
   },
   {
     operation: "updateRuleset",
     method: "PATCH",
     path: "/v1/rulesets/{namespace}/{slug}",
     label: "required params",
-    run: -> { client.rules.update_ruleset("path_slug", {path_namespace: "path_namespace"}) }
+    run: -> { client.rules.update_ruleset("acme-rules", {path_namespace: "acme"}) }
   },
   {
     operation: "updateRuleset",
@@ -385,14 +541,14 @@ cases = [
     label: "all params",
     run: -> do
       client.rules.update_ruleset(
-        "path_slug",
+        "acme-rules",
         {
-          path_namespace: "path_namespace",
-          description: "",
+          path_namespace: "acme",
+          description: "API for managing Acme products and orders.",
           is_private: false,
-          body_namespace: "",
-          body_slug: "",
-          title: ""
+          body_namespace: "acme",
+          body_slug: "acme-rules",
+          title: "Acme API Rules"
         }
       )
     end
@@ -402,56 +558,109 @@ cases = [
     method: "POST",
     path: "/v1/themes",
     label: "required params",
-    run: -> { client.themes.create({document: "", name: "", slug: ""}) }
+    run: -> do
+      client.themes.create(
+        {document: ":root { --scalar-color-1: \#1f2937; }", name: "Acme Theme", slug: "acme-theme"}
+      )
+    end
   },
   {
     operation: "create",
     method: "POST",
     path: "/v1/themes",
     label: "all params",
-    run: -> { client.themes.create({document: "", name: "", slug: "", description: ""}) }
+    run: -> do
+      client.themes.create(
+        {
+          document: ":root { --scalar-color-1: \#1f2937; }",
+          name: "Acme Theme",
+          slug: "acme-theme",
+          description: "API for managing Acme products and orders."
+        }
+      )
+    end
   },
   {
     operation: "retrieve",
     method: "GET",
     path: "/v1/themes/{slug}",
-    run: -> { client.themes.retrieve("slug") }
+    run: -> { client.themes.retrieve("acme-theme") }
   },
   {
     operation: "update",
     method: "PATCH",
     path: "/v1/themes/{slug}",
     label: "required params",
-    run: -> { client.themes.update("slug") }
+    run: -> { client.themes.update("acme-theme") }
   },
   {
     operation: "update",
     method: "PATCH",
     path: "/v1/themes/{slug}",
     label: "all params",
-    run: -> { client.themes.update("slug", {description: "", name: ""}) }
+    run: -> do
+      client.themes.update(
+        "acme-theme",
+        {description: "API for managing Acme products and orders.", name: "Acme Theme"}
+      )
+    end
   },
   {operation: "list", method: "GET", path: "/v1/themes", run: -> { client.themes.list }},
   {
     operation: "delete",
     method: "DELETE",
     path: "/v1/themes/{slug}",
-    run: -> { client.themes.delete("slug") }
+    run: -> { client.themes.delete("acme-theme") }
   },
   {
     operation: "replaceDocument",
     method: "PUT",
     path: "/v1/themes/{slug}",
-    run: -> { client.themes.replace_document("slug", {document: ""}) }
+    run: -> do
+      client.themes.replace_document("acme-theme", {document: ":root { --scalar-color-1: \#1f2937; }"})
+    end
   },
   {operation: "list", method: "GET", path: "/v1/teams", run: -> { client.teams.list }},
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/teams/members/{uid}",
+    run: -> { client.teams.members.update("UakgbKJ5m9gl0JDMbcJqL", {role: "owner"}) }
+  },
+  {operation: "list", method: "GET", path: "/v1/teams/members", run: -> { client.teams.members.list }},
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/teams/members/{uid}",
+    run: -> { client.teams.members.delete("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "cancel",
+    method: "DELETE",
+    path: "/v1/teams/invites/{uid}",
+    run: -> { client.teams.invites.cancel("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "member",
+    method: "POST",
+    path: "/v1/teams/invites",
+    run: -> { client.teams.invites.member({email: "alex@example.com", role: "owner"}) }
+  },
+  {
+    operation: "resend",
+    method: "PATCH",
+    path: "/v1/teams/invites/{uid}",
+    run: -> { client.teams.invites.resend("UakgbKJ5m9gl0JDMbcJqL") }
+  },
   {
     operation: "createGuide",
     method: "POST",
     path: "/v1/guides",
     label: "required params",
     run: -> do
-      client.scalar_docs.create_guide({allowed_domains: [], allowed_users: [], is_private: false, name: ""})
+      client.scalar_docs.create_guide(
+        {allowed_domains: [], allowed_users: [], is_private: false, name: "Acme Documentation"}
+      )
     end
   },
   {
@@ -461,29 +670,496 @@ cases = [
     label: "all params",
     run: -> do
       client.scalar_docs.create_guide(
-        {allowed_domains: [], allowed_users: [], is_private: false, name: "", slug: "xxx"}
+        {
+          allowed_domains: [],
+          allowed_users: [],
+          is_private: false,
+          name: "Acme Documentation",
+          slug: "acme-api"
+        }
       )
     end
   },
+  {
+    operation: "createProject",
+    method: "POST",
+    path: "/v1/docs",
+    label: "required params",
+    run: -> { client.scalar_docs.create_project({name: "Acme Documentation", provider: "forgejo"}) }
+  },
+  {
+    operation: "createProject",
+    method: "POST",
+    path: "/v1/docs",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.create_project(
+        {
+          name: "Acme Documentation",
+          provider: "forgejo",
+          bitbucket_repository: {
+            "workspaceUuid" => "{12345678-1234-4234-8234-123456789abc}",
+            "repoUuid" => "{abcdef01-1234-4234-8234-123456789abc}"
+          },
+          blank: true,
+          github_repository: {
+            "installationId" => 84,
+            "repoId" => 123_456_789
+          },
+          is_private: false,
+          slug: "acme-api"
+        }
+      )
+    end
+  },
+  {
+    operation: "deleteProject",
+    method: "DELETE",
+    path: "/v1/docs/{slug}",
+    run: -> { client.scalar_docs.delete_project("acme-docs") }
+  },
   {operation: "listGuides", method: "GET", path: "/v1/guides", run: -> { client.scalar_docs.list_guides }},
+  {
+    operation: "listProjectConfig",
+    method: "GET",
+    path: "/v1/docs/{slug}/config",
+    label: "required params",
+    run: -> { client.scalar_docs.list_project_config("acme-docs") }
+  },
+  {
+    operation: "listProjectConfig",
+    method: "GET",
+    path: "/v1/docs/{slug}/config",
+    label: "all params",
+    run: -> { client.scalar_docs.list_project_config("acme-docs", {ref: "main"}) }
+  },
+  {
+    operation: "listProjectDomain",
+    method: "GET",
+    path: "/v1/docs/{slug}/domain",
+    run: -> { client.scalar_docs.list_project_domain("acme-docs") }
+  },
+  {
+    operation: "listProjectDomainStatus",
+    method: "GET",
+    path: "/v1/docs/{slug}/domain/status",
+    run: -> { client.scalar_docs.list_project_domain_status("acme-docs") }
+  },
+  {
+    operation: "listProjects",
+    method: "GET",
+    path: "/v1/docs",
+    label: "required params",
+    run: -> { client.scalar_docs.list_projects }
+  },
+  {
+    operation: "listProjects",
+    method: "GET",
+    path: "/v1/docs",
+    label: "all params",
+    run: -> { client.scalar_docs.list_projects({limit: 20}) }
+  },
   {
     operation: "publishGuide",
     method: "POST",
     path: "/v1/guides/{slug}/publish",
-    run: -> { client.scalar_docs.publish_guide("slug") }
+    run: -> { client.scalar_docs.publish_guide("acme-docs") }
+  },
+  {
+    operation: "publishProject",
+    method: "POST",
+    path: "/v1/docs/{slug}/publish",
+    label: "required params",
+    run: -> { client.scalar_docs.publish_project("acme-docs") }
+  },
+  {
+    operation: "publishProject",
+    method: "POST",
+    path: "/v1/docs/{slug}/publish",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.publish_project(
+        "acme-docs",
+        {
+          commit_sha: "0123456789abcdef0123456789abcdef01234567",
+          config_path: "scalar.config.json",
+          preview: false
+        }
+      )
+    end
+  },
+  {
+    operation: "retrieveProject",
+    method: "GET",
+    path: "/v1/docs/{slug}",
+    run: -> { client.scalar_docs.retrieve_project("acme-docs") }
+  },
+  {
+    operation: "updateProject",
+    method: "PATCH",
+    path: "/v1/docs/{slug}",
+    label: "required params",
+    run: -> { client.scalar_docs.update_project("acme-docs") }
+  },
+  {
+    operation: "updateProject",
+    method: "PATCH",
+    path: "/v1/docs/{slug}",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.update_project(
+        "acme-docs",
+        {
+          access_groups: ["xxxxx"],
+          active_theme_id: "UakgbKJ5m9gl0JDMbcJqL",
+          agent_enabled: true,
+          analytics_enabled: true,
+          is_private: false,
+          login_portal_uid: "xxxxx",
+          name: "Acme Documentation"
+        }
+      )
+    end
+  },
+  {
+    operation: "updateProjectConfig",
+    method: "PUT",
+    path: "/v1/docs/{slug}/config",
+    label: "required params",
+    run: -> do
+      client.scalar_docs.update_project_config("acme-docs", {content: "{\"name\":\"Acme Documentation\"}"})
+    end
+  },
+  {
+    operation: "updateProjectConfig",
+    method: "PUT",
+    path: "/v1/docs/{slug}/config",
+    label: "all params",
+    run: -> do
+      client.scalar_docs.update_project_config(
+        "acme-docs",
+        {
+          content: "{\"name\":\"Acme Documentation\"}",
+          base_token: "example-edit-token",
+          message: "Update documentation configuration",
+          path: "scalar.config.json",
+          ref: "main"
+        }
+      )
+    end
   },
   {operation: "list", method: "GET", path: "/v1/namespaces", run: -> { client.namespaces.list }},
   {
     operation: "exchangePersonalToken",
     method: "POST",
     path: "/v1/auth/exchange",
-    run: -> { client.authentication.exchange_personal_token({personal_token: ""}) }
+    run: -> do
+      client.authentication.exchange_personal_token({personal_token: "scalar_example_personal_token"})
+    end
   },
   {
     operation: "listCurrentUser",
     method: "GET",
     path: "/v1/auth/me",
     run: -> { client.authentication.list_current_user }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks",
+    label: "required params",
+    run: -> { client.sdks.create({api_uid: "UakgbKJ5m9gl0JDMbcJqL", languages: ["typescript"]}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks",
+    label: "all params",
+    run: -> do
+      client.sdks.create(
+        {
+          api_uid: "UakgbKJ5m9gl0JDMbcJqL",
+          languages: ["typescript"],
+          class_name: "Acme",
+          config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}",
+          slug: "acme-api",
+          title: "Acme SDK"
+        }
+      )
+    end
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/sdks/{uid}",
+    run: -> { client.sdks.retrieve("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/sdks/{uid}",
+    label: "required params",
+    run: -> { client.sdks.update("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/sdks/{uid}",
+    label: "all params",
+    run: -> do
+      client.sdks.update(
+        "UakgbKJ5m9gl0JDMbcJqL",
+        {
+          api_uid: "UakgbKJ5m9gl0JDMbcJqL",
+          api_version: "",
+          config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}",
+          is_private: false,
+          slug: "acme-api",
+          title: "Acme SDK"
+        }
+      )
+    end
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/sdks",
+    label: "required params",
+    run: -> { client.sdks.list }
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/sdks",
+    label: "all params",
+    run: -> { client.sdks.list({limit: 20}) }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/sdks/{uid}",
+    run: -> { client.sdks.delete("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "build",
+    method: "POST",
+    path: "/v1/sdks/{uid}/build",
+    label: "required params",
+    run: -> { client.sdks.build("UakgbKJ5m9gl0JDMbcJqL") }
+  },
+  {
+    operation: "build",
+    method: "POST",
+    path: "/v1/sdks/{uid}/build",
+    label: "all params",
+    run: -> { client.sdks.build("UakgbKJ5m9gl0JDMbcJqL", {languages: ["typescript"], version: "1.2.0"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks/{uid}/versions",
+    run: -> do
+      client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", {api_version: "1.2.0", version: "1.2.0"})
+    end
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/sdks/{uid}/versions/{version}",
+    run: -> { client.sdks.versions.delete("1.2.0", {uid: "UakgbKJ5m9gl0JDMbcJqL"}) }
+  },
+  {
+    operation: "link",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories",
+    label: "required params",
+    run: -> do
+      client.sdks.repositories.link(
+        "UakgbKJ5m9gl0JDMbcJqL",
+        {base_branch: "main", language: "typescript", repository_id: 123_456_789}
+      )
+    end
+  },
+  {
+    operation: "link",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories",
+    label: "all params",
+    run: -> do
+      client.sdks.repositories.link(
+        "UakgbKJ5m9gl0JDMbcJqL",
+        {base_branch: "main", language: "typescript", repository_id: 123_456_789, prerelease_type: "beta"}
+      )
+    end
+  },
+  {
+    operation: "unlink",
+    method: "DELETE",
+    path: "/v1/sdks/{uid}/repositories/{language}",
+    run: -> { client.sdks.repositories.unlink("typescript", {uid: "UakgbKJ5m9gl0JDMbcJqL"}) }
+  },
+  {
+    operation: "updatePublishing",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories/{language}/publishing",
+    label: "required params",
+    run: -> do
+      client.sdks.repositories.update_publishing(
+        "typescript",
+        {uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true}
+      )
+    end
+  },
+  {
+    operation: "updatePublishing",
+    method: "POST",
+    path: "/v1/sdks/{uid}/repositories/{language}/publishing",
+    label: "all params",
+    run: -> do
+      client.sdks.repositories.update_publishing(
+        "typescript",
+        {
+          uid: "UakgbKJ5m9gl0JDMbcJqL",
+          publish_on_merge: true,
+          access: "public",
+          auth_method: "oidc",
+          tag: "latest"
+        }
+      )
+    end
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers",
+    label: "required params",
+    run: -> { client.mcp.servers.create({name: "Acme MCP"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.create(
+        {name: "Acme MCP", project_uids: [""], slug: "acme-api", version_uids: [""]}
+      )
+    end
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}",
+    run: -> { client.mcp.servers.retrieve("42") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}",
+    label: "required params",
+    run: -> { client.mcp.servers.update("42") }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.update(
+        "42",
+        {auto_add_operations: true, docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api"}
+      )
+    end
+  },
+  {operation: "list", method: "GET", path: "/v1/mcp/servers", run: -> { client.mcp.servers.list }},
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}",
+    run: -> { client.mcp.servers.delete("42") }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations",
+    label: "required params",
+    run: -> { client.mcp.servers.installations.create("42", {document_auth: {}, name: "Acme MCP"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.installations.create("42", {document_auth: {}, name: "Acme MCP", slug: "acme-api"})
+    end
+  },
+  {
+    operation: "retrieve",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    run: -> { client.mcp.servers.installations.retrieve("84", {id: "42"}) }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    label: "required params",
+    run: -> { client.mcp.servers.installations.update("84", {id: "42"}) }
+  },
+  {
+    operation: "update",
+    method: "PATCH",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    label: "all params",
+    run: -> do
+      client.mcp.servers.installations.update(
+        "84",
+        {
+          id: "42",
+          document_auth: {},
+          is_private: false,
+          login_portal_uid: "",
+          mcp_version: "",
+          name: "Acme MCP",
+          slug: "acme-api"
+        }
+      )
+    end
+  },
+  {
+    operation: "list",
+    method: "GET",
+    path: "/v1/mcp/servers/{id}/installations",
+    run: -> { client.mcp.servers.installations.list("42") }
+  },
+  {
+    operation: "delete",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}",
+    run: -> { client.mcp.servers.installations.delete("84", {id: "42"}) }
+  },
+  {
+    operation: "createAccessGroup",
+    method: "POST",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
+    run: -> do
+      client.mcp.servers.installations.create_access_group(
+        "84",
+        {id: "42", access_group_uid: "UakgbKJ5m9gl0JDMbcJqL"}
+      )
+    end
+  },
+  {
+    operation: "deleteAccessGroup",
+    method: "DELETE",
+    path: "/v1/mcp/servers/{id}/installations/{installationId}/access-group",
+    run: -> do
+      client.mcp.servers.installations.delete_access_group(
+        "84",
+        {id: "42", access_group_uid: "UakgbKJ5m9gl0JDMbcJqL"}
+      )
+    end
   }
 ]
 

@@ -1,0 +1,27 @@
+module Scalar
+  module Models
+    module Teams
+      type member_list_response =
+        {
+          members: ::Array[Scalar::Teams::TeamMember],
+          pending_invites: ::Array[Scalar::Teams::TeamInvite]
+        }
+
+      class MemberListResponse < Scalar::Internal::Type::BaseModel
+        attr_accessor members: ::Array[Scalar::Teams::TeamMember]
+
+        attr_accessor pending_invites: ::Array[Scalar::Teams::TeamInvite]
+
+        def initialize: (
+          members: ::Array[Scalar::Teams::TeamMember],
+          pending_invites: ::Array[Scalar::Teams::TeamInvite]
+        ) -> void
+
+        def to_hash: -> {
+          members: ::Array[Scalar::Teams::TeamMember],
+          pending_invites: ::Array[Scalar::Teams::TeamInvite]
+        }
+      end
+    end
+  end
+end

@@ -1,0 +1,59 @@
+module Scalar
+  module Models
+    type scalar_doc_update_project_config_params =
+      {
+        slug: String,
+        content: String,
+        base_token: String,
+        message: String,
+        path: String,
+        ref: String
+      }
+      & Scalar::Internal::Type::request_parameters
+
+    class ScalarDocUpdateProjectConfigParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor slug: String
+
+      attr_accessor content: String
+
+      attr_reader base_token: String?
+
+      def base_token=: (String) -> String
+
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      attr_reader path: String?
+
+      def path=: (String) -> String
+
+      attr_reader ref: String?
+
+      def ref=: (String) -> String
+
+      def initialize: (
+        slug: String,
+        content: String,
+        ?base_token: String,
+        ?message: String,
+        ?path: String,
+        ?ref: String,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        slug: String,
+        content: String,
+        base_token: String,
+        message: String,
+        path: String,
+        ref: String,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

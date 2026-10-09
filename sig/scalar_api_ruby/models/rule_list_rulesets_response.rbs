@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    type rule_list_rulesets_response = ::Array[Scalar::Rule]
+
+    RuleListRulesetsResponse: Scalar::Internal::Type::Converter
+  end
+end

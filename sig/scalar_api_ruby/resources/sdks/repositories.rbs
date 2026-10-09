@@ -1,0 +1,34 @@
+module Scalar
+  module Resources
+    class Sdks
+      class Repositories
+        def link: (
+          String uid,
+          base_branch: String,
+          language: Scalar::Models::Sdks::RepositoryLinkParams::language,
+          repository_id: Integer,
+          ?prerelease_type: String,
+          ?request_options: Scalar::request_opts
+        ) -> Scalar::Models::Sdks::RepositoryLinkResponse
+
+        def unlink: (
+          Scalar::Models::Sdks::RepositoryUnlinkParams::language language,
+          uid: String,
+          ?request_options: Scalar::request_opts
+        ) -> top
+
+        def update_publishing: (
+          Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language language,
+          uid: String,
+          publish_on_merge: bool,
+          ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?tag: String,
+          ?request_options: Scalar::request_opts
+        ) -> top
+
+        def initialize: (client: Scalar::Client) -> void
+      end
+    end
+  end
+end

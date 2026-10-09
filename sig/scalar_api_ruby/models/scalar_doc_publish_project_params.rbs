@@ -1,0 +1,42 @@
+module Scalar
+  module Models
+    type scalar_doc_publish_project_params =
+      { slug: String, commit_sha: String, config_path: String, preview: bool }
+      & Scalar::Internal::Type::request_parameters
+
+    class ScalarDocPublishProjectParams < Scalar::Internal::Type::BaseModel
+      extend Scalar::Internal::Type::RequestParameters::Converter
+      include Scalar::Internal::Type::RequestParameters
+
+      attr_accessor slug: String
+
+      attr_reader commit_sha: String?
+
+      def commit_sha=: (String) -> String
+
+      attr_reader config_path: String?
+
+      def config_path=: (String) -> String
+
+      attr_reader preview: bool?
+
+      def preview=: (bool) -> bool
+
+      def initialize: (
+        slug: String,
+        ?commit_sha: String,
+        ?config_path: String,
+        ?preview: bool,
+        ?request_options: Scalar::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        slug: String,
+        commit_sha: String,
+        config_path: String,
+        preview: bool,
+        request_options: Scalar::RequestOptions
+      }
+    end
+  end
+end

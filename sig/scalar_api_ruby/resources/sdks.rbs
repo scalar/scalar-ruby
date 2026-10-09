@@ -1,0 +1,51 @@
+module Scalar
+  module Resources
+    class Sdks
+      attr_reader versions: Scalar::Resources::Sdks::Versions
+
+      attr_reader repositories: Scalar::Resources::Sdks::Repositories
+
+      def create: (
+        api_uid: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
+        ?class_name: String,
+        ?config: String,
+        ?slug: String,
+        ?title: String,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::UID
+
+      def retrieve: (
+        String uid,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Sdk
+
+      def update: (
+        String uid,
+        ?api_uid: String?,
+        ?api_version: String?,
+        ?config: String,
+        ?is_private: bool,
+        ?slug: String,
+        ?title: String,
+        ?request_options: Scalar::request_opts
+      ) -> top
+
+      def list: (
+        ?limit: Integer,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Models::SdkListResponse
+
+      def delete: (String uid, ?request_options: Scalar::request_opts) -> top
+
+      def build: (
+        String uid,
+        ?languages: ::Array[Scalar::Models::SdkBuildParams::language],
+        ?version: String,
+        ?request_options: Scalar::request_opts
+      ) -> Scalar::Models::SdkBuildResponse
+
+      def initialize: (client: Scalar::Client) -> void
+    end
+  end
+end

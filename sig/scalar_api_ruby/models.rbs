@@ -1,0 +1,205 @@
+module Scalar
+  class AccessGroup = Scalar::Models::AccessGroup
+
+  class AccessGroupCreateParams = Scalar::Models::AccessGroupCreateParams
+
+  class AccessGroupDeleteParams = Scalar::Models::AccessGroupDeleteParams
+
+  class AccessGroupName = Scalar::Models::AccessGroupName
+
+  class AccessGroupRetrieveParams = Scalar::Models::AccessGroupRetrieveParams
+
+  module AccessGroups = Scalar::Models::AccessGroups
+
+  class AccessGroupUpdateParams = Scalar::Models::AccessGroupUpdateParams
+
+  class ActiveDeployment = Scalar::Models::ActiveDeployment
+
+  class APIDocument = Scalar::Models::APIDocument
+
+  class AuthenticationExchangePersonalTokenParams = Scalar::Models::AuthenticationExchangePersonalTokenParams
+
+  class AuthenticationListCurrentUserParams = Scalar::Models::AuthenticationListCurrentUserParams
+
+  class DocsProject = Scalar::Models::DocsProject
+
+  class GithubProject = Scalar::Models::GithubProject
+
+  class GithubProjectRepository = Scalar::Models::GithubProjectRepository
+
+  class LoginPortal = Scalar::Models::LoginPortal
+
+  class LoginPortalCreateParams = Scalar::Models::LoginPortalCreateParams
+
+  class LoginPortalDeleteParams = Scalar::Models::LoginPortalDeleteParams
+
+  class LoginPortalEmail = Scalar::Models::LoginPortalEmail
+
+  class LoginPortalListParams = Scalar::Models::LoginPortalListParams
+
+  class LoginPortalPage = Scalar::Models::LoginPortalPage
+
+  class LoginPortalRetrieveParams = Scalar::Models::LoginPortalRetrieveParams
+
+  class LoginPortalUpdateParams = Scalar::Models::LoginPortalUpdateParams
+
+  class ManagedDocVersion = Scalar::Models::ManagedDocVersion
+
+  class ManagedSchemaVersion = Scalar::Models::ManagedSchemaVersion
+
+  module Mcp = Scalar::Models::Mcp
+
+  class Method = Scalar::Models::Method
+
+  class Namespace = Scalar::Models::Namespace
+
+  class NamespaceListParams = Scalar::Models::NamespaceListParams
+
+  class Nanoid = Scalar::Models::Nanoid
+
+  class RegistryCreateAPIDocumentAccessGroupParams = Scalar::Models::RegistryCreateAPIDocumentAccessGroupParams
+
+  class RegistryCreateAPIDocumentParams = Scalar::Models::RegistryCreateAPIDocumentParams
+
+  class RegistryCreateAPIDocumentVersionParams = Scalar::Models::RegistryCreateAPIDocumentVersionParams
+
+  class RegistryDeleteAPIDocumentAccessGroupParams = Scalar::Models::RegistryDeleteAPIDocumentAccessGroupParams
+
+  class RegistryDeleteAPIDocumentParams = Scalar::Models::RegistryDeleteAPIDocumentParams
+
+  class RegistryDeleteAPIDocumentVersionParams = Scalar::Models::RegistryDeleteAPIDocumentVersionParams
+
+  class RegistryListAllAPIDocumentsParams = Scalar::Models::RegistryListAllAPIDocumentsParams
+
+  class RegistryListAPIDocumentsParams = Scalar::Models::RegistryListAPIDocumentsParams
+
+  class RegistryListAPIDocumentVersionMetadataParams = Scalar::Models::RegistryListAPIDocumentVersionMetadataParams
+
+  class RegistryRetrieveAPIDocumentVersionParams = Scalar::Models::RegistryRetrieveAPIDocumentVersionParams
+
+  class RegistryUpdateAPIDocumentParams = Scalar::Models::RegistryUpdateAPIDocumentParams
+
+  class RegistryUpdateAPIDocumentVersionParams = Scalar::Models::RegistryUpdateAPIDocumentVersionParams
+
+  class Rule = Scalar::Models::Rule
+
+  class RuleCreateRulesetAccessGroupParams = Scalar::Models::RuleCreateRulesetAccessGroupParams
+
+  class RuleCreateRulesetParams = Scalar::Models::RuleCreateRulesetParams
+
+  class RuleDeleteRulesetAccessGroupParams = Scalar::Models::RuleDeleteRulesetAccessGroupParams
+
+  class RuleDeleteRulesetParams = Scalar::Models::RuleDeleteRulesetParams
+
+  class RuleListRulesetsParams = Scalar::Models::RuleListRulesetsParams
+
+  class RuleRetrieveRulesetDocumentParams = Scalar::Models::RuleRetrieveRulesetDocumentParams
+
+  class RuleUpdateRulesetParams = Scalar::Models::RuleUpdateRulesetParams
+
+  class ScalarDocCreateGuideParams = Scalar::Models::ScalarDocCreateGuideParams
+
+  class ScalarDocCreateProjectParams = Scalar::Models::ScalarDocCreateProjectParams
+
+  class ScalarDocDeleteProjectParams = Scalar::Models::ScalarDocDeleteProjectParams
+
+  class ScalarDocListGuidesParams = Scalar::Models::ScalarDocListGuidesParams
+
+  class ScalarDocListProjectConfigParams = Scalar::Models::ScalarDocListProjectConfigParams
+
+  class ScalarDocListProjectDomainParams = Scalar::Models::ScalarDocListProjectDomainParams
+
+  class ScalarDocListProjectDomainStatusParams = Scalar::Models::ScalarDocListProjectDomainStatusParams
+
+  class ScalarDocListProjectsParams = Scalar::Models::ScalarDocListProjectsParams
+
+  class ScalarDocPublishGuideParams = Scalar::Models::ScalarDocPublishGuideParams
+
+  class ScalarDocPublishProjectParams = Scalar::Models::ScalarDocPublishProjectParams
+
+  class ScalarDocRetrieveProjectParams = Scalar::Models::ScalarDocRetrieveProjectParams
+
+  class ScalarDocUpdateProjectConfigParams = Scalar::Models::ScalarDocUpdateProjectConfigParams
+
+  class ScalarDocUpdateProjectParams = Scalar::Models::ScalarDocUpdateProjectParams
+
+  class Schema = Scalar::Models::Schema
+
+  class SchemaCreateParams = Scalar::Models::SchemaCreateParams
+
+  class SchemaDeleteParams = Scalar::Models::SchemaDeleteParams
+
+  class SchemaListParams = Scalar::Models::SchemaListParams
+
+  module Schemas = Scalar::Models::Schemas
+
+  class SchemaUpdateParams = Scalar::Models::SchemaUpdateParams
+
+  class Sdk = Scalar::Models::Sdk
+
+  class SdkBuildParams = Scalar::Models::SdkBuildParams
+
+  class SdkCreateParams = Scalar::Models::SdkCreateParams
+
+  class SdkDeleteParams = Scalar::Models::SdkDeleteParams
+
+  class SdkListParams = Scalar::Models::SdkListParams
+
+  class SdkRetrieveParams = Scalar::Models::SdkRetrieveParams
+
+  module Sdks = Scalar::Models::Sdks
+
+  class SdkTargetSummary = Scalar::Models::SdkTargetSummary
+
+  class SdkUpdateParams = Scalar::Models::SdkUpdateParams
+
+  class SdkVersion = Scalar::Models::SdkVersion
+
+  class Slug = Scalar::Models::Slug
+
+  class Team = Scalar::Models::Team
+
+  class TeamImage = Scalar::Models::TeamImage
+
+  class TeamListParams = Scalar::Models::TeamListParams
+
+  class TeamName = Scalar::Models::TeamName
+
+  module Teams = Scalar::Models::Teams
+
+  class TeamSummary = Scalar::Models::TeamSummary
+
+  class Theme = Scalar::Models::Theme
+
+  class ThemeCreateParams = Scalar::Models::ThemeCreateParams
+
+  class ThemeDeleteParams = Scalar::Models::ThemeDeleteParams
+
+  class ThemeListParams = Scalar::Models::ThemeListParams
+
+  class ThemeReplaceDocumentParams = Scalar::Models::ThemeReplaceDocumentParams
+
+  class ThemeRetrieveParams = Scalar::Models::ThemeRetrieveParams
+
+  class ThemeUpdateParams = Scalar::Models::ThemeUpdateParams
+
+  class Timestamp = Scalar::Models::Timestamp
+
+  class UID = Scalar::Models::UID
+
+  class User = Scalar::Models::User
+
+  class Value400 = Scalar::Models::Value400
+
+  class Value401 = Scalar::Models::Value401
+
+  class Value403 = Scalar::Models::Value403
+
+  class Value404 = Scalar::Models::Value404
+
+  class Value422 = Scalar::Models::Value422
+
+  class Value500 = Scalar::Models::Value500
+
+  class Version = Scalar::Models::Version
+end

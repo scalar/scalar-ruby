@@ -1,0 +1,40 @@
+module Scalar
+  module Resources
+    class Mcp
+      class Servers
+        attr_reader installations: Scalar::Resources::Mcp::Servers::Installations
+
+        def create: (
+          name: String,
+          ?project_uids: ::Array[String],
+          ?slug: String,
+          ?version_uids: ::Array[String],
+          ?request_options: Scalar::request_opts
+        ) -> Scalar::Models::Mcp::ServerCreateResponse
+
+        def retrieve: (
+          String id,
+          ?request_options: Scalar::request_opts
+        ) -> Scalar::Mcp::McpServer
+
+        def update: (
+          String id,
+          ?auto_add_operations: bool,
+          ?docs_pages: ::Array[String],
+          ?name: String,
+          ?operations: ::Array[String],
+          ?slug: String,
+          ?request_options: Scalar::request_opts
+        ) -> Scalar::Mcp::McpServer
+
+        def list: (
+          ?request_options: Scalar::request_opts
+        ) -> ::Array[Scalar::Mcp::McpServer]
+
+        def delete: (String id, ?request_options: Scalar::request_opts) -> top
+
+        def initialize: (client: Scalar::Client) -> void
+      end
+    end
+  end
+end

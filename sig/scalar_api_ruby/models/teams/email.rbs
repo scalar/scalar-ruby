@@ -1,0 +1,7 @@
+module Scalar
+  module Models
+    module Teams
+      class Email = String
+    end
+  end
+end
