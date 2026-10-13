@@ -80,6 +80,9 @@ module Scalar
       sig { params(typesense_id: Float).void }
       attr_writer :typesense_id
 
+      sig { returns(T.nilable(String)) }
+      attr_accessor :user_info_hook_secret_uid
+
       sig do
         params(
           access_groups: String,
@@ -100,7 +103,8 @@ module Scalar
           updated_at: Integer,
           user_info_hook_url: String,
           repository: T.nilable(Scalar::GithubProjectRepository::OrHash),
-          typesense_id: Float
+          typesense_id: Float,
+          user_info_hook_secret_uid: T.nilable(String)
         ).returns(T.attached_class)
       end
       def self.new(
@@ -122,7 +126,8 @@ module Scalar
         updated_at:,
         user_info_hook_url:,
         repository: nil,
-        typesense_id: nil
+        typesense_id: nil,
+        user_info_hook_secret_uid: nil
       )
       end
 
@@ -147,7 +152,8 @@ module Scalar
             updated_at: Integer,
             user_info_hook_url: String,
             repository: T.nilable(Scalar::GithubProjectRepository),
-            typesense_id: Float
+            typesense_id: Float,
+            user_info_hook_secret_uid: T.nilable(String)
           }
         )
       end

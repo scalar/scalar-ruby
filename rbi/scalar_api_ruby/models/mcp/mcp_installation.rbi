@@ -20,9 +20,6 @@ module Scalar
         sig { returns(T::Boolean) }
         attr_accessor :credential_redaction_enabled
 
-        sig { returns(T::Boolean) }
-        attr_accessor :is_private
-
         sig { returns(T.nilable(String)) }
         attr_accessor :login_portal_uid
 
@@ -46,7 +43,6 @@ module Scalar
             id: String,
             access_groups: T::Array[String],
             credential_redaction_enabled: T::Boolean,
-            is_private: T::Boolean,
             login_portal_uid: T.nilable(String),
             mcp_server_id: String,
             mcp_version: T.nilable(String),
@@ -59,7 +55,6 @@ module Scalar
           id:,
           access_groups:,
           credential_redaction_enabled:,
-          is_private:,
           login_portal_uid:,
           mcp_server_id:,
           mcp_version:,
@@ -75,7 +70,6 @@ module Scalar
               id: String,
               access_groups: T::Array[String],
               credential_redaction_enabled: T::Boolean,
-              is_private: T::Boolean,
               login_portal_uid: T.nilable(String),
               mcp_server_id: String,
               mcp_version: T.nilable(String),

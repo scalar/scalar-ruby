@@ -86,7 +86,6 @@
 - `mcp.servers.update(...)` — `PATCH /v1/mcp/servers/{id}`
 - `mcp.servers.list(...)` — `GET /v1/mcp/servers`
 - `mcp.servers.delete(...)` — `DELETE /v1/mcp/servers/{id}`
-- `mcp.servers.installations.create(...)` — `POST /v1/mcp/servers/{id}/installations`
 - `mcp.servers.installations.retrieve(...)` — `GET /v1/mcp/servers/{id}/installations/{installationId}`
 - `mcp.servers.installations.update(...)` — `PATCH /v1/mcp/servers/{id}/installations/{installationId}`
 - `mcp.servers.installations.list(...)` — `GET /v1/mcp/servers/{id}/installations`

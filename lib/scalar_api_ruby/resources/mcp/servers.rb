@@ -55,10 +55,9 @@ module Scalar
 
         # Update MCP server metadata and which tools it exposes.
         #
-        # @overload update(id, auto_add_operations: nil, docs_pages: nil, name: nil, operations: nil, slug: nil, request_options: {})
+        # @overload update(id, docs_pages: nil, name: nil, operations: nil, slug: nil, request_options: {})
         #
         # @param id [String]
-        # @param auto_add_operations [Boolean]
         # @param docs_pages [Array<String>]
         # @param name [String]
         # @param operations [Array<String>]
