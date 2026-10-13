@@ -20,7 +20,8 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         repository: Scalar::GithubProjectRepository?,
-        typesense_id: Float
+        typesense_id: Float,
+        user_info_hook_secret_uid: String?
       }
 
     class GithubProject < Scalar::Internal::Type::BaseModel
@@ -64,6 +65,8 @@ module Scalar
 
       def typesense_id=: (Float) -> Float
 
+      attr_accessor user_info_hook_secret_uid: String?
+
       def initialize: (
         access_groups: String,
         active_deployment: Scalar::ActiveDeployment?,
@@ -83,7 +86,8 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         ?repository: Scalar::GithubProjectRepository?,
-        ?typesense_id: Float
+        ?typesense_id: Float,
+        ?user_info_hook_secret_uid: String?
       ) -> void
 
       def to_hash: -> {
@@ -105,7 +109,8 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         repository: Scalar::GithubProjectRepository?,
-        typesense_id: Float
+        typesense_id: Float,
+        user_info_hook_secret_uid: String?
       }
     end
   end
