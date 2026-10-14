@@ -38,6 +38,8 @@ module Scalar
 
     private def auth_headers: -> ::Hash[String, String]
 
+    private def auth_header_keys: -> ::Array[String]
+
     def initialize: (
       ?bearer_auth: String?,
       ?o_auth2: String?,

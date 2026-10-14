@@ -96,10 +96,18 @@ module Scalar
             params(
               request: Scalar::Internal::Transport::BaseClient::RequestInput,
               status: Integer,
-              response_headers: T::Hash[String, String]
+              response_headers: T::Hash[String, String],
+              base_url: URI::Generic,
+              credential_headers: T::Array[String]
             ).returns(Scalar::Internal::Transport::BaseClient::RequestInput)
           end
-          def follow_redirect(request, status:, response_headers:)
+          def follow_redirect(
+            request,
+            status:,
+            response_headers:,
+            base_url:,
+            credential_headers:
+          )
           end
 
           # @api private
@@ -174,6 +182,11 @@ module Scalar
         # @api private
         sig { overridable.returns(T::Hash[String, String]) }
         private def auth_headers
+        end
+
+        # @api private
+        sig { overridable.returns(T::Array[String]) }
+        private def auth_header_keys
         end
 
         # @api private

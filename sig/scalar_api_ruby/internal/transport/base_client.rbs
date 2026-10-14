@@ -48,7 +48,9 @@ module Scalar
         def self.follow_redirect: (
           Scalar::Internal::Transport::BaseClient::request_input request,
           status: Integer,
-          response_headers: ::Hash[String, String]
+          response_headers: ::Hash[String, String],
+          base_url: URI::Generic,
+          credential_headers: ::Array[String]
         ) -> Scalar::Internal::Transport::BaseClient::request_input
 
         def self.reap_connection!: (
@@ -86,6 +88,8 @@ module Scalar
         ) -> void
 
         private def auth_headers: -> ::Hash[String, String]
+
+        private def auth_header_keys: -> ::Array[String]
 
         private def user_agent: -> String
 
