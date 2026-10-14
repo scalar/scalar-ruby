@@ -135,11 +135,12 @@ module Scalar
         #
         # @return [Object]
         def coerce(value, state:)
+          # Even discriminator-selected variants return through ensure below.
+          strictness = state.fetch(:strictness)
           if (target = resolve_variant(value))
             return Scalar::Internal::Type::Converter.coerce(target, value, state: state)
           end
 
-          strictness = state.fetch(:strictness)
           exactness = state.fetch(:exactness)
 
           alternatives = []

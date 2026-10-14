@@ -2,7 +2,7 @@ module Scalar
   module Models
     type github_project =
       {
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
@@ -25,7 +25,7 @@ module Scalar
       }
 
     class GithubProject < Scalar::Internal::Type::BaseModel
-      attr_accessor access_groups: String
+      attr_accessor access_groups: top
 
       attr_accessor active_deployment: Scalar::ActiveDeployment?
 
@@ -68,7 +68,7 @@ module Scalar
       attr_accessor user_info_hook_secret_uid: String?
 
       def initialize: (
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
@@ -91,7 +91,7 @@ module Scalar
       ) -> void
 
       def to_hash: -> {
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
