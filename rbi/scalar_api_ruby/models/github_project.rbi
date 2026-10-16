@@ -6,7 +6,7 @@ module Scalar
       OrHash =
         T.type_alias { T.any(Scalar::GithubProject, Scalar::Internal::AnyHash) }
 
-      sig { returns(String) }
+      sig { returns(T.anything) }
       attr_accessor :access_groups
 
       sig { returns(T.nilable(Scalar::ActiveDeployment)) }
@@ -80,9 +80,12 @@ module Scalar
       sig { params(typesense_id: Float).void }
       attr_writer :typesense_id
 
+      sig { returns(T.nilable(String)) }
+      attr_accessor :user_info_hook_secret_uid
+
       sig do
         params(
-          access_groups: String,
+          access_groups: T.anything,
           active_deployment: T.nilable(Scalar::ActiveDeployment::OrHash),
           active_theme_id: String,
           agent_enabled: T::Boolean,
@@ -100,7 +103,8 @@ module Scalar
           updated_at: Integer,
           user_info_hook_url: String,
           repository: T.nilable(Scalar::GithubProjectRepository::OrHash),
-          typesense_id: Float
+          typesense_id: Float,
+          user_info_hook_secret_uid: T.nilable(String)
         ).returns(T.attached_class)
       end
       def self.new(
@@ -122,14 +126,15 @@ module Scalar
         updated_at:,
         user_info_hook_url:,
         repository: nil,
-        typesense_id: nil
+        typesense_id: nil,
+        user_info_hook_secret_uid: nil
       )
       end
 
       sig do
         override.returns(
           {
-            access_groups: String,
+            access_groups: T.anything,
             active_deployment: T.nilable(Scalar::ActiveDeployment),
             active_theme_id: String,
             agent_enabled: T::Boolean,
@@ -147,7 +152,8 @@ module Scalar
             updated_at: Integer,
             user_info_hook_url: String,
             repository: T.nilable(Scalar::GithubProjectRepository),
-            typesense_id: Float
+            typesense_id: Float,
+            user_info_hook_secret_uid: T.nilable(String)
           }
         )
       end

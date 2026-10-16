@@ -5,8 +5,8 @@ module Scalar
     class GithubProject < Scalar::Internal::Type::BaseModel
       # @!attribute access_groups
       #
-      #   @return [String]
-      required :access_groups, String, api_name: :accessGroups
+      #   @return [Object]
+      required :access_groups, Scalar::Internal::Type::Unknown, api_name: :accessGroups
 
       # @!attribute active_deployment
       #
@@ -98,8 +98,13 @@ module Scalar
       #   @return [Float, nil]
       optional :typesense_id, Float, api_name: :typesenseId
 
-      # @!method initialize(access_groups:, active_deployment:, active_theme_id:, agent_enabled:, analytics_enabled:, created_at:, is_private:, last_published:, last_published_uid:, login_portal_uid:, name:, publish_message:, publish_status:, slug:, uid:, updated_at:, user_info_hook_url:, repository: nil, typesense_id: nil)
-      #   @param access_groups [String]
+      # @!attribute user_info_hook_secret_uid
+      #
+      #   @return [String, nil]
+      optional :user_info_hook_secret_uid, String, api_name: :userInfoHookSecretUid, nil?: true
+
+      # @!method initialize(access_groups:, active_deployment:, active_theme_id:, agent_enabled:, analytics_enabled:, created_at:, is_private:, last_published:, last_published_uid:, login_portal_uid:, name:, publish_message:, publish_status:, slug:, uid:, updated_at:, user_info_hook_url:, repository: nil, typesense_id: nil, user_info_hook_secret_uid: nil)
+      #   @param access_groups [Object]
       #   @param active_deployment [Scalar::Models::ActiveDeployment, nil]
       #   @param active_theme_id [String]
       #   @param agent_enabled [Boolean]
@@ -118,6 +123,7 @@ module Scalar
       #   @param user_info_hook_url [String]
       #   @param repository [Scalar::Models::GithubProjectRepository, nil]
       #   @param typesense_id [Float]
+      #   @param user_info_hook_secret_uid [String, nil]
     end
   end
 end
