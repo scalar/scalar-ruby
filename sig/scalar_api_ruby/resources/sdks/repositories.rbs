@@ -22,8 +22,11 @@ module Scalar
           uid: String,
           publish_on_merge: bool,
           ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          ?artifact_id: String,
           ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?registry: String,
           ?tag: String,
+          ?tap_repo: String,
           ?request_options: Scalar::request_opts
         ) -> top
 

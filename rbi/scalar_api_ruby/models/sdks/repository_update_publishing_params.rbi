@@ -45,6 +45,12 @@ module Scalar
         end
         attr_writer :access
 
+        sig { returns(T.nilable(String)) }
+        attr_reader :artifact_id
+
+        sig { params(artifact_id: String).void }
+        attr_writer :artifact_id
+
         sig do
           returns(
             T.nilable(
@@ -63,10 +69,22 @@ module Scalar
         attr_writer :auth_method
 
         sig { returns(T.nilable(String)) }
+        attr_reader :registry
+
+        sig { params(registry: String).void }
+        attr_writer :registry
+
+        sig { returns(T.nilable(String)) }
         attr_reader :tag
 
         sig { params(tag: String).void }
         attr_writer :tag
+
+        sig { returns(T.nilable(String)) }
+        attr_reader :tap_repo
+
+        sig { params(tap_repo: String).void }
+        attr_writer :tap_repo
 
         sig do
           params(
@@ -76,9 +94,12 @@ module Scalar
             publish_on_merge: T::Boolean,
             access:
               Scalar::Sdks::RepositoryUpdatePublishingParams::Access::OrSymbol,
+            artifact_id: String,
             auth_method:
               Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+            registry: String,
             tag: String,
+            tap_repo: String,
             request_options: Scalar::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
@@ -87,8 +108,11 @@ module Scalar
           language:,
           publish_on_merge:,
           access: nil,
+          artifact_id: nil,
           auth_method: nil,
+          registry: nil,
           tag: nil,
+          tap_repo: nil,
           request_options: {}
         )
         end
@@ -102,9 +126,12 @@ module Scalar
               publish_on_merge: T::Boolean,
               access:
                 Scalar::Sdks::RepositoryUpdatePublishingParams::Access::OrSymbol,
+              artifact_id: String,
               auth_method:
                 Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+              registry: String,
               tag: String,
+              tap_repo: String,
               request_options: Scalar::RequestOptions
             }
           )

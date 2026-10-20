@@ -1022,8 +1022,11 @@ cases = [
           uid: "UakgbKJ5m9gl0JDMbcJqL",
           publish_on_merge: true,
           access: "public",
+          artifact_id: StringIO.new("smoke-test"),
           auth_method: "oidc",
-          tag: "latest"
+          registry: "npm",
+          tag: "latest",
+          tap_repo: "scalar/homebrew-tap"
         }
       )
     end
