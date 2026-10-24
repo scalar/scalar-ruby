@@ -86,8 +86,14 @@ module Scalar
           #
           # @param response_headers [Hash{String=>String}]
           #
+          # @param base_url [URI::Generic] the client's base URL, whose origin is the only one its
+          #   credentials belong to
+          #
+          # @param credential_headers [Array<String>] lowercase names of the client's header
+          #   credentials, its `auth_header_keys`
+          #
           # @return [Hash{Symbol=>Object}]
-          def follow_redirect(request, status:, response_headers:)
+          def follow_redirect(request, status:, response_headers:, base_url:, credential_headers:)
             method, url, headers = request.fetch_values(:method, :url, :headers)
             location =
               Kernel.then do
@@ -132,6 +138,15 @@ module Scalar
             if Scalar::Internal::Util.uri_origin(url) != Scalar::Internal::Util.uri_origin(location)
               drop = %w[authorization cookie host proxy-authorization]
               request = {**request, headers: request.fetch(:headers).except(*drop)}
+            end
+
+            # The list above only knows the standard credential headers, so an API key sent in a
+            # header of its own (`x-api-key`) would otherwise follow any redirect to a foreign host,
+            # and a 307/308 would carry the method and body with it. The drop is sticky: nothing
+            # re-adds a header once it is gone, so a chain that returns to the client's origin after
+            # a foreign hop still arrives without it.
+            if Scalar::Internal::Util.uri_origin(base_url) != Scalar::Internal::Util.uri_origin(location)
+              request = {**request, headers: request.fetch(:headers).except(*credential_headers)}
             end
 
             request
@@ -219,6 +234,15 @@ module Scalar
         #
         # @return [Hash{String=>String}]
         private def auth_headers = {}
+
+        # @api private
+        #
+        # Lowercased names of every header credential `auth_headers` can write, whether or not the
+        # client holds a value for it. A redirect that leaves the base URL's origin drops these, so a
+        # key passed per call through `extra_headers` is dropped the same as one the client holds.
+        #
+        # @return [Array<String>]
+        private def auth_header_keys = []
 
         # @api private
         #
@@ -395,7 +419,14 @@ module Scalar
           in 300..399
             self.class.reap_connection!(status, stream: stream)
 
-            request = self.class.follow_redirect(request, status: status, response_headers: headers)
+            request =
+              self.class.follow_redirect(
+                request,
+                status: status,
+                response_headers: headers,
+                base_url: @base_url,
+                credential_headers: auth_header_keys
+              )
             send_request(
               request,
               redirect_count: redirect_count + 1,

@@ -6,7 +6,6 @@ module Scalar
       type mcp_server =
         {
           id: String,
-          auto_add_operations: bool,
           created_at: String,
           name: String,
           slug: String,
@@ -15,8 +14,6 @@ module Scalar
 
       class McpServer < Scalar::Internal::Type::BaseModel
         attr_accessor id: String
-
-        attr_accessor auto_add_operations: bool
 
         attr_accessor created_at: String
 
@@ -28,7 +25,6 @@ module Scalar
 
         def initialize: (
           id: String,
-          auto_add_operations: bool,
           created_at: String,
           name: String,
           slug: String,
@@ -37,7 +33,6 @@ module Scalar
 
         def to_hash: -> {
           id: String,
-          auto_add_operations: bool,
           created_at: String,
           name: String,
           slug: String,

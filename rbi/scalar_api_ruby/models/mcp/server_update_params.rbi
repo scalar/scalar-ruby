@@ -15,12 +15,6 @@ module Scalar
         sig { returns(String) }
         attr_accessor :id
 
-        sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :auto_add_operations
-
-        sig { params(auto_add_operations: T::Boolean).void }
-        attr_writer :auto_add_operations
-
         sig { returns(T.nilable(T::Array[String])) }
         attr_reader :docs_pages
 
@@ -48,7 +42,6 @@ module Scalar
         sig do
           params(
             id: String,
-            auto_add_operations: T::Boolean,
             docs_pages: T::Array[String],
             name: String,
             operations: T::Array[String],
@@ -58,7 +51,6 @@ module Scalar
         end
         def self.new(
           id:,
-          auto_add_operations: nil,
           docs_pages: nil,
           name: nil,
           operations: nil,
@@ -71,7 +63,6 @@ module Scalar
           override.returns(
             {
               id: String,
-              auto_add_operations: T::Boolean,
               docs_pages: T::Array[String],
               name: String,
               operations: T::Array[String],

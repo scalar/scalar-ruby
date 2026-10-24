@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.3.0](https://github.com/scalar/scalar-ruby/compare/v0.2.0...v0.3.0) (2026-10-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** Added required property `github_project.chatInsightsEnabled`.
+* **api:** 3 breaking changes to the SDK surface.
+    - Property `api_document.tags` type changed from `string` to `unknown`.
+    - Property `github_project.accessGroups` type changed from `string` to `unknown`.
+    - Property `docs_project.accessGroups` type changed from `string` to `unknown`.
+* **api:** 8 breaking changes to the SDK surface.
+    - Removed body field `autoAddOperations` from `mcp.servers.update`.
+    - Removed body field `isPrivate` from `mcp.servers.installations.update`.
+    - Removed body field `loginPortalUid` from `mcp.servers.installations.update`.
+    - Removed body field `documentAuth` from `mcp.servers.installations.update`.
+    - Removed operation `mcp.servers.installations.create` (`POST /v1/mcp/servers/{id}/installations`).
+    - Removed required property `mcp_server.autoAddOperations`.
+    - Removed required property `mcp_installation.isPrivate`.
+    - Removed required property `mcp_installation_list_item.isPrivate`.
+
+### Features
+
+* **api:** add property github_project.chatInsightsEnabled ([1acf1ad](https://github.com/scalar/scalar-ruby/commit/1acf1adc46ed34f558192d2f390a91c65e81b002))
+* **api:** update property api_document.tags (+3 more changes) ([cc500dd](https://github.com/scalar/scalar-ruby/commit/cc500dd9100311ce4fc7c9bc3324b376660b0dd2))
+* **api:** update SDK surface (14 changes) ([637c4b1](https://github.com/scalar/scalar-ruby/commit/637c4b1ec12d07468051b91ce9d3e2f2a7a65cd9))
+* **api:** update SDK surface (4 changes) ([3d717a5](https://github.com/scalar/scalar-ruby/commit/3d717a527d015d58902aa90c23acf4b9a2ef676c))
+
+
+### Chores
+
+* **api:** regenerate SDK ([5834062](https://github.com/scalar/scalar-ruby/commit/58340624e19ec64e59b11426a79d5ff2eedf96fc))
+* **api:** regenerate SDK ([ef2020a](https://github.com/scalar/scalar-ruby/commit/ef2020a155d2a459c1d5681803fb7ae27e32d6ab))
+* **api:** update generated SDK content ([c0790e6](https://github.com/scalar/scalar-ruby/commit/c0790e6e73dcebdfe0b1e74fbe618e19a610dfc7))
+
 ## [0.2.0](https://github.com/scalar/scalar-ruby/compare/v0.1.1...v0.2.0) (2026-10-09)
 
 

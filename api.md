@@ -110,7 +110,6 @@ Complete reference of every operation, grouped by resource. See [the README](./R
     - [Delete an MCP server](#delete-an-mcp-server)
     - [`Mcp Servers Installations`](#mcp-servers-installations)
       - [List installations](#list-installations)
-      - [Create an installation](#create-an-installation)
       - [Get an installation](#get-an-installation)
       - [Update an installation](#update-an-installation)
       - [Delete an installation](#delete-an-installation)
@@ -1338,7 +1337,7 @@ Toggle publish-on-merge and the release settings for a linked target.
 | Request | [`RepositoryUpdatePublishingParams`](././lib/scalar_api_ruby/models/sdks/repository_update_publishing_params.rb) |
 
 ```ruby
-response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", auth_method: "oidc", tag: "latest" })
+response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: StringIO.new("smoke-test"), auth_method: "oidc", registry: "npm", tag: "latest", tap_repo: "scalar/homebrew-tap" })
 
 puts response.inspect
 ```
@@ -1404,7 +1403,7 @@ Update MCP server metadata and which tools it exposes.
 | Response | [`Mcp::McpServer`](././lib/scalar_api_ruby/models/mcp/mcp_server.rb) |
 
 ```ruby
-response = client.mcp.servers.update("42", { auto_add_operations: true, docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api" })
+response = client.mcp.servers.update("42", { docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api" })
 
 puts response.inspect
 ```
@@ -1442,24 +1441,9 @@ response = client.mcp.servers.installations.list("42")
 puts response.inspect
 ```
 
-##### Create an installation
-
-Create an installation of an MCP server. `documentAuth` holds the credentials the server presents to the upstream API and is never returned.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationCreateParams`](././lib/scalar_api_ruby/models/mcp/servers/installation_create_params.rb) |
-| Response | [`Mcp::McpInstallation`](././lib/scalar_api_ruby/models/mcp/mcp_installation.rb) |
-
-```ruby
-response = client.mcp.servers.installations.create("42", { document_auth: {  }, name: "Acme MCP", slug: "acme-api" })
-
-puts response.inspect
-```
-
 ##### Get an installation
 
-Get a single installation of an MCP server.
+Get a single installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1474,7 +1458,7 @@ puts response.inspect
 
 ##### Update an installation
 
-Update an installation. Set `isPrivate` and add access groups to put it behind a login.
+Update an installation. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1482,14 +1466,14 @@ Update an installation. Set `isPrivate` and add access groups to put it behind a
 | Response | [`Mcp::McpInstallation`](././lib/scalar_api_ruby/models/mcp/mcp_installation.rb) |
 
 ```ruby
-response = client.mcp.servers.installations.update("84", { id: "42", document_auth: {  }, is_private: false, login_portal_uid: "", mcp_version: "", name: "Acme MCP", slug: "acme-api" })
+response = client.mcp.servers.installations.update("84", { id: "42", mcp_version: "", name: "Acme MCP", slug: "acme-api" })
 
 puts response.inspect
 ```
 
 ##### Delete an installation
 
-Delete an installation of an MCP server.
+Delete an installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1503,7 +1487,7 @@ puts response.inspect
 
 ##### Add an access group
 
-Let an access group reach a private installation.
+Let an access group reach a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1517,7 +1501,7 @@ puts response.inspect
 
 ##### Remove an access group
 
-Stop an access group reaching a private installation.
+Stop an access group reaching a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
