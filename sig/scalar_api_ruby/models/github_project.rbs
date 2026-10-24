@@ -7,6 +7,7 @@ module Scalar
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
@@ -34,6 +35,8 @@ module Scalar
       attr_accessor agent_enabled: bool
 
       attr_accessor analytics_enabled: bool
+
+      attr_accessor chat_insights_enabled: bool
 
       attr_accessor created_at: Integer
 
@@ -73,6 +76,7 @@ module Scalar
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
@@ -96,6 +100,7 @@ module Scalar
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
