@@ -28,6 +28,9 @@ module Scalar
       sig { returns(T::Boolean) }
       attr_accessor :analytics_enabled
 
+      sig { returns(T::Boolean) }
+      attr_accessor :chat_insights_enabled
+
       sig { returns(Integer) }
       attr_accessor :created_at
 
@@ -90,6 +93,7 @@ module Scalar
           active_theme_id: String,
           agent_enabled: T::Boolean,
           analytics_enabled: T::Boolean,
+          chat_insights_enabled: T::Boolean,
           created_at: Integer,
           is_private: T::Boolean,
           last_published: T.nilable(Integer),
@@ -113,6 +117,7 @@ module Scalar
         active_theme_id:,
         agent_enabled:,
         analytics_enabled:,
+        chat_insights_enabled:,
         created_at:,
         is_private:,
         last_published:,
@@ -139,6 +144,7 @@ module Scalar
             active_theme_id: String,
             agent_enabled: T::Boolean,
             analytics_enabled: T::Boolean,
+            chat_insights_enabled: T::Boolean,
             created_at: Integer,
             is_private: T::Boolean,
             last_published: T.nilable(Integer),
