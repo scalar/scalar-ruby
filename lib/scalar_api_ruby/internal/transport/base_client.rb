@@ -12,6 +12,10 @@ module Scalar
         # from whatwg fetch spec
         MAX_REDIRECTS = 20
 
+        # Longest wait, in seconds, a `retry-after-ms` or `Retry-After` header may ask for before the
+        # client's own backoff is used instead.
+        MAX_RETRY_AFTER = 60
+
         # rubocop:disable Style/MutableConstant
         PLATFORM_HEADERS = {
           "x-scalar-arch" => Scalar::Internal::Util.arch,
@@ -30,7 +34,7 @@ module Scalar
           #
           # @raise [ArgumentError]
           def validate!(req)
-            keys = %i[method path query headers body unwrap page stream model options]
+            keys = %i[method path query headers body unwrap page stream model security options]
             case req
             in Hash
               req.each_key do |k|
@@ -68,6 +72,61 @@ module Scalar
 
           # @api private
           #
+          # The wait in seconds a `retry-after-ms` or `Retry-After` header asks for, when it is a
+          # finite value over zero and at most {MAX_RETRY_AFTER}; otherwise `nil`, and the caller backs
+          # off on its own schedule.
+          #
+          # Both headers come from the server, so neither is trusted: a negative or past value would
+          # make `sleep` raise, and an hour or `1e400` would park the call. `Retry-After` is seconds
+          # or an HTTP date; a date that does not parse is ignored rather than raised.
+          #
+          # @param headers [Hash{String=>String}, Net::HTTPResponse]
+          #
+          # @return [Float, nil]
+          def retry_after(headers)
+            millis = Float(headers["retry-after-ms"], exception: false)
+            if millis&.finite? && millis.positive? && millis <= self::MAX_RETRY_AFTER * 1000
+              return millis / 1000
+            end
+
+            header = headers["retry-after"]
+            return nil if header.nil?
+
+            seconds = Float(header, exception: false)
+            seconds ||=
+              begin
+                Time.httpdate(header.to_s) - Time.now
+              rescue ArgumentError, RangeError
+                nil
+              end
+            seconds.to_f if seconds&.finite? && seconds.positive? && seconds <= self::MAX_RETRY_AFTER
+          end
+
+          # @api private
+          #
+          # Whether a response is a redirect the client follows: a 301, 302, 303, 307 or 308 that
+          # names a `location`, the statuses the fetch spec follows. A 300 only offers choices, a 304
+          # tells a conditional request its copy is current, and a redirect with no `location` names
+          # no target, so `send_request` treats each as the server's answer and raises it as a status
+          # error, as it does a 4xx.
+          #
+          # @param status [Integer]
+          # @param headers [Hash{String=>String}]
+          #
+          # @return [Boolean]
+          def redirect?(status, headers:)
+            case status
+            in 301 | 302 | 303 | 307 | 308
+              # Net::HTTP strips a blank `location` to "", which `URI.join` resolves to the request's
+              # own URL, so it would be re-requested until the redirect limit.
+              !headers["location"].to_s.strip.empty?
+            else
+              false
+            end
+          end
+
+          # @api private
+          #
           # @param request [Hash{Symbol=>Object}] .
           #
           #   @option request [Symbol] :method
@@ -95,10 +154,14 @@ module Scalar
           # @return [Hash{Symbol=>Object}]
           def follow_redirect(request, status:, response_headers:, base_url:, credential_headers:)
             method, url, headers = request.fetch_values(:method, :url, :headers)
+            # `send_request` only passes a response `redirect?` accepted. The rescue covers a call
+            # handed a 3xx with no `location` (`ArgumentError`), and a `location` that is not a valid
+            # URI reference (`URI::Error`), such as one with a space or a bad `%` escape, or two
+            # `Location` headers Net::HTTP joined into "/a, /b".
             location =
               Kernel.then do
                 URI.join(url, response_headers["location"])
-              rescue ArgumentError
+              rescue ArgumentError, URI::Error
                 message = "Server responded with status #{status} but no valid location header."
                 raise Scalar::Errors::APIConnectionError.new(
                   url: url,
@@ -237,6 +300,17 @@ module Scalar
 
         # @api private
         #
+        # The credential headers one request is sent with, given the security requirement groups its
+        # operation passes as `security:` (`nil` for the client's default). A client that scopes its
+        # credentials per operation overrides this; every other one sends all of `auth_headers`.
+        #
+        # @param _security [Array<Array<String>>, nil]
+        #
+        # @return [Hash{String=>String}]
+        private def auth_headers_for(_security) = auth_headers
+
+        # @api private
+        #
         # Lowercased names of every header credential `auth_headers` can write, whether or not the
         # client holds a value for it. A redirect that leaves the base URL's origin drops these, so a
         # key passed per call through `extra_headers` is dropped the same as one the client holds.
@@ -276,6 +350,8 @@ module Scalar
         #
         #   @option req [Scalar::Internal::Type::Converter, Class, nil] :model
         #
+        #   @option req [Array<Array<String>>, nil] :security
+        #
         # @param opts [Hash{Symbol=>Object}] .
         #
         #   @option opts [String, nil] :idempotency_key
@@ -298,13 +374,18 @@ module Scalar
 
           query = Scalar::Internal::Util.deep_merge(req[:query].to_h, opts[:extra_query].to_h)
 
-          headers =
-            Scalar::Internal::Util.normalized_headers(
-              @headers,
-              auth_headers,
-              req[:headers].to_h,
-              opts[:extra_headers].to_h
-            )
+          # The client's defaults, its credentials and the operation's own headers each may carry a
+          # `cookie`, and a plain merge would let the operation's cookie parameters replace the
+          # credential cookie. Those three are merged by cookie name instead; `extra_headers` still
+          # replaces the whole header, as it replaces any other.
+          sources =
+            [@headers, auth_headers_for(req[:security]), req[:headers].to_h].map do
+              Scalar::Internal::Util.normalized_headers(_1)
+            end
+          merged = Scalar::Internal::Util.normalized_headers(*sources)
+          cookie = Scalar::Internal::Util.merge_cookies(*sources.map { _1["cookie"] })
+          merged["cookie"] = cookie unless cookie.nil?
+          headers = Scalar::Internal::Util.normalized_headers(merged, opts[:extra_headers].to_h)
 
           if @idempotency_header && !headers.key?(@idempotency_header) &&
              (!Net::HTTP::IDEMPOTENT_METHODS_.include?(method.to_s.upcase) || opts.key?(:idempotency_key))
@@ -351,20 +432,8 @@ module Scalar
         #
         # @return [Float]
         private def retry_delay(headers, retry_count:)
-          # Non-standard extension
-          span = Float(headers["retry-after-ms"], exception: false)&.then { _1 / 1000 }
-          return span if span
-
-          retry_header = headers["retry-after"]
-          return span if (span = Float(retry_header, exception: false))
-
-          span =
-            retry_header&.then do
-              Time.httpdate(_1) - Time.now
-            rescue ArgumentError
-              nil
-            end
-          return span if span
+          asked = self.class.retry_after(headers)
+          return asked if asked
 
           scale = retry_count**2
           jitter = 1 - (0.25 * rand)
@@ -408,15 +477,17 @@ module Scalar
           end
           headers = Scalar::Internal::Util.normalized_headers(response&.each_header&.to_h)
 
+          redirect = status.is_a?(Integer) && self.class.redirect?(status, headers: headers)
+
           case status
           in ..299
             [status, response, stream]
-          in 300..399 if redirect_count >= self.class::MAX_REDIRECTS
+          in Integer if redirect && redirect_count >= self.class::MAX_REDIRECTS
             self.class.reap_connection!(status, stream: stream)
 
             message = "Failed to complete the request within #{self.class::MAX_REDIRECTS} redirects."
             raise Scalar::Errors::APIConnectionError.new(url: url, response: response, message: message)
-          in 300..399
+          in Integer if redirect
             self.class.reap_connection!(status, stream: stream)
 
             request =
@@ -435,10 +506,19 @@ module Scalar
             )
           in Scalar::Errors::APIConnectionError if retry_count >= max_retries
             raise status
-          in (400..) if retry_count >= max_retries || !self.class.should_retry?(status, headers: headers)
+            # Any other 3xx — a 304 answering a conditional request, a 300, a redirect status without a
+            # `location` — is the server's answer rather than a hop, so it fails as a status error, like a 4xx.
+          in (300..) if retry_count >= max_retries || !self.class.should_retry?(status, headers: headers)
+            # Read only for the error's `body`, so only its first `MAX_ERROR_BODY_BYTES` are kept and
+            # the rest is never read: a server cannot make an error cost more than that in memory.
             decoded =
               Kernel.then do
-                Scalar::Internal::Util.decode_content(headers, stream: stream, suppress_error: true)
+                Scalar::Internal::Util.decode_content(
+                  headers,
+                  stream: stream,
+                  suppress_error: true,
+                  truncate_at: Scalar::Internal::Util::MAX_ERROR_BODY_BYTES
+                )
               ensure
                 self.class.reap_connection!(status, stream: stream)
               end
@@ -451,7 +531,7 @@ module Scalar
               request: nil,
               response: response
             )
-          in 400.. | Scalar::Errors::APIConnectionError
+          in 300.. | Scalar::Errors::APIConnectionError
             self.class.reap_connection!(status, stream: stream)
 
             delay = retry_delay(response || {}, retry_count: retry_count)
@@ -520,7 +600,10 @@ module Scalar
             send_request(request, redirect_count: 0, retry_count: 0, send_retry_header: send_retry_header)
 
           headers = Scalar::Internal::Util.normalized_headers(response.each_header.to_h)
-          decoded = Scalar::Internal::Util.decode_content(headers, stream: stream)
+          # Only an operation declared to return raw bytes reads its body whole; every other buffered
+          # body is capped, since the response's own content type cannot be trusted to say which it is.
+          decoded =
+            Scalar::Internal::Util.decode_content(headers, stream: stream, download: model == StringIO)
           case req
           in stream: Class => st
             st.new(
