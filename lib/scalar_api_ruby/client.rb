@@ -79,6 +79,8 @@ module Scalar
     #
     # @return [Hash{String=>String}]
     private def auth_bearer_auth
+      return {} if @bearer_auth.to_s.empty?
+
       {"authorization" => "Bearer #{@bearer_auth}"}
     end
 
@@ -86,8 +88,15 @@ module Scalar
     #
     # @return [Hash{String=>String}]
     private def auth_o_auth2
+      return {} if @o_auth2.to_s.empty?
+
       {"authorization" => "Bearer #{@o_auth2}"}
     end
+
+    # @api private
+    #
+    # @return [Array<String>]
+    private def auth_header_keys = ["authorization"]
 
     # Creates and returns a new client for interacting with the API.
     #

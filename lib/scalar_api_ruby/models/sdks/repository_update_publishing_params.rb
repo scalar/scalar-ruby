@@ -28,6 +28,11 @@ module Scalar
         #   @return [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Access, nil]
         optional :access, enum: -> { Scalar::Sdks::RepositoryUpdatePublishingParams::Access }
 
+        # @!attribute artifact_id
+        #
+        #   @return [String, nil]
+        optional :artifact_id, String, api_name: :artifactId
+
         # @!attribute auth_method
         #
         #   @return [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::AuthMethod, nil]
@@ -35,18 +40,31 @@ module Scalar
                  enum: -> { Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod },
                  api_name: :authMethod
 
+        # @!attribute registry
+        #
+        #   @return [String, nil]
+        optional :registry, String
+
         # @!attribute tag
         #
         #   @return [String, nil]
         optional :tag, String
 
-        # @!method initialize(uid:, language:, publish_on_merge:, access: nil, auth_method: nil, tag: nil, request_options: {})
+        # @!attribute tap_repo
+        #
+        #   @return [String, nil]
+        optional :tap_repo, String, api_name: :tapRepo
+
+        # @!method initialize(uid:, language:, publish_on_merge:, access: nil, artifact_id: nil, auth_method: nil, registry: nil, tag: nil, tap_repo: nil, request_options: {})
         #   @param uid [String]
         #   @param language [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Language]
         #   @param publish_on_merge [Boolean]
         #   @param access [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Access]
+        #   @param artifact_id [String]
         #   @param auth_method [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::AuthMethod]
+        #   @param registry [String]
         #   @param tag [String]
+        #   @param tap_repo [String]
         #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
 
         module Language

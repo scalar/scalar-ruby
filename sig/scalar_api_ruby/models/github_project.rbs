@@ -2,11 +2,12 @@ module Scalar
   module Models
     type github_project =
       {
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
@@ -20,11 +21,12 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         repository: Scalar::GithubProjectRepository?,
-        typesense_id: Float
+        typesense_id: Float,
+        user_info_hook_secret_uid: String?
       }
 
     class GithubProject < Scalar::Internal::Type::BaseModel
-      attr_accessor access_groups: String
+      attr_accessor access_groups: top
 
       attr_accessor active_deployment: Scalar::ActiveDeployment?
 
@@ -33,6 +35,8 @@ module Scalar
       attr_accessor agent_enabled: bool
 
       attr_accessor analytics_enabled: bool
+
+      attr_accessor chat_insights_enabled: bool
 
       attr_accessor created_at: Integer
 
@@ -64,12 +68,15 @@ module Scalar
 
       def typesense_id=: (Float) -> Float
 
+      attr_accessor user_info_hook_secret_uid: String?
+
       def initialize: (
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
@@ -83,15 +90,17 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         ?repository: Scalar::GithubProjectRepository?,
-        ?typesense_id: Float
+        ?typesense_id: Float,
+        ?user_info_hook_secret_uid: String?
       ) -> void
 
       def to_hash: -> {
-        access_groups: String,
+        access_groups: top,
         active_deployment: Scalar::ActiveDeployment?,
         active_theme_id: String,
         agent_enabled: bool,
         analytics_enabled: bool,
+        chat_insights_enabled: bool,
         created_at: Integer,
         is_private: bool,
         last_published: Integer?,
@@ -105,7 +114,8 @@ module Scalar
         updated_at: Integer,
         user_info_hook_url: String,
         repository: Scalar::GithubProjectRepository?,
-        typesense_id: Float
+        typesense_id: Float,
+        user_info_hook_secret_uid: String?
       }
     end
   end

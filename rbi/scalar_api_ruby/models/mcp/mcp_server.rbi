@@ -14,9 +14,6 @@ module Scalar
         sig { returns(String) }
         attr_accessor :id
 
-        sig { returns(T::Boolean) }
-        attr_accessor :auto_add_operations
-
         sig { returns(String) }
         attr_accessor :created_at
 
@@ -32,28 +29,19 @@ module Scalar
         sig do
           params(
             id: String,
-            auto_add_operations: T::Boolean,
             created_at: String,
             name: String,
             slug: String,
             updated_at: String
           ).returns(T.attached_class)
         end
-        def self.new(
-          id:,
-          auto_add_operations:,
-          created_at:,
-          name:,
-          slug:,
-          updated_at:
-        )
+        def self.new(id:, created_at:, name:, slug:, updated_at:)
         end
 
         sig do
           override.returns(
             {
               id: String,
-              auto_add_operations: T::Boolean,
               created_at: String,
               name: String,
               slug: String,

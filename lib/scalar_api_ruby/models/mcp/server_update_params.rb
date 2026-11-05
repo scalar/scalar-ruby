@@ -13,11 +13,6 @@ module Scalar
         #   @return [String]
         required :id, String
 
-        # @!attribute auto_add_operations
-        #
-        #   @return [Boolean, nil]
-        optional :auto_add_operations, Scalar::Internal::Type::Boolean, api_name: :autoAddOperations
-
         # @!attribute docs_pages
         #
         #   @return [Array<String>, nil]
@@ -38,9 +33,8 @@ module Scalar
         #   @return [String, nil]
         optional :slug, String
 
-        # @!method initialize(id:, auto_add_operations: nil, docs_pages: nil, name: nil, operations: nil, slug: nil, request_options: {})
+        # @!method initialize(id:, docs_pages: nil, name: nil, operations: nil, slug: nil, request_options: {})
         #   @param id [String]
-        #   @param auto_add_operations [Boolean]
         #   @param docs_pages [Array<String>]
         #   @param name [String]
         #   @param operations [Array<String>]

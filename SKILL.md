@@ -12,7 +12,7 @@ Generated Ruby client for Scalar API, published as `scalar_api_ruby`. Use the ge
 Add the gem to your application's `Gemfile`:
 
 ```ruby
-gem "scalar_api_ruby", "~> 0.2.0" # x-release-please-version
+gem "scalar_api_ruby", "~> 0.3.0" # x-release-please-version
 ```
 
 Or install it directly:
@@ -63,6 +63,8 @@ begin
   puts response.inspect
 rescue Scalar::Errors::APIError => error
   puts "#{error.status}: #{error.message}"
+  puts error.request_id if error.request_id
+  puts error.problem_details if error.problem_details
   raise
 end
 ```

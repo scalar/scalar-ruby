@@ -6,32 +6,10 @@ module Scalar
       class Servers
         # MCP
         class Installations
-          # Create an installation of an MCP server. `documentAuth` holds the credentials
-          # the server presents to the upstream API and is never returned.
+          # @deprecated
           #
-          # @overload create(id, document_auth:, name:, slug: nil, request_options: {})
-          #
-          # @param id [String]
-          # @param document_auth [Hash{Symbol=>Object}]
-          # @param name [String]
-          # @param slug [String]
-          # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
-          #
-          # @return [Scalar::Models::Mcp::McpInstallation]
-          #
-          # @see Scalar::Models::Mcp::Servers::InstallationCreateParams
-          def create(id, params)
-            parsed, options = Scalar::Mcp::Servers::InstallationCreateParams.dump_request(params)
-            @client.request(
-              method: :post,
-              path: ["v1/mcp/servers/%1$s/installations", id],
-              body: parsed,
-              model: Scalar::Mcp::McpInstallation,
-              options: options
-            )
-          end
-
-          # Get a single installation of an MCP server.
+          # Get a single installation of an MCP server. Deprecated: address the environment
+          # by slug with the `/environments/:environment` form.
           #
           # @overload retrieve(installation_id, id:, request_options: {})
           #
@@ -53,26 +31,25 @@ module Scalar
             )
           end
 
-          # Update an installation. Set `isPrivate` and add access groups to put it behind a
-          # login.
+          # @deprecated
           #
-          # @overload update(installation_id, id:, document_auth: nil, is_private: nil, login_portal_uid: nil, mcp_version: nil, name: nil, slug: nil, request_options: {})
+          # Some parameter documentations has been truncated, see
+          # {Scalar::Models::Mcp::Servers::InstallationUpdateParams} for more details.
+          #
+          # Update an installation. Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
+          #
+          # @overload update(installation_id, id:, mcp_version: nil, name: nil, slug: nil, request_options: {})
           #
           # @param installation_id [String] Path param
           #
           # @param id [String] Path param
           #
-          # @param document_auth [Hash{Symbol=>Object}] Body param
-          #
-          # @param is_private [Boolean] Body param
-          #
-          # @param login_portal_uid [String, nil] Body param
-          #
           # @param mcp_version [String, nil] Body param
           #
           # @param name [String] Body param
           #
-          # @param slug [String] Body param
+          # @param slug [String] Body param: The environment’s current slug. An environment cannot be renamed, so
           #
           # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
           #
@@ -111,7 +88,10 @@ module Scalar
             )
           end
 
-          # Delete an installation of an MCP server.
+          # @deprecated
+          #
+          # Delete an installation of an MCP server. Deprecated: address the environment by
+          # slug with the `/environments/:environment` form.
           #
           # @overload delete(installation_id, id:, request_options: {})
           #
@@ -133,7 +113,11 @@ module Scalar
             )
           end
 
-          # Let an access group reach a private installation.
+          # @deprecated
+          #
+          # Let an access group reach a private installation. Requires a team admin.
+          # Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
           #
           # @overload create_access_group(installation_id, id:, access_group_uid:, request_options: {})
           #
@@ -160,7 +144,11 @@ module Scalar
             )
           end
 
-          # Stop an access group reaching a private installation.
+          # @deprecated
+          #
+          # Stop an access group reaching a private installation. Requires a team admin.
+          # Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
           #
           # @overload delete_access_group(installation_id, id:, access_group_uid:, request_options: {})
           #

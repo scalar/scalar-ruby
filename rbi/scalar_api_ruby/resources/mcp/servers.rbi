@@ -43,7 +43,6 @@ module Scalar
         sig do
           params(
             id: String,
-            auto_add_operations: T::Boolean,
             docs_pages: T::Array[String],
             name: String,
             operations: T::Array[String],
@@ -53,7 +52,6 @@ module Scalar
         end
         def update(
           id,
-          auto_add_operations: nil,
           docs_pages: nil,
           name: nil,
           operations: nil,

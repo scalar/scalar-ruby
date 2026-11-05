@@ -17,6 +17,8 @@ module Scalar
 
         DEFAULT_MAX_CONNECTIONS: Integer
 
+        MAX_POOLS: 16
+
         def self.connect: (
           cert_store: OpenSSL::X509::Store,
           url: URI::Generic

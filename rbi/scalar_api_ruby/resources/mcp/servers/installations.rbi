@@ -6,21 +6,8 @@ module Scalar
       class Servers
         # MCP
         class Installations
-          # Create an installation of an MCP server. `documentAuth` holds the credentials
-          # the server presents to the upstream API and is never returned.
-          sig do
-            params(
-              id: String,
-              document_auth: T::Hash[Symbol, T.anything],
-              name: String,
-              slug: String,
-              request_options: Scalar::RequestOptions::OrHash
-            ).returns(Scalar::Mcp::McpInstallation)
-          end
-          def create(id, document_auth:, name:, slug: nil, request_options: {})
-          end
-
-          # Get a single installation of an MCP server.
+          # Get a single installation of an MCP server. Deprecated: address the environment
+          # by slug with the `/environments/:environment` form.
           sig do
             params(
               installation_id: String,
@@ -31,15 +18,12 @@ module Scalar
           def retrieve(installation_id, id:, request_options: {})
           end
 
-          # Update an installation. Set `isPrivate` and add access groups to put it behind a
-          # login.
+          # Update an installation. Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
           sig do
             params(
               installation_id: String,
               id: String,
-              document_auth: T::Hash[Symbol, T.anything],
-              is_private: T::Boolean,
-              login_portal_uid: T.nilable(String),
               mcp_version: T.nilable(String),
               name: String,
               slug: String,
@@ -52,16 +36,11 @@ module Scalar
             # Path param
             id:,
             # Body param
-            document_auth: nil,
-            # Body param
-            is_private: nil,
-            # Body param
-            login_portal_uid: nil,
-            # Body param
             mcp_version: nil,
             # Body param
             name: nil,
-            # Body param
+            # Body param: The environment’s current slug. An environment cannot be renamed, so
+            # any other slug is refused.
             slug: nil,
             request_options: {}
           )
@@ -78,7 +57,8 @@ module Scalar
           def list(id, request_options: {})
           end
 
-          # Delete an installation of an MCP server.
+          # Delete an installation of an MCP server. Deprecated: address the environment by
+          # slug with the `/environments/:environment` form.
           sig do
             params(
               installation_id: String,
@@ -89,7 +69,9 @@ module Scalar
           def delete(installation_id, id:, request_options: {})
           end
 
-          # Let an access group reach a private installation.
+          # Let an access group reach a private installation. Requires a team admin.
+          # Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
           sig do
             params(
               installation_id: String,
@@ -109,7 +91,9 @@ module Scalar
           )
           end
 
-          # Stop an access group reaching a private installation.
+          # Stop an access group reaching a private installation. Requires a team admin.
+          # Deprecated: address the environment by slug with the
+          # `/environments/:environment` form.
           sig do
             params(
               installation_id: String,

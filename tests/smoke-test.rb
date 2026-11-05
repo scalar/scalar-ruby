@@ -1022,8 +1022,11 @@ cases = [
           uid: "UakgbKJ5m9gl0JDMbcJqL",
           publish_on_merge: true,
           access: "public",
+          artifact_id: StringIO.new("smoke-test"),
           auth_method: "oidc",
-          tag: "latest"
+          registry: "npm",
+          tag: "latest",
+          tap_repo: "scalar/homebrew-tap"
         }
       )
     end
@@ -1067,7 +1070,7 @@ cases = [
     run: -> do
       client.mcp.servers.update(
         "42",
-        {auto_add_operations: true, docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api"}
+        {docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api"}
       )
     end
   },
@@ -1077,22 +1080,6 @@ cases = [
     method: "DELETE",
     path: "/v1/mcp/servers/{id}",
     run: -> { client.mcp.servers.delete("42") }
-  },
-  {
-    operation: "create",
-    method: "POST",
-    path: "/v1/mcp/servers/{id}/installations",
-    label: "required params",
-    run: -> { client.mcp.servers.installations.create("42", {document_auth: {}, name: "Acme MCP"}) }
-  },
-  {
-    operation: "create",
-    method: "POST",
-    path: "/v1/mcp/servers/{id}/installations",
-    label: "all params",
-    run: -> do
-      client.mcp.servers.installations.create("42", {document_auth: {}, name: "Acme MCP", slug: "acme-api"})
-    end
   },
   {
     operation: "retrieve",
@@ -1115,15 +1102,7 @@ cases = [
     run: -> do
       client.mcp.servers.installations.update(
         "84",
-        {
-          id: "42",
-          document_auth: {},
-          is_private: false,
-          login_portal_uid: "",
-          mcp_version: "",
-          name: "Acme MCP",
-          slug: "acme-api"
-        }
+        {id: "42", mcp_version: "", name: "Acme MCP", slug: "acme-api"}
       )
     end
   },

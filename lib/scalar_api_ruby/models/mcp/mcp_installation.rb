@@ -21,11 +21,6 @@ module Scalar
                  Scalar::Internal::Type::Boolean,
                  api_name: :credentialRedactionEnabled
 
-        # @!attribute is_private
-        #
-        #   @return [Boolean]
-        required :is_private, Scalar::Internal::Type::Boolean, api_name: :isPrivate
-
         # @!attribute login_portal_uid
         #
         #   @return [String, nil]
@@ -56,11 +51,10 @@ module Scalar
         #   @return [String]
         required :slug, String
 
-        # @!method initialize(id:, access_groups:, credential_redaction_enabled:, is_private:, login_portal_uid:, mcp_server_id:, mcp_version:, name:, pii_redaction_enabled:, slug:)
+        # @!method initialize(id:, access_groups:, credential_redaction_enabled:, login_portal_uid:, mcp_server_id:, mcp_version:, name:, pii_redaction_enabled:, slug:)
         #   @param id [String]
         #   @param access_groups [Array<String>]
         #   @param credential_redaction_enabled [Boolean]
-        #   @param is_private [Boolean]
         #   @param login_portal_uid [String, nil]
         #   @param mcp_server_id [String]
         #   @param mcp_version [String, nil]

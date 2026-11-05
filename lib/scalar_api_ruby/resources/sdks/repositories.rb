@@ -54,7 +54,7 @@ module Scalar
 
         # Toggle publish-on-merge and the release settings for a linked target.
         #
-        # @overload update_publishing(language, uid:, publish_on_merge:, access: nil, auth_method: nil, tag: nil, request_options: {})
+        # @overload update_publishing(language, uid:, publish_on_merge:, access: nil, artifact_id: nil, auth_method: nil, registry: nil, tag: nil, tap_repo: nil, request_options: {})
         #
         # @param language [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Language] Path param
         #
@@ -64,9 +64,15 @@ module Scalar
         #
         # @param access [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Access] Body param
         #
+        # @param artifact_id [String] Body param
+        #
         # @param auth_method [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::AuthMethod] Body param
         #
+        # @param registry [String] Body param
+        #
         # @param tag [String] Body param
+        #
+        # @param tap_repo [String] Body param
         #
         # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
         #

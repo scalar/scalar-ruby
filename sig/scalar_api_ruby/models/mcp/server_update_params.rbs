@@ -4,7 +4,6 @@ module Scalar
       type server_update_params =
         {
           id: String,
-          auto_add_operations: bool,
           docs_pages: ::Array[String],
           name: String,
           operations: ::Array[String],
@@ -17,10 +16,6 @@ module Scalar
         include Scalar::Internal::Type::RequestParameters
 
         attr_accessor id: String
-
-        attr_reader auto_add_operations: bool?
-
-        def auto_add_operations=: (bool) -> bool
 
         attr_reader docs_pages: ::Array[String]?
 
@@ -40,7 +35,6 @@ module Scalar
 
         def initialize: (
           id: String,
-          ?auto_add_operations: bool,
           ?docs_pages: ::Array[String],
           ?name: String,
           ?operations: ::Array[String],
@@ -50,7 +44,6 @@ module Scalar
 
         def to_hash: -> {
           id: String,
-          auto_add_operations: bool,
           docs_pages: ::Array[String],
           name: String,
           operations: ::Array[String],

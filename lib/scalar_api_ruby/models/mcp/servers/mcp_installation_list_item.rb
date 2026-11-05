@@ -10,11 +10,6 @@ module Scalar
           #   @return [String]
           required :id, String
 
-          # @!attribute is_private
-          #
-          #   @return [Boolean]
-          required :is_private, Scalar::Internal::Type::Boolean, api_name: :isPrivate
-
           # @!attribute mcp_version
           #
           #   @return [String, nil]
@@ -30,9 +25,8 @@ module Scalar
           #   @return [String]
           required :slug, String
 
-          # @!method initialize(id:, is_private:, mcp_version:, name:, slug:)
+          # @!method initialize(id:, mcp_version:, name:, slug:)
           #   @param id [String]
-          #   @param is_private [Boolean]
           #   @param mcp_version [String, nil]
           #   @param name [String]
           #   @param slug [String]
