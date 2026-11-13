@@ -23,7 +23,7 @@ module Scalar
       def update: (
         String uid,
         ?api_uid: String?,
-        ?api_version: String?,
+        ?api_version: top,
         ?config: String,
         ?is_private: bool,
         ?slug: String,
@@ -40,6 +40,7 @@ module Scalar
 
       def build: (
         String uid,
+        ?custom_code_ref: String,
         ?languages: ::Array[Scalar::Models::SdkBuildParams::language],
         ?version: String,
         ?request_options: Scalar::request_opts

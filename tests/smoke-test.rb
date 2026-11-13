@@ -911,7 +911,7 @@ cases = [
         "UakgbKJ5m9gl0JDMbcJqL",
         {
           api_uid: "UakgbKJ5m9gl0JDMbcJqL",
-          api_version: "",
+          api_version: {},
           config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}",
           is_private: false,
           slug: "acme-api",
@@ -952,15 +952,26 @@ cases = [
     method: "POST",
     path: "/v1/sdks/{uid}/build",
     label: "all params",
-    run: -> { client.sdks.build("UakgbKJ5m9gl0JDMbcJqL", {languages: ["typescript"], version: "1.2.0"}) }
+    run: -> do
+      client.sdks.build(
+        "UakgbKJ5m9gl0JDMbcJqL",
+        {custom_code_ref: "scalar-next", languages: ["typescript"], version: "1.2.0"}
+      )
+    end
   },
   {
     operation: "create",
     method: "POST",
     path: "/v1/sdks/{uid}/versions",
-    run: -> do
-      client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", {api_version: "1.2.0", version: "1.2.0"})
-    end
+    label: "required params",
+    run: -> { client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", {version: "1.2.0"}) }
+  },
+  {
+    operation: "create",
+    method: "POST",
+    path: "/v1/sdks/{uid}/versions",
+    label: "all params",
+    run: -> { client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", {version: "1.2.0", api_version: {}}) }
   },
   {
     operation: "delete",

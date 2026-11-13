@@ -8,6 +8,9 @@ module Scalar
       sig { returns(T.nilable(String)) }
       attr_accessor :api_uid
 
+      sig { returns(T::Hash[Symbol, String]) }
+      attr_accessor :current
+
       sig { returns(String) }
       attr_accessor :current_version
 
@@ -16,6 +19,9 @@ module Scalar
 
       sig { returns(T::Boolean) }
       attr_accessor :is_private
+
+      sig { returns(T.nilable(String)) }
+      attr_accessor :latest_version
 
       sig { returns(String) }
       attr_accessor :namespace
@@ -35,36 +41,35 @@ module Scalar
       sig { returns(T::Array[Scalar::SdkVersion]) }
       attr_accessor :versions
 
-      sig { returns(T.nilable(String)) }
-      attr_accessor :api_version
-
       sig do
         params(
           api_uid: T.nilable(String),
+          current: T::Hash[Symbol, String],
           current_version: String,
           description: String,
           is_private: T::Boolean,
+          latest_version: T.nilable(String),
           namespace: String,
           slug: String,
           targets: T::Array[Scalar::SdkTargetSummary::OrHash],
           title: String,
           uid: String,
-          versions: T::Array[Scalar::SdkVersion::OrHash],
-          api_version: T.nilable(String)
+          versions: T::Array[Scalar::SdkVersion::OrHash]
         ).returns(T.attached_class)
       end
       def self.new(
         api_uid:,
+        current:,
         current_version:,
         description:,
         is_private:,
+        latest_version:,
         namespace:,
         slug:,
         targets:,
         title:,
         uid:,
-        versions:,
-        api_version: nil
+        versions:
       )
       end
 
@@ -72,16 +77,17 @@ module Scalar
         override.returns(
           {
             api_uid: T.nilable(String),
+            current: T::Hash[Symbol, String],
             current_version: String,
             description: String,
             is_private: T::Boolean,
+            latest_version: T.nilable(String),
             namespace: String,
             slug: String,
             targets: T::Array[Scalar::SdkTargetSummary],
             title: String,
             uid: String,
-            versions: T::Array[Scalar::SdkVersion],
-            api_version: T.nilable(String)
+            versions: T::Array[Scalar::SdkVersion]
           }
         )
       end

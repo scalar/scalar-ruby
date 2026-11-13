@@ -17,8 +17,12 @@ module Scalar
       sig { returns(T.nilable(String)) }
       attr_accessor :api_uid
 
-      sig { returns(T.nilable(String)) }
-      attr_accessor :api_version
+      # Removed. A request that carries it is refused with a 400.
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :api_version
+
+      sig { params(api_version: T.anything).void }
+      attr_writer :api_version
 
       sig { returns(T.nilable(String)) }
       attr_reader :config
@@ -48,7 +52,7 @@ module Scalar
         params(
           uid: String,
           api_uid: T.nilable(String),
-          api_version: T.nilable(String),
+          api_version: T.anything,
           config: String,
           is_private: T::Boolean,
           slug: String,
@@ -59,6 +63,7 @@ module Scalar
       def self.new(
         uid:,
         api_uid: nil,
+        # Removed. A request that carries it is refused with a 400.
         api_version: nil,
         config: nil,
         is_private: nil,
@@ -73,7 +78,7 @@ module Scalar
           {
             uid: String,
             api_uid: T.nilable(String),
-            api_version: T.nilable(String),
+            api_version: T.anything,
             config: String,
             is_private: T::Boolean,
             slug: String,

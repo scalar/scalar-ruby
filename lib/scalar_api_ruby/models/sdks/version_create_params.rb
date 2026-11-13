@@ -13,20 +13,26 @@ module Scalar
         #   @return [String]
         required :uid, String
 
-        # @!attribute api_version
-        #
-        #   @return [String]
-        required :api_version, String, api_name: :apiVersion
-
         # @!attribute version
         #
         #   @return [String]
         required :version, String
 
-        # @!method initialize(uid:, api_version:, version:, request_options: {})
+        # @!attribute api_version
+        #   @deprecated
+        #
+        #   Removed. A request that carries it is refused with a 400.
+        #
+        #   @return [Object, nil]
+        optional :api_version, Scalar::Internal::Type::Unknown, api_name: :apiVersion
+
+        # @!method initialize(uid:, version:, api_version: nil, request_options: {})
         #   @param uid [String]
-        #   @param api_version [String]
+        #
         #   @param version [String]
+        #
+        #   @param api_version [Object] Removed. A request that carries it is refused with a 400.
+        #
         #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
       end
     end
