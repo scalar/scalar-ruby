@@ -35,7 +35,9 @@ module Scalar
       )
       end
 
-      # Get a single SDK by its uid.
+      # Get a single SDK by its uid with the languages its config declares, its version
+      # labels highest first, the current version label per language (`current`), and
+      # the `currentVersion` and `latestVersion` tags.
       sig do
         params(
           uid: String,
@@ -50,7 +52,7 @@ module Scalar
         params(
           uid: String,
           api_uid: T.nilable(String),
-          api_version: T.nilable(String),
+          api_version: T.anything,
           config: String,
           is_private: T::Boolean,
           slug: String,
@@ -61,6 +63,7 @@ module Scalar
       def update(
         uid,
         api_uid: nil,
+        # Removed. A request that carries it is refused with a 400.
         api_version: nil,
         config: nil,
         is_private: nil,
@@ -70,7 +73,9 @@ module Scalar
       )
       end
 
-      # List every SDK on the team.
+      # List every SDK on the team with the languages its config declares, each with its
+      # version labels highest first, the current version label per language
+      # (`current`), and the `currentVersion` and `latestVersion` tags.
       sig do
         params(
           limit: Integer,
@@ -90,17 +95,29 @@ module Scalar
       def delete(uid, request_options: {})
       end
 
-      # Start a build. Omit `version` to build the current work — the open draft, else
-      # the latest version — and the resolved version comes back in the response.
+      # Start a build with the SDK's saved config. Every input is optional: `version` is
+      # the version of the linked API description to build (default: its latest
+      # version), `customCodeRef` the branch, tag or commit each language merges as
+      # custom code (default: each language's `scalar-next` branch), and `languages` the
+      # languages to build (default: every language the config declares). The response
+      # names the version built. A 503 means the custom code could not be read from
+      # GitHub and nothing was built; try again.
       sig do
         params(
           uid: String,
+          custom_code_ref: String,
           languages: T::Array[Scalar::SdkBuildParams::Language::OrSymbol],
           version: String,
           request_options: Scalar::RequestOptions::OrHash
         ).returns(Scalar::Models::SdkBuildResponse)
       end
-      def build(uid, languages: nil, version: nil, request_options: {})
+      def build(
+        uid,
+        custom_code_ref: nil,
+        languages: nil,
+        version: nil,
+        request_options: {}
+      )
       end
 
       # @api private

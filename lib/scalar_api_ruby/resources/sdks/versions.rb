@@ -5,13 +5,18 @@ module Scalar
     class Sdks
       # SDKs
       class Versions
-        # Create a new SDK version against a specific API version.
+        # Create a version label from a version of the SDK's API document and start its
+        # build. The label is the document version, and it becomes `latestVersion` when it
+        # is the highest.
         #
-        # @overload create(uid, api_version:, version:, request_options: {})
+        # @overload create(uid, version:, api_version: nil, request_options: {})
         #
         # @param uid [String]
-        # @param api_version [String]
+        #
         # @param version [String]
+        #
+        # @param api_version [Object] Removed. A request that carries it is refused with a 400.
+        #
         # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Object]
@@ -28,7 +33,16 @@ module Scalar
           )
         end
 
-        # Permanently delete one version of an SDK.
+        # Permanently delete one version label of an SDK and its builds. A label that is
+        # the current build of any language promoting manually is refused with 409 and
+        # nothing is deleted; promote or roll back to another build for that language
+        # first. Each other language whose current build was of that label moves to the
+        # active build of the highest remaining label that has one for the language, and
+        # has no current build when none has; `currentVersion` shows the result. Each
+        # language that moved to another build syncs it to its linked repository unless
+        # the repository already holds it. When it was `latestVersion`, that tag moves to
+        # the highest remaining label holding an active build. An SDK's last version
+        # cannot be deleted.
         #
         # @overload delete(version, uid:, request_options: {})
         #

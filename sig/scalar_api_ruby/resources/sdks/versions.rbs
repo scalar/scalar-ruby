@@ -4,8 +4,8 @@ module Scalar
       class Versions
         def create: (
           String uid,
-          api_version: String,
           version: String,
+          ?api_version: top,
           ?request_options: Scalar::request_opts
         ) -> top
 
