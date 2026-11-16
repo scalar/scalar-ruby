@@ -16,9 +16,7 @@ module Scalar
         module Converter
           # @api private
           sig do
-            params(params: T.anything).returns(
-              [T.anything, Scalar::Internal::AnyHash]
-            )
+            params(params: T.anything).returns([T.anything, Scalar::Internal::AnyHash])
           end
           def dump_request(params)
           end

@@ -74,7 +74,10 @@ module Scalar
           in [_, Scalar::Internal::Type::BaseModel]
             value.class
           in [Symbol, Hash]
-            key = value.fetch(@discriminator) { value.fetch(@discriminator.to_s, Scalar::Internal::OMIT) }
+            key =
+              value.fetch(@discriminator) do
+                value.fetch(@discriminator.to_s, Scalar::Internal::OMIT)
+              end
 
             return nil if key == Scalar::Internal::OMIT
 
@@ -104,7 +107,8 @@ module Scalar
         #
         # @return [Boolean]
         def ==(other)
-          Scalar::Internal::Type::Union === other && other.derefed_variants == derefed_variants
+          Scalar::Internal::Type::Union === other &&
+            other.derefed_variants == derefed_variants
         end
 
         # @api public
@@ -149,7 +153,8 @@ module Scalar
             exact = state[:exactness] = {yes: 0, no: 0, maybe: 0}
             state[:branched] += 1
 
-            coerced = Scalar::Internal::Type::Converter.coerce(target, value, state: state)
+            coerced =
+              Scalar::Internal::Type::Converter.coerce(target, value, state: state)
             yes, no, maybe = exact.values
             if (no + maybe).zero? || (!strictness && yes.positive?)
               exact.each { exactness[_1] += _2 }
@@ -189,7 +194,9 @@ module Scalar
 
           known_variants.each do
             target = _2.call
-            return Scalar::Internal::Type::Converter.dump(target, value, state: state) if target === value
+            if target === value
+              return Scalar::Internal::Type::Converter.dump(target, value, state: state)
+            end
           end
 
           super
@@ -199,7 +206,10 @@ module Scalar
         #
         # @return [Object]
         def to_sorbet_type
-          types = variants.map { Scalar::Internal::Util::SorbetRuntimeSupport.to_sorbet_type(_1) }.uniq
+          types =
+            variants
+            .map { Scalar::Internal::Util::SorbetRuntimeSupport.to_sorbet_type(_1) }
+            .uniq
           case types
           in []
             T.noreturn
@@ -221,7 +231,10 @@ module Scalar
         def inspect(depth: 0)
           return is_a?(Module) ? super() : self.class.name if depth.positive?
 
-          members = variants.map { Scalar::Internal::Type::Converter.inspect(_1, depth: depth.succ) }
+          members =
+            variants.map do
+              Scalar::Internal::Type::Converter.inspect(_1, depth: depth.succ)
+            end
           prefix = is_a?(Module) ? name : self.class.name
 
           "#{prefix}[#{members.join(" | ")}]"

@@ -27,7 +27,9 @@ module Scalar
         def create(slug, params)
           parsed, options = Scalar::Schemas::VersionCreateParams.dump_request(params)
           namespace =
-            parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+            parsed.delete(:namespace) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :post,
             path: ["v1/schemas/%1$s/%2$s/version", namespace, slug],
@@ -52,14 +54,17 @@ module Scalar
         def retrieve(semver, params)
           parsed, options = Scalar::Schemas::VersionRetrieveParams.dump_request(params)
           namespace =
-            parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-          slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+            parsed.delete(:namespace) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
+          slug =
+            parsed.delete(:slug) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :get,
             path: ["v1/schemas/%1$s/%2$s/version/%3$s", namespace, slug, semver],
-            headers: {
-              "accept" => "text/plain"
-            },
+            headers: {"accept" => "text/plain"},
             model: String,
             options: options
           )
@@ -80,8 +85,13 @@ module Scalar
         def delete(semver, params)
           parsed, options = Scalar::Schemas::VersionDeleteParams.dump_request(params)
           namespace =
-            parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-          slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+            parsed.delete(:namespace) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
+          slug =
+            parsed.delete(:slug) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :delete,
             path: ["v1/schemas/%1$s/%2$s/version/%3$s", namespace, slug, semver],

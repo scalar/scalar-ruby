@@ -20,11 +20,7 @@ module Scalar
         include Scalar::Internal::Util::SorbetRuntimeSupport
 
         # All of the valid Symbol values for this enum.
-        sig do
-          overridable.returns(
-            T::Array[T.any(NilClass, T::Boolean, Integer, Float, Symbol)]
-          )
-        end
+        sig { overridable.returns(T::Array[T.any(NilClass, T::Boolean, Integer, Float, Symbol)]) }
         def values
         end
 

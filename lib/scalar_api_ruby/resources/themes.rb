@@ -36,9 +36,7 @@ module Scalar
         @client.request(
           method: :get,
           path: ["v1/themes/%1$s", slug],
-          headers: {
-            "accept" => "text/plain"
-          },
+          headers: {"accept" => "text/plain"},
           model: String,
           options: params[:request_options]
         )

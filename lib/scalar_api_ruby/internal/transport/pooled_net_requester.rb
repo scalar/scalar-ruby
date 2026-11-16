@@ -151,7 +151,7 @@ module Scalar
 
           finished = false
 
-          # rubocop:disable Metrics/BlockLength
+          # rubocop:disable-next Metrics/BlockLength
           enum =
             Enumerator.new do |y|
               next if finished
@@ -199,11 +199,16 @@ module Scalar
               # `request: nil`, as every other error site passes: the built request carries the client's
               # credential headers, and an error is the kind of object that gets logged or inspected.
             rescue Timeout::Error
-              raise Scalar::Errors::APITimeoutError.new(url: url, request: nil)
+              raise Scalar::Errors::APITimeoutError.new(
+                url: url,
+                request: nil
+              )
             rescue StandardError
-              raise Scalar::Errors::APIConnectionError.new(url: url, request: nil)
+              raise Scalar::Errors::APIConnectionError.new(
+                url: url,
+                request: nil
+              )
             end
-          # rubocop:enable Metrics/BlockLength
 
           _, response = enum.next
           body =

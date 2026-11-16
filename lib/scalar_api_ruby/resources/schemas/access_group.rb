@@ -23,7 +23,9 @@ module Scalar
         def create(slug, params)
           parsed, options = Scalar::Schemas::AccessGroupCreateParams.dump_request(params)
           namespace =
-            parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+            parsed.delete(:namespace) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :post,
             path: ["v1/schemas/%1$s/%2$s/access-group", namespace, slug],
@@ -51,7 +53,9 @@ module Scalar
         def delete(slug, params)
           parsed, options = Scalar::Schemas::AccessGroupDeleteParams.dump_request(params)
           namespace =
-            parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+            parsed.delete(:namespace) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :delete,
             path: ["v1/schemas/%1$s/%2$s/access-group", namespace, slug],

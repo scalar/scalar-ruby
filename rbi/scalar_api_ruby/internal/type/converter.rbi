@@ -65,18 +65,11 @@ module Scalar
               spec:
                 T.any(
                   {
-                    const:
-                      T.nilable(
-                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
-                      ),
+                    const: T.nilable(T.any(NilClass, T::Boolean, Integer, Float, Symbol)),
                     enum:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      ),
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input)),
                     union:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      )
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input))
                   },
                   T.proc.returns(Scalar::Internal::Type::Converter::Input),
                   Scalar::Internal::Type::Converter::Input
@@ -92,18 +85,11 @@ module Scalar
               type_info:
                 T.any(
                   {
-                    const:
-                      T.nilable(
-                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
-                      ),
+                    const: T.nilable(T.any(NilClass, T::Boolean, Integer, Float, Symbol)),
                     enum:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      ),
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input)),
                     union:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      )
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input))
                   },
                   T.proc.returns(Scalar::Internal::Type::Converter::Input),
                   Scalar::Internal::Type::Converter::Input
@@ -111,18 +97,11 @@ module Scalar
               spec:
                 T.any(
                   {
-                    const:
-                      T.nilable(
-                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
-                      ),
+                    const: T.nilable(T.any(NilClass, T::Boolean, Integer, Float, Symbol)),
                     enum:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      ),
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input)),
                     union:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      )
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input))
                   },
                   T.proc.returns(Scalar::Internal::Type::Converter::Input),
                   Scalar::Internal::Type::Converter::Input
