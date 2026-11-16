@@ -50,7 +50,9 @@ module Scalar
       def create_api_document_access_group(slug, params)
         parsed, options = Scalar::RegistryCreateAPIDocumentAccessGroupParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :post,
           path: ["v1/apis/%1$s/%2$s/access-group", namespace, slug],
@@ -82,7 +84,9 @@ module Scalar
       def create_api_document_version(slug, params)
         parsed, options = Scalar::RegistryCreateAPIDocumentVersionParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :post,
           path: ["v1/apis/%1$s/%2$s/version", namespace, slug],
@@ -106,7 +110,9 @@ module Scalar
       def delete_api_document(slug, params)
         parsed, options = Scalar::RegistryDeleteAPIDocumentParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/apis/%1$s/%2$s", namespace, slug],
@@ -133,7 +139,9 @@ module Scalar
       def delete_api_document_access_group(slug, params)
         parsed, options = Scalar::RegistryDeleteAPIDocumentAccessGroupParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/apis/%1$s/%2$s/access-group", namespace, slug],
@@ -158,8 +166,13 @@ module Scalar
       def delete_api_document_version(semver, params)
         parsed, options = Scalar::RegistryDeleteAPIDocumentVersionParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-        slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        slug =
+          parsed.delete(:slug) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/apis/%1$s/%2$s/version/%3$s", namespace, slug, semver],
@@ -202,8 +215,13 @@ module Scalar
       def list_api_document_version_metadata(semver, params)
         parsed, options = Scalar::RegistryListAPIDocumentVersionMetadataParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-        slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        slug =
+          parsed.delete(:slug) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :get,
           path: ["v1/apis/%1$s/%2$s/version/%3$s/metadata", namespace, slug, semver],
@@ -246,14 +264,17 @@ module Scalar
       def retrieve_api_document_version(semver, params)
         parsed, options = Scalar::RegistryRetrieveAPIDocumentVersionParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-        slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        slug =
+          parsed.delete(:slug) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :get,
           path: ["v1/apis/%1$s/%2$s/version/%3$s", namespace, slug, semver],
-          headers: {
-            "accept" => "text/plain"
-          },
+          headers: {"accept" => "text/plain"},
           model: String,
           options: options
         )
@@ -283,7 +304,9 @@ module Scalar
       def update_api_document(slug, params)
         parsed, options = Scalar::RegistryUpdateAPIDocumentParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :patch,
           path: ["v1/apis/%1$s/%2$s", namespace, slug],
@@ -313,8 +336,13 @@ module Scalar
       def update_api_document_version(semver, params)
         parsed, options = Scalar::RegistryUpdateAPIDocumentVersionParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
-        slug = parsed.delete(:slug) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        slug =
+          parsed.delete(:slug) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :patch,
           path: ["v1/apis/%1$s/%2$s/version/%3$s", namespace, slug, semver],

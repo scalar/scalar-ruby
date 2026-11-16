@@ -9,18 +9,14 @@ module Scalar
 
         abstract!
 
-        KnownField =
-          T.type_alias do
-            {
-              mode: T.nilable(Symbol),
-              required: T::Boolean,
-              nilable: T::Boolean
-            }
-          end
+        KnownField = T.type_alias { { mode: T.nilable(Symbol), required: T::Boolean, nilable: T::Boolean } }
 
         OrHash =
           T.type_alias do
-            T.any(Scalar::Internal::Type::BaseModel, Scalar::Internal::AnyHash)
+            T.any(
+              Scalar::Internal::Type::BaseModel,
+              Scalar::Internal::AnyHash
+            )
           end
 
         class << self
@@ -39,15 +35,19 @@ module Scalar
                 Symbol,
                 T.all(
                   Scalar::Internal::Type::BaseModel::KnownField,
-                  {
-                    type_fn:
-                      T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                  }
+                  { type_fn: T.proc.returns(Scalar::Internal::Type::Converter::Input) }
                 )
               ]
             )
           end
           def known_fields
+          end
+
+          # @api private
+          #
+          # Keys `.#dump` leaves out of a request even though no field declares them.
+          sig { returns(T::Hash[Symbol, TrueClass]) }
+          def dropped_keys
           end
 
           # @api private
@@ -73,18 +73,11 @@ module Scalar
               type_info:
                 T.any(
                   {
-                    const:
-                      T.nilable(
-                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
-                      ),
+                    const: T.nilable(T.any(NilClass, T::Boolean, Integer, Float, Symbol)),
                     enum:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      ),
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input)),
                     union:
-                      T.nilable(
-                        T.proc.returns(Scalar::Internal::Type::Converter::Input)
-                      ),
+                      T.nilable(T.proc.returns(Scalar::Internal::Type::Converter::Input)),
                     api_name: Symbol,
                     nil?: T::Boolean
                   },
@@ -144,6 +137,13 @@ module Scalar
           private def response_only(&blk)
           end
 
+          # @api private
+          #
+          # Declares keys `.#dump` drops without declaring an attribute for them.
+          sig { params(names: Symbol).void }
+          private def drop_on_dump(*names)
+          end
+
           sig { params(other: T.anything).returns(T::Boolean) }
           def ==(other)
           end
@@ -200,10 +200,9 @@ module Scalar
         class << self
           # @api private
           sig do
-            params(
-              model: Scalar::Internal::Type::BaseModel,
-              convert: T::Boolean
-            ).returns(Scalar::Internal::AnyHash)
+            params(model: Scalar::Internal::Type::BaseModel, convert: T::Boolean).returns(
+              Scalar::Internal::AnyHash
+            )
           end
           def recursively_to_h(model, convert:)
           end
@@ -250,9 +249,7 @@ module Scalar
         end
 
         sig do
-          params(keys: T.nilable(T::Array[Symbol])).returns(
-            Scalar::Internal::AnyHash
-          )
+          params(keys: T.nilable(T::Array[Symbol])).returns(Scalar::Internal::AnyHash)
         end
         def deconstruct_keys(keys)
         end
@@ -268,11 +265,7 @@ module Scalar
         # Create a new instance of a model.
         sig do
           params(
-            data:
-              T.any(
-                T::Hash[Symbol, T.anything],
-                Scalar::Internal::Type::BaseModel
-              )
+            data: T.any(T::Hash[Symbol, T.anything], Scalar::Internal::Type::BaseModel)
           ).returns(T.attached_class)
         end
         def self.new(data = {})

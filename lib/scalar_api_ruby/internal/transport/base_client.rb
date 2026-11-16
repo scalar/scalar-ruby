@@ -16,7 +16,7 @@ module Scalar
         # client's own backoff is used instead.
         MAX_RETRY_AFTER = 60
 
-        # rubocop:disable Style/MutableConstant
+        # rubocop:disable-next Style/MutableConstant
         PLATFORM_HEADERS = {
           "x-scalar-arch" => Scalar::Internal::Util.arch,
           "x-scalar-lang" => "ruby",
@@ -25,7 +25,6 @@ module Scalar
           "x-scalar-runtime" => ::RUBY_ENGINE,
           "x-scalar-runtime-version" => ::RUBY_ENGINE_VERSION
         }
-        # rubocop:enable Style/MutableConstant
 
         class << self
           # @api private
@@ -198,7 +197,8 @@ module Scalar
             end
 
             # from undici
-            if Scalar::Internal::Util.uri_origin(url) != Scalar::Internal::Util.uri_origin(location)
+            if Scalar::Internal::Util.uri_origin(url) !=
+               Scalar::Internal::Util.uri_origin(location)
               drop = %w[authorization cookie host proxy-authorization]
               request = {**request, headers: request.fetch(:headers).except(*drop)}
             end
@@ -208,7 +208,8 @@ module Scalar
             # and a 307/308 would carry the method and body with it. The drop is sticky: nothing
             # re-adds a header once it is gone, so a chain that returns to the client's origin after
             # a foreign hop still arrives without it.
-            if Scalar::Internal::Util.uri_origin(base_url) != Scalar::Internal::Util.uri_origin(location)
+            if Scalar::Internal::Util.uri_origin(base_url) !=
+               Scalar::Internal::Util.uri_origin(location)
               request = {**request, headers: request.fetch(:headers).except(*credential_headers)}
             end
 
@@ -320,8 +321,11 @@ module Scalar
 
         # @api private
         #
+        # A literal rather than `self.class.name`: a class name is namespaced (`Acme::Client`), and
+        # `:` is not a token character (RFC 9110 §5.6.2).
+        #
         # @return [String]
-        private def user_agent = "#{self.class.name}/Ruby #{Scalar::VERSION}"
+        private def user_agent = "Scalar/Ruby #{Scalar::VERSION}"
 
         # @api private
         #
@@ -372,7 +376,10 @@ module Scalar
 
           path = Scalar::Internal::Util.interpolate_path(uninterpolated_path)
 
-          query = Scalar::Internal::Util.deep_merge(req[:query].to_h, opts[:extra_query].to_h)
+          query = Scalar::Internal::Util.deep_merge(
+            req[:query].to_h,
+            opts[:extra_query].to_h
+          )
 
           # The client's defaults, its credentials and the operation's own headers each may carry a
           # `cookie`, and a plain merge would let the operation's cookie parameters replace the
@@ -383,9 +390,13 @@ module Scalar
               Scalar::Internal::Util.normalized_headers(_1)
             end
           merged = Scalar::Internal::Util.normalized_headers(*sources)
-          cookie = Scalar::Internal::Util.merge_cookies(*sources.map { _1["cookie"] })
+          # A local rather than an inline block: under a long module name the inline form is broken
+          # inside its braces, and the multi-line `{ }` block that leaves is a `Style` offense.
+          cookies = sources.map { _1["cookie"] }
+          cookie = Scalar::Internal::Util.merge_cookies(*cookies)
           merged["cookie"] = cookie unless cookie.nil?
-          headers = Scalar::Internal::Util.normalized_headers(merged, opts[:extra_headers].to_h)
+          headers =
+            Scalar::Internal::Util.normalized_headers(merged, opts[:extra_headers].to_h)
 
           if @idempotency_header && !headers.key?(@idempotency_header) &&
              (!Net::HTTP::IDEMPOTENT_METHODS_.include?(method.to_s.upcase) || opts.key?(:idempotency_key))
@@ -413,7 +424,10 @@ module Scalar
           headers.delete("content-type") if body.nil? && !req.key?(:body)
 
           url =
-            Scalar::Internal::Util.join_parsed_uri(@base_url_components, {**req, path: path, query: query})
+            Scalar::Internal::Util.join_parsed_uri(
+              @base_url_components,
+              {**req, path: path, query: query}
+            )
           headers, encoded = Scalar::Internal::Util.encode_content(headers, body)
           {
             method: method,
@@ -466,7 +480,10 @@ module Scalar
         # @return [Array(Integer, Net::HTTPResponse, Enumerable<String>)]
         def send_request(request, redirect_count:, retry_count:, send_retry_header:)
           url, headers, max_retries, timeout = request.fetch_values(:url, :headers, :max_retries, :timeout)
-          input = {**request.except(:timeout), deadline: Scalar::Internal::Util.monotonic_secs + timeout}
+          input = {
+            **request.except(:timeout),
+            deadline: Scalar::Internal::Util.monotonic_secs + timeout
+          }
 
           headers["x-scalar-retry-count"] = retry_count.to_s if send_retry_header
 
@@ -486,7 +503,11 @@ module Scalar
             self.class.reap_connection!(status, stream: stream)
 
             message = "Failed to complete the request within #{self.class::MAX_REDIRECTS} redirects."
-            raise Scalar::Errors::APIConnectionError.new(url: url, response: response, message: message)
+            raise Scalar::Errors::APIConnectionError.new(
+              url: url,
+              response: response,
+              message: message
+            )
           in Integer if redirect
             self.class.reap_connection!(status, stream: stream)
 
@@ -506,8 +527,8 @@ module Scalar
             )
           in Scalar::Errors::APIConnectionError if retry_count >= max_retries
             raise status
-            # Any other 3xx — a 304 answering a conditional request, a 300, a redirect status without a
-            # `location` — is the server's answer rather than a hop, so it fails as a status error, like a 4xx.
+          # Any other 3xx — a 304 answering a conditional request, a 300, a redirect status without a
+          # `location` — is the server's answer rather than a hop, so it fails as a status error, like a 4xx.
           in (300..) if retry_count >= max_retries || !self.class.should_retry?(status, headers: headers)
             # Read only for the error's `body`, so only its first `MAX_ERROR_BODY_BYTES` are kept and
             # the rest is never read: a server cannot make an error cost more than that in memory.
@@ -603,7 +624,11 @@ module Scalar
           # Only an operation declared to return raw bytes reads its body whole; every other buffered
           # body is capped, since the response's own content type cannot be trusted to say which it is.
           decoded =
-            Scalar::Internal::Util.decode_content(headers, stream: stream, download: model == StringIO)
+            Scalar::Internal::Util.decode_content(
+              headers,
+              stream: stream,
+              download: model == StringIO
+            )
           case req
           in stream: Class => st
             st.new(
@@ -627,9 +652,8 @@ module Scalar
         #
         # @return [String]
         def inspect
-          # rubocop:disable Layout/LineLength
+          # rubocop:disable-next Layout/LineLength
           "#<#{self.class.name}:0x#{object_id.to_s(16)} base_url=#{@base_url} max_retries=#{@max_retries} timeout=#{@timeout}>"
-          # rubocop:enable Layout/LineLength
         end
 
         define_sorbet_constant!(:RequestComponents) do
@@ -655,7 +679,14 @@ module Scalar
                     T.proc.params(arg0: T.anything).returns(T.anything)
                   )
                 ),
-              page: T.nilable(T::Class[Scalar::Internal::Type::BasePage[Scalar::Internal::Type::BaseModel]]),
+              page:
+                T.nilable(
+                  T::Class[
+                    Scalar::Internal::Type::BasePage[
+                      Scalar::Internal::Type::BaseModel
+                    ]
+                  ]
+                ),
               stream: T.nilable(T::Class[T.anything]),
               model: T.nilable(Scalar::Internal::Type::Converter::Input),
               options: T.nilable(Scalar::RequestOptions::OrHash)

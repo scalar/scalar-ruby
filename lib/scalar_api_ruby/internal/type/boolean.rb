@@ -26,7 +26,9 @@ module Scalar
         # @param other [Object]
         #
         # @return [Boolean]
-        def self.==(other) = other.is_a?(Class) && other <= Scalar::Internal::Type::Boolean
+        def self.==(other)
+          other.is_a?(Class) && other <= Scalar::Internal::Type::Boolean
+        end
 
         class << self
           # @api private

@@ -502,7 +502,7 @@ Create a login portal for the current team.
 | Response | [`UID`](././lib/scalar_api_ruby/models/uid.rb) |
 
 ```ruby
-response = client.login_portals.create({ email: { "logo" => "", "logoSize" => "100", "buttonText" => "Login", "message" => "Click to access private documentation hosted by scalar.com", "title" => "Private Docs", "mainColor" => "\#2a2f45", "mainBackground" => "\#f6f6f6", "cardColor" => "\#2a2f45", "cardBackground" => "\#fff", "buttonColor" => "\#fff", "buttonBackground" => "\#0f0f0f" }, page: { "title" => "Scalar Private Docs", "description" => "Login to access your documentation", "head" => "", "script" => "", "theme" => "", "companyName" => "", "logo" => "", "logoURL" => "", "favicon" => "", "termsLink" => "", "privacyLink" => "", "formTitle" => "Scalar Private Docs", "formDescription" => "Login to access your documentation", "formImage" => "" }, slug: "acme-login", title: "Acme Private Documentation" })
+response = client.login_portals.create({ email: { "logo" => "", "logoSize" => "100", "buttonText" => "Login", "message" => "Click to access private documentation hosted by scalar.com", "title" => "Private Docs", "mainColor" => "#2a2f45", "mainBackground" => "#f6f6f6", "cardColor" => "#2a2f45", "cardBackground" => "#fff", "buttonColor" => "#fff", "buttonBackground" => "#0f0f0f" }, page: { "title" => "Scalar Private Docs", "description" => "Login to access your documentation", "head" => "", "script" => "", "theme" => "", "companyName" => "", "logo" => "", "logoURL" => "", "favicon" => "", "termsLink" => "", "privacyLink" => "", "formTitle" => "Scalar Private Docs", "formDescription" => "Login to access your documentation", "formImage" => "" }, slug: "acme-login", title: "Acme Private Documentation" })
 
 puts response.inspect
 ```
@@ -749,7 +749,7 @@ Create a team theme.
 | Response | [`UID`](././lib/scalar_api_ruby/models/uid.rb) |
 
 ```ruby
-response = client.themes.create({ document: ":root { --scalar-color-1: \#1f2937; }", name: "Acme Theme", slug: "acme-theme", description: "API for managing Acme products and orders." })
+response = client.themes.create({ document: ":root { --scalar-color-1: #1f2937; }", name: "Acme Theme", slug: "acme-theme", description: "API for managing Acme products and orders." })
 
 puts response.inspect
 ```
@@ -777,7 +777,7 @@ Replace the theme document.
 | Request | [`ThemeReplaceDocumentParams`](././lib/scalar_api_ruby/models/theme_replace_document_params.rb) |
 
 ```ruby
-response = client.themes.replace_document("acme-theme", { document: ":root { --scalar-color-1: \#1f2937; }" })
+response = client.themes.replace_document("acme-theme", { document: ":root { --scalar-color-1: #1f2937; }" })
 
 puts response.inspect
 ```
@@ -1177,7 +1177,7 @@ SDKs
 
 ### List all SDKs
 
-List every SDK on the team with the languages its config declares, each with its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
+List every SDK on the team. `targets` are the languages its config declares, which the next build builds. `current` (the version label per language a request without a version serves) and each version label’s `languages`, highest label first, are what is served, and can include a language a later config dropped: a version keeps the languages its builds produced. Also returns the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1207,7 +1207,7 @@ puts response.inspect
 
 ### Get an SDK
 
-Get a single SDK by its uid with the languages its config declares, its version labels highest first, the current version label per language (`current`), and the `currentVersion` and `latestVersion` tags.
+Get a single SDK by its uid. `targets` are the languages its config declares, which the next build builds. `current` (the version label per language a request without a version serves) and each version label’s `languages`, highest label first, are what is served, and can include a language a later config dropped: a version keeps the languages its builds produced. Also returns the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1337,7 +1337,7 @@ Toggle publish-on-merge and the release settings for a linked target.
 | Request | [`RepositoryUpdatePublishingParams`](././lib/scalar_api_ruby/models/sdks/repository_update_publishing_params.rb) |
 
 ```ruby
-response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: StringIO.new("smoke-test"), auth_method: "oidc", registry: "npm", tag: "latest", tap_repo: "scalar/homebrew-tap" })
+response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: "scalar-galaxy", auth_method: "oidc", registry: "npm", tag: "latest", tap_repo: "scalar/homebrew-tap" })
 
 puts response.inspect
 ```

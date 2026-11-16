@@ -129,12 +129,12 @@ module Scalar
       custom_headers_env = ENV["SCALAR_CUSTOM_HEADERS"]
       unless custom_headers_env.nil?
         parsed = {}
-        custom_headers_env
-          .split("\n")
-          .each do |line|
-            colon = line.index(":")
-            parsed[line[0...colon].strip] = line[(colon + 1)..].strip unless colon.nil?
+        custom_headers_env.split("\n").each do |line|
+          colon = line.index(":")
+          unless colon.nil?
+            parsed[line[0...colon].strip] = line[(colon + 1)..].strip
           end
+        end
         headers = parsed.merge(headers)
       end
 

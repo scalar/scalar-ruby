@@ -48,7 +48,9 @@ module Scalar
       def create_ruleset_access_group(slug, params)
         parsed, options = Scalar::RuleCreateRulesetAccessGroupParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :post,
           path: ["v1/rulesets/%1$s/%2$s/access-group", namespace, slug],
@@ -72,7 +74,9 @@ module Scalar
       def delete_ruleset(slug, params)
         parsed, options = Scalar::RuleDeleteRulesetParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/rulesets/%1$s/%2$s", namespace, slug],
@@ -99,7 +103,9 @@ module Scalar
       def delete_ruleset_access_group(slug, params)
         parsed, options = Scalar::RuleDeleteRulesetAccessGroupParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/rulesets/%1$s/%2$s/access-group", namespace, slug],
@@ -142,13 +148,13 @@ module Scalar
       def retrieve_ruleset_document(slug, params)
         parsed, options = Scalar::RuleRetrieveRulesetDocumentParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :get,
           path: ["v1/rulesets/%1$s/%2$s", namespace, slug],
-          headers: {
-            "accept" => "text/plain"
-          },
+          headers: {"accept" => "text/plain"},
           model: String,
           options: options
         )
@@ -180,7 +186,9 @@ module Scalar
       def update_ruleset(path_slug, params)
         parsed, options = Scalar::RuleUpdateRulesetParams.dump_request(params)
         path_namespace =
-          parsed.delete(:path_namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:path_namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :patch,
           path: ["v1/rulesets/%1$s/%2$s", path_namespace, path_slug],

@@ -63,15 +63,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.new(
-        url:,
-        status: nil,
-        headers: nil,
-        body: nil,
-        request: nil,
-        response: nil,
-        message: nil
-      )
+      def self.new(url:, status: nil, headers: nil, body: nil, request: nil, response: nil, message: nil)
       end
     end
 
@@ -144,15 +136,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.for(
-        url:,
-        status:,
-        headers:,
-        body:,
-        request:,
-        response:,
-        message: nil
-      )
+      def self.for(url:, status:, headers:, body:, request:, response:, message: nil)
       end
 
       sig { returns(Integer) }
@@ -170,15 +154,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.new(
-        url:,
-        status:,
-        headers:,
-        body:,
-        request:,
-        response:,
-        message: nil
-      )
+      def self.new(url:, status:, headers:, body:, request:, response:, message: nil)
       end
     end
 

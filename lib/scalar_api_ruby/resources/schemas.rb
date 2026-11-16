@@ -61,7 +61,9 @@ module Scalar
       def update(slug, params)
         parsed, options = Scalar::SchemaUpdateParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :patch,
           path: ["v1/schemas/%1$s/%2$s", namespace, slug],
@@ -104,7 +106,9 @@ module Scalar
       def delete(slug, params)
         parsed, options = Scalar::SchemaDeleteParams.dump_request(params)
         namespace =
-          parsed.delete(:namespace) { raise ArgumentError.new("missing required path argument #{_1}") }
+          parsed.delete(:namespace) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
           path: ["v1/schemas/%1$s/%2$s", namespace, slug],

@@ -55,7 +55,10 @@ module Scalar
         # @see Scalar::Models::Sdks::VersionDeleteParams
         def delete(version, params)
           parsed, options = Scalar::Sdks::VersionDeleteParams.dump_request(params)
-          uid = parsed.delete(:uid) { raise ArgumentError.new("missing required path argument #{_1}") }
+          uid =
+            parsed.delete(:uid) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :delete,
             path: ["v1/sdks/%1$s/versions/%2$s", uid, version],

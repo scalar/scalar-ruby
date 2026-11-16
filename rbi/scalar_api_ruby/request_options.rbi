@@ -8,7 +8,9 @@ module Scalar
   # simply pass a Hash with symbol keys matching the attributes on this class.
   class RequestOptions < Scalar::Internal::Type::BaseModel
     OrHash =
-      T.type_alias { T.any(Scalar::RequestOptions, Scalar::Internal::AnyHash) }
+      T.type_alias do
+        T.any(Scalar::RequestOptions, Scalar::Internal::AnyHash)
+      end
 
     # @api private
     sig { params(opts: Scalar::RequestOptions::OrHash).void }
@@ -22,11 +24,7 @@ module Scalar
 
     # Extra query params to send with the request. These are `.merge`’d into any
     # `query` given at the client level.
-    sig do
-      returns(
-        T.nilable(T::Hash[String, T.nilable(T.any(T::Array[String], String))])
-      )
-    end
+    sig { returns(T.nilable(T::Hash[String, T.nilable(T.any(T::Array[String], String))])) }
     attr_accessor :extra_query
 
     # Extra headers to send with the request. These are `.merged`’d into any

@@ -36,7 +36,9 @@ module Scalar
         # @param other [Object]
         #
         # @return [Boolean]
-        def self.==(other) = other.is_a?(Class) && other <= Scalar::Internal::Type::FileInput
+        def self.==(other)
+          other.is_a?(Class) && other <= Scalar::Internal::Type::FileInput
+        end
 
         class << self
           # @api private
@@ -89,7 +91,11 @@ module Scalar
               Scalar::FilePart.new(value, filename: "upload")
             in IO
               state[:can_retry] = false
-              value.to_path.nil? ? Scalar::FilePart.new(value, filename: "upload") : value
+              if value.to_path.nil?
+                Scalar::FilePart.new(value, filename: "upload")
+              else
+                value
+              end
             in Scalar::FilePart if value.content.is_a?(IO)
               state[:can_retry] = false
               value

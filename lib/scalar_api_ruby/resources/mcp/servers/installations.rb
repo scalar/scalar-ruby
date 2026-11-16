@@ -22,7 +22,10 @@ module Scalar
           # @see Scalar::Models::Mcp::Servers::InstallationRetrieveParams
           def retrieve(installation_id, params)
             parsed, options = Scalar::Mcp::Servers::InstallationRetrieveParams.dump_request(params)
-            id = parsed.delete(:id) { raise ArgumentError.new("missing required path argument #{_1}") }
+            id =
+              parsed.delete(:id) do
+                raise ArgumentError.new("missing required path argument #{_1}")
+              end
             @client.request(
               method: :get,
               path: ["v1/mcp/servers/%1$s/installations/%2$s", id, installation_id],
@@ -58,7 +61,10 @@ module Scalar
           # @see Scalar::Models::Mcp::Servers::InstallationUpdateParams
           def update(installation_id, params)
             parsed, options = Scalar::Mcp::Servers::InstallationUpdateParams.dump_request(params)
-            id = parsed.delete(:id) { raise ArgumentError.new("missing required path argument #{_1}") }
+            id =
+              parsed.delete(:id) do
+                raise ArgumentError.new("missing required path argument #{_1}")
+              end
             @client.request(
               method: :patch,
               path: ["v1/mcp/servers/%1$s/installations/%2$s", id, installation_id],
@@ -104,7 +110,10 @@ module Scalar
           # @see Scalar::Models::Mcp::Servers::InstallationDeleteParams
           def delete(installation_id, params)
             parsed, options = Scalar::Mcp::Servers::InstallationDeleteParams.dump_request(params)
-            id = parsed.delete(:id) { raise ArgumentError.new("missing required path argument #{_1}") }
+            id =
+              parsed.delete(:id) do
+                raise ArgumentError.new("missing required path argument #{_1}")
+              end
             @client.request(
               method: :delete,
               path: ["v1/mcp/servers/%1$s/installations/%2$s", id, installation_id],
@@ -134,7 +143,10 @@ module Scalar
           # @see Scalar::Models::Mcp::Servers::InstallationCreateAccessGroupParams
           def create_access_group(installation_id, params)
             parsed, options = Scalar::Mcp::Servers::InstallationCreateAccessGroupParams.dump_request(params)
-            id = parsed.delete(:id) { raise ArgumentError.new("missing required path argument #{_1}") }
+            id =
+              parsed.delete(:id) do
+                raise ArgumentError.new("missing required path argument #{_1}")
+              end
             @client.request(
               method: :post,
               path: ["v1/mcp/servers/%1$s/installations/%2$s/access-group", id, installation_id],
@@ -165,7 +177,10 @@ module Scalar
           # @see Scalar::Models::Mcp::Servers::InstallationDeleteAccessGroupParams
           def delete_access_group(installation_id, params)
             parsed, options = Scalar::Mcp::Servers::InstallationDeleteAccessGroupParams.dump_request(params)
-            id = parsed.delete(:id) { raise ArgumentError.new("missing required path argument #{_1}") }
+            id =
+              parsed.delete(:id) do
+                raise ArgumentError.new("missing required path argument #{_1}")
+              end
             @client.request(
               method: :delete,
               path: ["v1/mcp/servers/%1$s/installations/%2$s/access-group", id, installation_id],

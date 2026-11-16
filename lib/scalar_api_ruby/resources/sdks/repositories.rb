@@ -43,7 +43,10 @@ module Scalar
         # @see Scalar::Models::Sdks::RepositoryUnlinkParams
         def unlink(language, params)
           parsed, options = Scalar::Sdks::RepositoryUnlinkParams.dump_request(params)
-          uid = parsed.delete(:uid) { raise ArgumentError.new("missing required path argument #{_1}") }
+          uid =
+            parsed.delete(:uid) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :delete,
             path: ["v1/sdks/%1$s/repositories/%2$s", uid, language],
@@ -81,7 +84,10 @@ module Scalar
         # @see Scalar::Models::Sdks::RepositoryUpdatePublishingParams
         def update_publishing(language, params)
           parsed, options = Scalar::Sdks::RepositoryUpdatePublishingParams.dump_request(params)
-          uid = parsed.delete(:uid) { raise ArgumentError.new("missing required path argument #{_1}") }
+          uid =
+            parsed.delete(:uid) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :post,
             path: ["v1/sdks/%1$s/repositories/%2$s/publishing", uid, language],

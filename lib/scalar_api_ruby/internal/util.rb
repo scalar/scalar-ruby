@@ -160,7 +160,8 @@ module Scalar
           in Hash | nil => coerced
             coerced
           else
-            message = "Expected a #{Hash} or #{Scalar::Internal::Type::BaseModel}, got #{input.inspect}"
+            message =
+              "Expected a #{Hash} or #{Scalar::Internal::Type::BaseModel}, got #{input.inspect}"
             raise ArgumentError.new(message)
           end
         end
@@ -264,7 +265,11 @@ module Scalar
         #
         # @return [String]
         def encode_path(path)
-          path.to_s.gsub(Scalar::Internal::Util::RFC_3986_NOT_PCHARS) { ERB::Util.url_encode(_1) }
+          path
+            .to_s
+            .gsub(Scalar::Internal::Util::RFC_3986_NOT_PCHARS) do
+              ERB::Util.url_encode(_1)
+            end
         end
 
         # @api private
@@ -747,13 +752,14 @@ module Scalar
           boundary = SecureRandom.urlsafe_base64(46)
 
           closing = []
+          file_input = Scalar::Internal::Type::FileInput
           strio =
             writable_enum do |y|
               case body
               in Hash
                 body.each do |key, val|
                   case val
-                  in Array if val.all? { primitive?(_1) || Scalar::Internal::Type::FileInput === _1 }
+                  in Array if val.all? { primitive?(_1) || file_input === _1 }
                     val.each do |v|
                       write_multipart_chunk(y, boundary: boundary, key: key, val: v, closing: closing)
                     end
@@ -819,8 +825,10 @@ module Scalar
           case [content_type, body]
           in [Scalar::Internal::Util::JSON_CONTENT, Hash | Array | -> { primitive?(_1) }]
             [headers, JSON.generate(body)]
-          in [Scalar::Internal::Util::JSONL_CONTENT, Enumerable] unless Scalar::Internal::Type::FileInput ===
-            body
+          in [
+               Scalar::Internal::Util::JSONL_CONTENT,
+               Enumerable
+             ] unless Scalar::Internal::Type::FileInput === body
             [headers, body.lazy.map { JSON.generate(_1) }]
           in [%r{^application/x-www-form-urlencoded}i, Hash]
             [headers, encode_form(body)]
@@ -991,9 +999,8 @@ module Scalar
         def close_fused!(enum)
           return unless enum.is_a?(Enumerator)
 
-          # rubocop:disable Lint/UnreachableLoop
+          # rubocop:disable-next Lint/UnreachableLoop
           enum.rewind.each { break }
-          # rubocop:enable Lint/UnreachableLoop
         end
 
         # @api private
@@ -1065,7 +1072,9 @@ module Scalar
           limit = Scalar::Internal::Util::MAX_PENDING_STREAM_BYTES
           return if bytesize <= limit
 
-          raise Scalar::Errors::Error.new("A stream line or event is larger than the #{limit}-byte limit.")
+          raise Scalar::Errors::Error.new(
+            "A stream line or event is larger than the #{limit}-byte limit."
+          )
         end
 
         # @api private
