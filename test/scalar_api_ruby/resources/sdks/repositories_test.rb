@@ -72,7 +72,9 @@ class ScalarSmokeTest::Resources::Sdks::RepositoriesTest < ScalarSmokeTest::Reso
         access: "public",
         artifact_id: "scalar-galaxy",
         auth_method: "oidc",
+        cask: true,
         registry: "npm",
+        replace_formula: false,
         tag: "latest",
         tap_repo: "scalar/homebrew-tap"
       }
