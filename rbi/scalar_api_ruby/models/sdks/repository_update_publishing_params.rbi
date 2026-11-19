@@ -68,11 +68,23 @@ module Scalar
         end
         attr_writer :auth_method
 
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :cask
+
+        sig { params(cask: T::Boolean).void }
+        attr_writer :cask
+
         sig { returns(T.nilable(String)) }
         attr_reader :registry
 
         sig { params(registry: String).void }
         attr_writer :registry
+
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :replace_formula
+
+        sig { params(replace_formula: T::Boolean).void }
+        attr_writer :replace_formula
 
         sig { returns(T.nilable(String)) }
         attr_reader :tag
@@ -97,7 +109,9 @@ module Scalar
             artifact_id: String,
             auth_method:
               Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+            cask: T::Boolean,
             registry: String,
+            replace_formula: T::Boolean,
             tag: String,
             tap_repo: String,
             request_options: Scalar::RequestOptions::OrHash
@@ -110,7 +124,9 @@ module Scalar
           access: nil,
           artifact_id: nil,
           auth_method: nil,
+          cask: nil,
           registry: nil,
+          replace_formula: nil,
           tag: nil,
           tap_repo: nil,
           request_options: {}
@@ -129,7 +145,9 @@ module Scalar
               artifact_id: String,
               auth_method:
                 Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+              cask: T::Boolean,
               registry: String,
+              replace_formula: T::Boolean,
               tag: String,
               tap_repo: String,
               request_options: Scalar::RequestOptions

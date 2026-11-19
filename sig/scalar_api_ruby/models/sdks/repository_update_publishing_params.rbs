@@ -9,7 +9,9 @@ module Scalar
           access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
           artifact_id: String,
           auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          cask: bool,
           registry: String,
+          replace_formula: bool,
           tag: String,
           tap_repo: String
         }
@@ -41,9 +43,17 @@ module Scalar
           Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
         ) -> Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
 
+        attr_reader cask: bool?
+
+        def cask=: (bool) -> bool
+
         attr_reader registry: String?
 
         def registry=: (String) -> String
+
+        attr_reader replace_formula: bool?
+
+        def replace_formula=: (bool) -> bool
 
         attr_reader tag: String?
 
@@ -60,7 +70,9 @@ module Scalar
           ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
           ?artifact_id: String,
           ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?cask: bool,
           ?registry: String,
+          ?replace_formula: bool,
           ?tag: String,
           ?tap_repo: String,
           ?request_options: Scalar::request_opts
@@ -73,7 +85,9 @@ module Scalar
           access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
           artifact_id: String,
           auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          cask: bool,
           registry: String,
+          replace_formula: bool,
           tag: String,
           tap_repo: String,
           request_options: Scalar::RequestOptions

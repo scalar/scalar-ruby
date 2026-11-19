@@ -49,7 +49,9 @@ module Scalar
             artifact_id: String,
             auth_method:
               Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+            cask: T::Boolean,
             registry: String,
+            replace_formula: T::Boolean,
             tag: String,
             tap_repo: String,
             request_options: Scalar::RequestOptions::OrHash
@@ -69,7 +71,11 @@ module Scalar
           # Body param
           auth_method: nil,
           # Body param
+          cask: nil,
+          # Body param
           registry: nil,
+          # Body param
+          replace_formula: nil,
           # Body param
           tag: nil,
           # Body param

@@ -1337,7 +1337,7 @@ Toggle publish-on-merge and the release settings for a linked target.
 | Request | [`RepositoryUpdatePublishingParams`](././lib/scalar_api_ruby/models/sdks/repository_update_publishing_params.rb) |
 
 ```ruby
-response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: "scalar-galaxy", auth_method: "oidc", registry: "npm", tag: "latest", tap_repo: "scalar/homebrew-tap" })
+response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: "scalar-galaxy", auth_method: "oidc", cask: true, registry: "npm", replace_formula: false, tag: "latest", tap_repo: "scalar/homebrew-tap" })
 
 puts response.inspect
 ```
