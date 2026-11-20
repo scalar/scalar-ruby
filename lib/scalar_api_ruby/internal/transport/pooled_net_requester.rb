@@ -16,6 +16,17 @@ module Scalar
         # Most origins the requester keeps a connection pool for at once.
         MAX_POOLS = 16
 
+        # @api private
+        #
+        # The trust store every TLS connection of this requester verifies against: OpenSSL's default
+        # paths, read when the client is constructed, so `SSL_CERT_FILE` and `SSL_CERT_DIR` as they
+        # stand then. A signed upload and a requested-URL fetch, which go to other hosts on connections
+        # of their own, verify against this same store, so those hosts are trusted exactly as the
+        # client's own are.
+        #
+        # @return [OpenSSL::X509::Store]
+        attr_reader :cert_store
+
         class << self
           # @api private
           #

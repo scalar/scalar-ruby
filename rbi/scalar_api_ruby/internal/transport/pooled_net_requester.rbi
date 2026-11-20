@@ -27,6 +27,10 @@ module Scalar
         # Most origins the requester keeps a connection pool for at once.
         MAX_POOLS = 16
 
+        # @api private
+        sig { returns(OpenSSL::X509::Store) }
+        attr_reader :cert_store
+
         class << self
           # @api private
           sig { params(cert_store: OpenSSL::X509::Store, url: URI::Generic).returns(Net::HTTP) }
