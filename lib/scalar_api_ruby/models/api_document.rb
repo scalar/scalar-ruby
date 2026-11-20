@@ -25,8 +25,8 @@ module Scalar
 
       # @!attribute tags
       #
-      #   @return [String]
-      required :tags, String
+      #   @return [Object]
+      required :tags, Scalar::Internal::Type::Unknown
 
       # @!attribute title
       #
@@ -53,7 +53,7 @@ module Scalar
       #   @param is_private [Boolean]
       #   @param namespace [String]
       #   @param slug [String]
-      #   @param tags [String]
+      #   @param tags [Object]
       #   @param title [String]
       #   @param uid [String]
       #   @param version [String]

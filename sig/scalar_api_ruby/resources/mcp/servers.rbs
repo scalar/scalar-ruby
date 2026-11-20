@@ -19,7 +19,6 @@ module Scalar
 
         def update: (
           String id,
-          ?auto_add_operations: bool,
           ?docs_pages: ::Array[String],
           ?name: String,
           ?operations: ::Array[String],

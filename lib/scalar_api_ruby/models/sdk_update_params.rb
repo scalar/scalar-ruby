@@ -18,9 +18,12 @@ module Scalar
       optional :api_uid, String, api_name: :apiUid, nil?: true
 
       # @!attribute api_version
+      #   @deprecated
       #
-      #   @return [String, nil]
-      optional :api_version, String, api_name: :apiVersion, nil?: true
+      #   Removed. A request that carries it is refused with a 400.
+      #
+      #   @return [Object, nil]
+      optional :api_version, Scalar::Internal::Type::Unknown, api_name: :apiVersion
 
       # @!attribute config
       #
@@ -44,12 +47,19 @@ module Scalar
 
       # @!method initialize(uid:, api_uid: nil, api_version: nil, config: nil, is_private: nil, slug: nil, title: nil, request_options: {})
       #   @param uid [String]
+      #
       #   @param api_uid [String, nil]
-      #   @param api_version [String, nil]
+      #
+      #   @param api_version [Object] Removed. A request that carries it is refused with a 400.
+      #
       #   @param config [String]
+      #
       #   @param is_private [Boolean]
+      #
       #   @param slug [String]
+      #
       #   @param title [String]
+      #
       #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
     end
   end

@@ -2,7 +2,7 @@ module Scalar
   module Models
     module Sdks
       type version_create_params =
-        { uid: String, api_version: String, version: String }
+        { uid: String, version: String, api_version: top }
         & Scalar::Internal::Type::request_parameters
 
       class VersionCreateParams < Scalar::Internal::Type::BaseModel
@@ -11,21 +11,23 @@ module Scalar
 
         attr_accessor uid: String
 
-        attr_accessor api_version: String
-
         attr_accessor version: String
+
+        attr_reader api_version: top?
+
+        def api_version=: (top) -> top
 
         def initialize: (
           uid: String,
-          api_version: String,
           version: String,
+          ?api_version: top,
           ?request_options: Scalar::request_opts
         ) -> void
 
         def to_hash: -> {
           uid: String,
-          api_version: String,
           version: String,
+          api_version: top,
           request_options: Scalar::RequestOptions
         }
       end

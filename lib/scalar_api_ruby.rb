@@ -3,7 +3,6 @@
 # Standard libraries.
 # rubocop:disable Lint/RedundantRequireStatement
 require "English"
-require "cgi"
 require "date"
 require "erb"
 require "etc"
@@ -16,18 +15,17 @@ require "securerandom"
 require "set"
 require "stringio"
 require "time"
+require "timeout"
 require "uri"
 # rubocop:enable Lint/RedundantRequireStatement
 
 # We already ship the preferred sorbet manifests in the package itself.
 # `tapioca` currently does not offer us a way to opt out of unnecessary compilation.
-if Object.const_defined?(:Tapioca) && caller.chain([$PROGRAM_NAME]).chain(ARGV).any?(/tapioca/) &&
+if Object.const_defined?(:Tapioca) &&
+   caller.chain([$PROGRAM_NAME]).chain(ARGV).any?(/tapioca/) &&
    ARGV.none?(/dsl/)
   return
 end
-
-# Gems.
-require "connection_pool"
 
 # Package files.
 require_relative "scalar_api_ruby/version"
@@ -48,6 +46,7 @@ require_relative "scalar_api_ruby/request_options"
 require_relative "scalar_api_ruby/file_part"
 require_relative "scalar_api_ruby/errors"
 require_relative "scalar_api_ruby/internal/transport/base_client"
+require_relative "scalar_api_ruby/internal/transport/connection_pool"
 require_relative "scalar_api_ruby/internal/transport/pooled_net_requester"
 require_relative "scalar_api_ruby/client"
 require_relative "scalar_api_ruby/models/access_group"
@@ -96,7 +95,6 @@ require_relative "scalar_api_ruby/models/mcp/server_list_params"
 require_relative "scalar_api_ruby/models/mcp/server_list_response"
 require_relative "scalar_api_ruby/models/mcp/server_retrieve_params"
 require_relative "scalar_api_ruby/models/mcp/servers/installation_create_access_group_params"
-require_relative "scalar_api_ruby/models/mcp/servers/installation_create_params"
 require_relative "scalar_api_ruby/models/mcp/servers/installation_delete_access_group_params"
 require_relative "scalar_api_ruby/models/mcp/servers/installation_delete_params"
 require_relative "scalar_api_ruby/models/mcp/servers/installation_list_params"

@@ -12,6 +12,11 @@ module Scalar
       #   @return [String]
       required :uid, String
 
+      # @!attribute custom_code_ref
+      #
+      #   @return [String, nil]
+      optional :custom_code_ref, String, api_name: :customCodeRef
+
       # @!attribute languages
       #
       #   @return [Array<Symbol, Scalar::Models::SdkBuildParams::Language>, nil]
@@ -22,8 +27,9 @@ module Scalar
       #   @return [String, nil]
       optional :version, String
 
-      # @!method initialize(uid:, languages: nil, version: nil, request_options: {})
+      # @!method initialize(uid:, custom_code_ref: nil, languages: nil, version: nil, request_options: {})
       #   @param uid [String]
+      #   @param custom_code_ref [String]
       #   @param languages [Array<Symbol, Scalar::Models::SdkBuildParams::Language>]
       #   @param version [String]
       #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]

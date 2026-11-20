@@ -18,12 +18,23 @@ module Scalar
           def inherited(child)
             super
             child.known_fields.replace(known_fields.dup)
+            child.dropped_keys.replace(dropped_keys.dup)
           end
 
           # @api private
           #
           # @return [Hash{Symbol=>Hash{Symbol=>Object}}]
           def known_fields = @known_fields ||= {}
+
+          # @api private
+          #
+          # Keys `.#dump` leaves out of a request even though no field declares them: the
+          # `readOnly` members of the model an input shape stands in for, under their wire and
+          # Ruby names, so a decoded value passed back into a request does not send them. Any
+          # other undeclared key is still sent as given.
+          #
+          # @return [Hash{Symbol=>true}]
+          def dropped_keys = @dropped_keys ||= {}
 
           # @api private
           #
@@ -56,7 +67,12 @@ module Scalar
             type_fn, info =
               case type_info
               in Proc | Scalar::Internal::Type::Converter | Class
-                [Scalar::Internal::Type::Converter.type_info({**spec, union: type_info}), spec]
+                [
+                  Scalar::Internal::Type::Converter.type_info(
+                    {**spec, union: type_info}
+                  ),
+                  spec
+                ]
               in Hash
                 [Scalar::Internal::Type::Converter.type_info(type_info), type_info]
               end
@@ -64,9 +80,19 @@ module Scalar
             setter = :"#{name_sym}="
             api_name = info.fetch(:api_name, name_sym)
             nilable = info.fetch(:nil?, false)
-            const = required && !nilable ? info.fetch(:const, Scalar::Internal::OMIT) : Scalar::Internal::OMIT
+            const =
+              (
+                if required && !nilable
+                  info.fetch(:const, Scalar::Internal::OMIT)
+                else
+                  Scalar::Internal::OMIT
+                end
+              )
 
             [name_sym, setter].each { undef_method(_1) } if known_fields.key?(name_sym)
+            # A declared field always wins over a key a parent dropped: `dump` looks fields up by Ruby
+            # name, so the wire spelling would otherwise still hit the inherited entry.
+            [name_sym, api_name].each { dropped_keys.delete(_1) }
 
             known_fields[name_sym] = {
               mode: @mode,
@@ -80,8 +106,10 @@ module Scalar
 
             define_method(setter) do |value|
               target = type_fn.call
-              state = Scalar::Internal::Type::Converter.new_coerce_state(translate_names: false)
-              coerced = Scalar::Internal::Type::Converter.coerce(target, value, state: state)
+              state =
+                Scalar::Internal::Type::Converter.new_coerce_state(translate_names: false)
+              coerced =
+                Scalar::Internal::Type::Converter.coerce(target, value, state: state)
               status = @coerced.store(name_sym, state.fetch(:error) || true)
               stored =
                 case [target, status]
@@ -93,8 +121,7 @@ module Scalar
               @data.store(name_sym, stored)
             end
 
-            # rubocop:disable Style/CaseEquality
-            # rubocop:disable Metrics/BlockLength
+            # rubocop:disable-next Style/CaseEquality, Metrics/BlockLength
             define_method(name_sym) do
               target = type_fn.call
 
@@ -111,8 +138,14 @@ module Scalar
                 )
               else
                 Kernel.then do
-                  value = @data.fetch(name_sym) { const == Scalar::Internal::OMIT ? nil : const }
-                  state = Scalar::Internal::Type::Converter.new_coerce_state(translate_names: false)
+                  value =
+                    @data.fetch(name_sym) do
+                      const == Scalar::Internal::OMIT ? nil : const
+                    end
+                  state =
+                    Scalar::Internal::Type::Converter.new_coerce_state(
+                      translate_names: false
+                    )
                   if (nilable || !required) && value.nil?
                     nil
                   else
@@ -129,8 +162,6 @@ module Scalar
                 end
               end
             end
-            # rubocop:enable Metrics/BlockLength
-            # rubocop:enable Style/CaseEquality
           end
 
           # @api private
@@ -196,13 +227,23 @@ module Scalar
             @mode = nil
           end
 
+          # @api private
+          #
+          # Declares keys `.#dump` drops without declaring an attribute for them.
+          #
+          # @param names [Array<Symbol>]
+          private def drop_on_dump(*names)
+            names.each { dropped_keys.store(_1, true) }
+          end
+
           # @api public
           #
           # @param other [Object]
           #
           # @return [Boolean]
           def ==(other)
-            other.is_a?(Class) && other <= Scalar::Internal::Type::BaseModel && other.fields == fields
+            other.is_a?(Class) && other <= Scalar::Internal::Type::BaseModel &&
+              other.fields == fields
           end
 
           # @api public
@@ -261,7 +302,7 @@ module Scalar
             data = instance.to_h
             status = instance.instance_variable_get(:@coerced)
 
-            # rubocop:disable Metrics/BlockLength
+            # rubocop:disable-next Metrics/BlockLength
             fields.each do |name, field|
               mode, required, target = field.fetch_values(:mode, :required, :type)
               api_name, nilable, const = field.fetch_values(:api_name, :nilable, :const)
@@ -285,7 +326,8 @@ module Scalar
                   exactness[nilable ? :yes : :maybe] += 1
                   nil
                 else
-                  coerced = Scalar::Internal::Type::Converter.coerce(target, item, state: state)
+                  coerced =
+                    Scalar::Internal::Type::Converter.coerce(target, item, state: state)
                   case target
                   in Scalar::Internal::Type::Converter | Symbol
                     coerced
@@ -297,7 +339,6 @@ module Scalar
               status.store(name, state.fetch(:error) || true)
               data.store(name, converted)
             end
-            # rubocop:enable Metrics/BlockLength
 
             keys.each { data.store(_1, val.fetch(_1)) }
             instance
@@ -323,6 +364,8 @@ module Scalar
               name = key.is_a?(String) ? key.to_sym : key
               case (field = known_fields[name])
               in nil
+                next if dropped_keys.key?(name)
+
                 acc.store(name, super(val, state: state))
               else
                 api_name, mode, type_fn = field.fetch_values(:api_name, :mode, :type_fn)
@@ -331,14 +374,19 @@ module Scalar
                   next
                 else
                   target = type_fn.call
-                  acc.store(api_name, Scalar::Internal::Type::Converter.dump(target, val, state: state))
+                  acc.store(
+                    api_name,
+                    Scalar::Internal::Type::Converter.dump(target, val, state: state)
+                  )
                 end
               end
             end
 
             known_fields.each_value do |field|
               api_name, mode, const = field.fetch_values(:api_name, :mode, :const)
-              next if mode == :coerce || acc.key?(api_name) || const == Scalar::Internal::OMIT
+              if mode == :coerce || acc.key?(api_name) || const == Scalar::Internal::OMIT
+                next
+              end
               acc.store(api_name, const)
             end
 
@@ -449,14 +497,18 @@ module Scalar
         # @param a [Object]
         #
         # @return [String]
-        def to_json(*a) = Scalar::Internal::Type::Converter.dump(self.class, self).to_json(*a)
+        def to_json(*a)
+          Scalar::Internal::Type::Converter.dump(self.class, self).to_json(*a)
+        end
 
         # @api public
         #
         # @param a [Object]
         #
         # @return [String]
-        def to_yaml(*a) = Scalar::Internal::Type::Converter.dump(self.class, self).to_yaml(*a)
+        def to_yaml(*a)
+          Scalar::Internal::Type::Converter.dump(self.class, self).to_yaml(*a)
+        end
 
         # Create a new instance of a model.
         #

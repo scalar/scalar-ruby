@@ -3,14 +3,6 @@ module Scalar
     class Mcp
       class Servers
         class Installations
-          def create: (
-            String id,
-            document_auth: ::Hash[Symbol, top],
-            name: String,
-            ?slug: String,
-            ?request_options: Scalar::request_opts
-          ) -> Scalar::Mcp::McpInstallation
-
           def retrieve: (
             String installation_id,
             id: String,
@@ -20,9 +12,6 @@ module Scalar
           def update: (
             String installation_id,
             id: String,
-            ?document_auth: ::Hash[Symbol, top],
-            ?is_private: bool,
-            ?login_portal_uid: String?,
             ?mcp_version: String?,
             ?name: String,
             ?slug: String,

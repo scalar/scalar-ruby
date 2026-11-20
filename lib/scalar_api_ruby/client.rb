@@ -79,6 +79,8 @@ module Scalar
     #
     # @return [Hash{String=>String}]
     private def auth_bearer_auth
+      return {} if @bearer_auth.to_s.empty?
+
       {"authorization" => "Bearer #{@bearer_auth}"}
     end
 
@@ -86,8 +88,15 @@ module Scalar
     #
     # @return [Hash{String=>String}]
     private def auth_o_auth2
+      return {} if @o_auth2.to_s.empty?
+
       {"authorization" => "Bearer #{@o_auth2}"}
     end
+
+    # @api private
+    #
+    # @return [Array<String>]
+    private def auth_header_keys = ["authorization"]
 
     # Creates and returns a new client for interacting with the API.
     #
@@ -120,12 +129,12 @@ module Scalar
       custom_headers_env = ENV["SCALAR_CUSTOM_HEADERS"]
       unless custom_headers_env.nil?
         parsed = {}
-        custom_headers_env
-          .split("\n")
-          .each do |line|
-            colon = line.index(":")
-            parsed[line[0...colon].strip] = line[(colon + 1)..].strip unless colon.nil?
+        custom_headers_env.split("\n").each do |line|
+          colon = line.index(":")
+          unless colon.nil?
+            parsed[line[0...colon].strip] = line[(colon + 1)..].strip
           end
+        end
         headers = parsed.merge(headers)
       end
 

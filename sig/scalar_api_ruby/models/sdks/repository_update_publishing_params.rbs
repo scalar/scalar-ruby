@@ -7,8 +7,13 @@ module Scalar
           language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
           publish_on_merge: bool,
           access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          artifact_id: String,
           auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
-          tag: String
+          cask: bool,
+          registry: String,
+          replace_formula: bool,
+          tag: String,
+          tap_repo: String
         }
         & Scalar::Internal::Type::request_parameters
 
@@ -28,23 +33,48 @@ module Scalar
           Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access
         ) -> Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access
 
+        attr_reader artifact_id: String?
+
+        def artifact_id=: (String) -> String
+
         attr_reader auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method?
 
         def auth_method=: (
           Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
         ) -> Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method
 
+        attr_reader cask: bool?
+
+        def cask=: (bool) -> bool
+
+        attr_reader registry: String?
+
+        def registry=: (String) -> String
+
+        attr_reader replace_formula: bool?
+
+        def replace_formula=: (bool) -> bool
+
         attr_reader tag: String?
 
         def tag=: (String) -> String
+
+        attr_reader tap_repo: String?
+
+        def tap_repo=: (String) -> String
 
         def initialize: (
           uid: String,
           language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
           publish_on_merge: bool,
           ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          ?artifact_id: String,
           ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?cask: bool,
+          ?registry: String,
+          ?replace_formula: bool,
           ?tag: String,
+          ?tap_repo: String,
           ?request_options: Scalar::request_opts
         ) -> void
 
@@ -53,8 +83,13 @@ module Scalar
           language: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::language,
           publish_on_merge: bool,
           access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          artifact_id: String,
           auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          cask: bool,
+          registry: String,
+          replace_formula: bool,
           tag: String,
+          tap_repo: String,
           request_options: Scalar::RequestOptions
         }
 

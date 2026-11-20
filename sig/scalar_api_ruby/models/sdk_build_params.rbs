@@ -3,6 +3,7 @@ module Scalar
     type sdk_build_params =
       {
         uid: String,
+        custom_code_ref: String,
         languages: ::Array[Scalar::Models::SdkBuildParams::language],
         version: String
       }
@@ -13,6 +14,10 @@ module Scalar
       include Scalar::Internal::Type::RequestParameters
 
       attr_accessor uid: String
+
+      attr_reader custom_code_ref: String?
+
+      def custom_code_ref=: (String) -> String
 
       attr_reader languages: ::Array[Scalar::Models::SdkBuildParams::language]?
 
@@ -26,6 +31,7 @@ module Scalar
 
       def initialize: (
         uid: String,
+        ?custom_code_ref: String,
         ?languages: ::Array[Scalar::Models::SdkBuildParams::language],
         ?version: String,
         ?request_options: Scalar::request_opts
@@ -33,6 +39,7 @@ module Scalar
 
       def to_hash: -> {
         uid: String,
+        custom_code_ref: String,
         languages: ::Array[Scalar::Models::SdkBuildParams::language],
         version: String,
         request_options: Scalar::RequestOptions

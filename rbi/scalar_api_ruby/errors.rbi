@@ -39,6 +39,18 @@ module Scalar
       sig { returns(T.nilable(T.anything)) }
       attr_accessor :body
 
+      sig { returns(T.nilable(String)) }
+      def request_id
+      end
+
+      sig { returns(T.nilable(T::Hash[T.any(String, Symbol), T.anything])) }
+      def problem_details
+      end
+
+      sig { params(name: String).returns(T.nilable(String)) }
+      private def response_header(name)
+      end
+
       # @api private
       sig do
         params(
@@ -51,15 +63,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.new(
-        url:,
-        status: nil,
-        headers: nil,
-        body: nil,
-        request: nil,
-        response: nil,
-        message: nil
-      )
+      def self.new(url:, status: nil, headers: nil, body: nil, request: nil, response: nil, message: nil)
       end
     end
 
@@ -132,15 +136,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.for(
-        url:,
-        status:,
-        headers:,
-        body:,
-        request:,
-        response:,
-        message: nil
-      )
+      def self.for(url:, status:, headers:, body:, request:, response:, message: nil)
       end
 
       sig { returns(Integer) }
@@ -158,15 +154,7 @@ module Scalar
           message: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.new(
-        url:,
-        status:,
-        headers:,
-        body:,
-        request:,
-        response:,
-        message: nil
-      )
+      def self.new(url:, status:, headers:, body:, request:, response:, message: nil)
       end
     end
 

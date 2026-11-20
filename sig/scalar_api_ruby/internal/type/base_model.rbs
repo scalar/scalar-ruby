@@ -13,6 +13,8 @@ module Scalar
         def self.known_fields: -> ::Hash[Symbol, (Scalar::Internal::Type::BaseModel::known_field
         & { type_fn: (^-> Scalar::Internal::Type::Converter::input) })]
 
+        def self.dropped_keys: -> ::Hash[Symbol, true]
+
         def self.fields: -> ::Hash[Symbol, (Scalar::Internal::Type::BaseModel::known_field
         & { type: Scalar::Internal::Type::Converter::input })]
 
@@ -49,6 +51,8 @@ module Scalar
         private def self.request_only: { -> void } -> void
 
         private def self.response_only: { -> void } -> void
+
+        private def self.drop_on_dump: (*Symbol names) -> void
 
         def self.==: (top other) -> bool
 

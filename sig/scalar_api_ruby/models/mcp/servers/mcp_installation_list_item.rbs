@@ -3,18 +3,10 @@ module Scalar
     module Mcp
       module Servers
         type mcp_installation_list_item =
-          {
-            id: String,
-            is_private: bool,
-            mcp_version: String?,
-            name: String,
-            slug: String
-          }
+          { id: String, mcp_version: String?, name: String, slug: String }
 
         class McpInstallationListItem < Scalar::Internal::Type::BaseModel
           attr_accessor id: String
-
-          attr_accessor is_private: bool
 
           attr_accessor mcp_version: String?
 
@@ -24,7 +16,6 @@ module Scalar
 
           def initialize: (
             id: String,
-            is_private: bool,
             mcp_version: String?,
             name: String,
             slug: String
@@ -32,7 +23,6 @@ module Scalar
 
           def to_hash: -> {
             id: String,
-            is_private: bool,
             mcp_version: String?,
             name: String,
             slug: String

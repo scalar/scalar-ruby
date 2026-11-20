@@ -14,6 +14,12 @@ module Scalar
       sig { returns(String) }
       attr_accessor :uid
 
+      sig { returns(T.nilable(String)) }
+      attr_reader :custom_code_ref
+
+      sig { params(custom_code_ref: String).void }
+      attr_writer :custom_code_ref
+
       sig do
         returns(T.nilable(T::Array[Scalar::SdkBuildParams::Language::OrSymbol]))
       end
@@ -35,18 +41,26 @@ module Scalar
       sig do
         params(
           uid: String,
+          custom_code_ref: String,
           languages: T::Array[Scalar::SdkBuildParams::Language::OrSymbol],
           version: String,
           request_options: Scalar::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
-      def self.new(uid:, languages: nil, version: nil, request_options: {})
+      def self.new(
+        uid:,
+        custom_code_ref: nil,
+        languages: nil,
+        version: nil,
+        request_options: {}
+      )
       end
 
       sig do
         override.returns(
           {
             uid: String,
+            custom_code_ref: String,
             languages: T::Array[Scalar::SdkBuildParams::Language::OrSymbol],
             version: String,
             request_options: Scalar::RequestOptions

@@ -2,47 +2,28 @@ module Scalar
   module Models
     type sdk_version =
       {
-        api_version: String,
-        languages: ::Array[Scalar::Models::SdkVersion::language],
-        status: Scalar::Models::SdkVersion::status,
-        version: String,
         created_at: Integer,
-        published_at: Integer
+        languages: ::Array[Scalar::Models::SdkVersion::language],
+        version: String
       }
 
     class SdkVersion < Scalar::Internal::Type::BaseModel
-      attr_accessor api_version: String
+      attr_accessor created_at: Integer
 
       attr_accessor languages: ::Array[Scalar::Models::SdkVersion::language]
 
-      attr_accessor status: Scalar::Models::SdkVersion::status
-
       attr_accessor version: String
 
-      attr_reader created_at: Integer?
-
-      def created_at=: (Integer) -> Integer
-
-      attr_reader published_at: Integer?
-
-      def published_at=: (Integer) -> Integer
-
       def initialize: (
-        api_version: String,
+        created_at: Integer,
         languages: ::Array[Scalar::Models::SdkVersion::language],
-        status: Scalar::Models::SdkVersion::status,
-        version: String,
-        ?created_at: Integer,
-        ?published_at: Integer
+        version: String
       ) -> void
 
       def to_hash: -> {
-        api_version: String,
-        languages: ::Array[Scalar::Models::SdkVersion::language],
-        status: Scalar::Models::SdkVersion::status,
-        version: String,
         created_at: Integer,
-        published_at: Integer
+        languages: ::Array[Scalar::Models::SdkVersion::language],
+        version: String
       }
 
       type language =
@@ -78,17 +59,6 @@ module Scalar
         DART: :dart
 
         def self?.values: -> ::Array[Scalar::Models::SdkVersion::language]
-      end
-
-      type status = :draft | :published
-
-      module Status
-        extend Scalar::Internal::Type::Enum
-
-        DRAFT: :draft
-        PUBLISHED: :published
-
-        def self?.values: -> ::Array[Scalar::Models::SdkVersion::status]
       end
     end
   end

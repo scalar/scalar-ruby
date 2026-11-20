@@ -46,9 +46,14 @@ module Scalar
             publish_on_merge: T::Boolean,
             access:
               Scalar::Sdks::RepositoryUpdatePublishingParams::Access::OrSymbol,
+            artifact_id: String,
             auth_method:
               Scalar::Sdks::RepositoryUpdatePublishingParams::AuthMethod::OrSymbol,
+            cask: T::Boolean,
+            registry: String,
+            replace_formula: T::Boolean,
             tag: String,
+            tap_repo: String,
             request_options: Scalar::RequestOptions::OrHash
           ).returns(T.anything)
         end
@@ -62,9 +67,19 @@ module Scalar
           # Body param
           access: nil,
           # Body param
+          artifact_id: nil,
+          # Body param
           auth_method: nil,
           # Body param
+          cask: nil,
+          # Body param
+          registry: nil,
+          # Body param
+          replace_formula: nil,
+          # Body param
           tag: nil,
+          # Body param
+          tap_repo: nil,
           request_options: {}
         )
         end

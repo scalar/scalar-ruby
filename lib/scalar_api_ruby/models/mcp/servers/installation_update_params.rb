@@ -19,23 +19,6 @@ module Scalar
           #   @return [String]
           required :installation_id, String
 
-          # @!attribute document_auth
-          #
-          #   @return [Hash{Symbol=>Object}, nil]
-          optional :document_auth,
-                   Scalar::Internal::Type::HashOf[Scalar::Internal::Type::Unknown],
-                   api_name: :documentAuth
-
-          # @!attribute is_private
-          #
-          #   @return [Boolean, nil]
-          optional :is_private, Scalar::Internal::Type::Boolean, api_name: :isPrivate
-
-          # @!attribute login_portal_uid
-          #
-          #   @return [String, nil]
-          optional :login_portal_uid, String, api_name: :loginPortalUid, nil?: true
-
           # @!attribute mcp_version
           #
           #   @return [String, nil]
@@ -47,19 +30,26 @@ module Scalar
           optional :name, String
 
           # @!attribute slug
+          #   The environment’s current slug. An environment cannot be renamed, so any other
+          #   slug is refused.
           #
           #   @return [String, nil]
           optional :slug, String
 
-          # @!method initialize(id:, installation_id:, document_auth: nil, is_private: nil, login_portal_uid: nil, mcp_version: nil, name: nil, slug: nil, request_options: {})
+          # @!method initialize(id:, installation_id:, mcp_version: nil, name: nil, slug: nil, request_options: {})
+          #   Some parameter documentations has been truncated, see
+          #   {Scalar::Models::Mcp::Servers::InstallationUpdateParams} for more details.
+          #
           #   @param id [String]
+          #
           #   @param installation_id [String]
-          #   @param document_auth [Hash{Symbol=>Object}]
-          #   @param is_private [Boolean]
-          #   @param login_portal_uid [String, nil]
+          #
           #   @param mcp_version [String, nil]
+          #
           #   @param name [String]
-          #   @param slug [String]
+          #
+          #   @param slug [String] The environment’s current slug. An environment cannot be renamed, so any other s
+          #
           #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
         end
       end

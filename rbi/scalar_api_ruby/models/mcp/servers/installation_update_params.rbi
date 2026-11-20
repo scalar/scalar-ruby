@@ -22,21 +22,6 @@ module Scalar
           sig { returns(String) }
           attr_accessor :installation_id
 
-          sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
-          attr_reader :document_auth
-
-          sig { params(document_auth: T::Hash[Symbol, T.anything]).void }
-          attr_writer :document_auth
-
-          sig { returns(T.nilable(T::Boolean)) }
-          attr_reader :is_private
-
-          sig { params(is_private: T::Boolean).void }
-          attr_writer :is_private
-
-          sig { returns(T.nilable(String)) }
-          attr_accessor :login_portal_uid
-
           sig { returns(T.nilable(String)) }
           attr_accessor :mcp_version
 
@@ -46,6 +31,8 @@ module Scalar
           sig { params(name: String).void }
           attr_writer :name
 
+          # The environment’s current slug. An environment cannot be renamed, so any other
+          # slug is refused.
           sig { returns(T.nilable(String)) }
           attr_reader :slug
 
@@ -56,9 +43,6 @@ module Scalar
             params(
               id: String,
               installation_id: String,
-              document_auth: T::Hash[Symbol, T.anything],
-              is_private: T::Boolean,
-              login_portal_uid: T.nilable(String),
               mcp_version: T.nilable(String),
               name: String,
               slug: String,
@@ -68,11 +52,10 @@ module Scalar
           def self.new(
             id:,
             installation_id:,
-            document_auth: nil,
-            is_private: nil,
-            login_portal_uid: nil,
             mcp_version: nil,
             name: nil,
+            # The environment’s current slug. An environment cannot be renamed, so any other
+            # slug is refused.
             slug: nil,
             request_options: {}
           )
@@ -83,9 +66,6 @@ module Scalar
               {
                 id: String,
                 installation_id: String,
-                document_auth: T::Hash[Symbol, T.anything],
-                is_private: T::Boolean,
-                login_portal_uid: T.nilable(String),
                 mcp_version: T.nilable(String),
                 name: String,
                 slug: String,

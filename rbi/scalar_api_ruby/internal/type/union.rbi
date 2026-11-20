@@ -27,9 +27,7 @@ module Scalar
 
         # @api private
         sig do
-          returns(
-            T::Array[[T.nilable(Symbol), T.anything, Scalar::Internal::AnyHash]]
-          )
+          returns(T::Array[[T.nilable(Symbol), T.anything, Scalar::Internal::AnyHash]])
         end
         protected def derefed_variants
         end
@@ -54,12 +52,7 @@ module Scalar
                 T.proc.returns(T.anything),
                 T.anything
               ),
-            spec:
-              T.any(
-                Scalar::Internal::AnyHash,
-                T.proc.returns(T.anything),
-                T.anything
-              )
+            spec: T.any(Scalar::Internal::AnyHash, T.proc.returns(T.anything), T.anything)
           ).void
         end
         private def variant(key, spec = nil)

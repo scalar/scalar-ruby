@@ -6,13 +6,13 @@ module Scalar
     class AccessGroupRetrieveResponse < Scalar::Internal::Type::BaseModel
       # @!attribute allowed_domains
       #
-      #   @return [String]
-      required :allowed_domains, String, api_name: :allowedDomains
+      #   @return [Object]
+      required :allowed_domains, Scalar::Internal::Type::Unknown, api_name: :allowedDomains
 
       # @!attribute allowed_emails
       #
-      #   @return [String]
-      required :allowed_emails, String, api_name: :allowedEmails
+      #   @return [Object]
+      required :allowed_emails, Scalar::Internal::Type::Unknown, api_name: :allowedEmails
 
       # @!attribute name
       #
@@ -30,8 +30,8 @@ module Scalar
       required :uid, String
 
       # @!method initialize(allowed_domains:, allowed_emails:, name:, slug:, uid:)
-      #   @param allowed_domains [String]
-      #   @param allowed_emails [String]
+      #   @param allowed_domains [Object]
+      #   @param allowed_emails [Object]
       #   @param name [String]
       #   @param slug [String]
       #   @param uid [String]

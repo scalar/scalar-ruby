@@ -4,7 +4,7 @@ module Scalar
       {
         uid: String,
         api_uid: String?,
-        api_version: String?,
+        api_version: top,
         config: String,
         is_private: bool,
         slug: String,
@@ -20,7 +20,9 @@ module Scalar
 
       attr_accessor api_uid: String?
 
-      attr_accessor api_version: String?
+      attr_reader api_version: top?
+
+      def api_version=: (top) -> top
 
       attr_reader config: String?
 
@@ -41,7 +43,7 @@ module Scalar
       def initialize: (
         uid: String,
         ?api_uid: String?,
-        ?api_version: String?,
+        ?api_version: top,
         ?config: String,
         ?is_private: bool,
         ?slug: String,
@@ -52,7 +54,7 @@ module Scalar
       def to_hash: -> {
         uid: String,
         api_uid: String?,
-        api_version: String?,
+        api_version: top,
         config: String,
         is_private: bool,
         slug: String,

@@ -8,7 +8,6 @@ module Scalar
           id: String,
           access_groups: ::Array[String],
           credential_redaction_enabled: bool,
-          is_private: bool,
           login_portal_uid: String?,
           mcp_server_id: String,
           mcp_version: String?,
@@ -23,8 +22,6 @@ module Scalar
         attr_accessor access_groups: ::Array[String]
 
         attr_accessor credential_redaction_enabled: bool
-
-        attr_accessor is_private: bool
 
         attr_accessor login_portal_uid: String?
 
@@ -42,7 +39,6 @@ module Scalar
           id: String,
           access_groups: ::Array[String],
           credential_redaction_enabled: bool,
-          is_private: bool,
           login_portal_uid: String?,
           mcp_server_id: String,
           mcp_version: String?,
@@ -55,7 +51,6 @@ module Scalar
           id: String,
           access_groups: ::Array[String],
           credential_redaction_enabled: bool,
-          is_private: bool,
           login_portal_uid: String?,
           mcp_server_id: String,
           mcp_version: String?,

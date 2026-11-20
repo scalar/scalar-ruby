@@ -24,13 +24,16 @@ module Scalar
 
         DEFAULT_MAX_CONNECTIONS = T.let(T.unsafe(nil), Integer)
 
+        # Most origins the requester keeps a connection pool for at once.
+        MAX_POOLS = 16
+
+        # @api private
+        sig { returns(OpenSSL::X509::Store) }
+        attr_reader :cert_store
+
         class << self
           # @api private
-          sig do
-            params(cert_store: OpenSSL::X509::Store, url: URI::Generic).returns(
-              Net::HTTP
-            )
-          end
+          sig { params(cert_store: OpenSSL::X509::Store, url: URI::Generic).returns(Net::HTTP) }
           def connect(cert_store:, url:)
           end
 
@@ -51,13 +54,7 @@ module Scalar
         end
 
         # @api private
-        sig do
-          params(
-            url: URI::Generic,
-            deadline: Float,
-            blk: T.proc.params(arg0: Net::HTTP).void
-          ).void
-        end
+        sig { params(url: URI::Generic, deadline: Float, blk: T.proc.params(arg0: Net::HTTP).void).void }
         private def with_pool(url, deadline:, &blk)
         end
 

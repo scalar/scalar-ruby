@@ -16,9 +16,6 @@ module Scalar
           sig { returns(String) }
           attr_accessor :id
 
-          sig { returns(T::Boolean) }
-          attr_accessor :is_private
-
           sig { returns(T.nilable(String)) }
           attr_accessor :mcp_version
 
@@ -31,20 +28,18 @@ module Scalar
           sig do
             params(
               id: String,
-              is_private: T::Boolean,
               mcp_version: T.nilable(String),
               name: String,
               slug: String
             ).returns(T.attached_class)
           end
-          def self.new(id:, is_private:, mcp_version:, name:, slug:)
+          def self.new(id:, mcp_version:, name:, slug:)
           end
 
           sig do
             override.returns(
               {
                 id: String,
-                is_private: T::Boolean,
                 mcp_version: T.nilable(String),
                 name: String,
                 slug: String

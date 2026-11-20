@@ -43,7 +43,10 @@ module Scalar
         # @see Scalar::Models::Sdks::RepositoryUnlinkParams
         def unlink(language, params)
           parsed, options = Scalar::Sdks::RepositoryUnlinkParams.dump_request(params)
-          uid = parsed.delete(:uid) { raise ArgumentError.new("missing required path argument #{_1}") }
+          uid =
+            parsed.delete(:uid) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :delete,
             path: ["v1/sdks/%1$s/repositories/%2$s", uid, language],
@@ -54,7 +57,7 @@ module Scalar
 
         # Toggle publish-on-merge and the release settings for a linked target.
         #
-        # @overload update_publishing(language, uid:, publish_on_merge:, access: nil, auth_method: nil, tag: nil, request_options: {})
+        # @overload update_publishing(language, uid:, publish_on_merge:, access: nil, artifact_id: nil, auth_method: nil, cask: nil, registry: nil, replace_formula: nil, tag: nil, tap_repo: nil, request_options: {})
         #
         # @param language [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Language] Path param
         #
@@ -64,9 +67,19 @@ module Scalar
         #
         # @param access [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::Access] Body param
         #
+        # @param artifact_id [String] Body param
+        #
         # @param auth_method [Symbol, Scalar::Models::Sdks::RepositoryUpdatePublishingParams::AuthMethod] Body param
         #
+        # @param cask [Boolean] Body param
+        #
+        # @param registry [String] Body param
+        #
+        # @param replace_formula [Boolean] Body param
+        #
         # @param tag [String] Body param
+        #
+        # @param tap_repo [String] Body param
         #
         # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -75,7 +88,10 @@ module Scalar
         # @see Scalar::Models::Sdks::RepositoryUpdatePublishingParams
         def update_publishing(language, params)
           parsed, options = Scalar::Sdks::RepositoryUpdatePublishingParams.dump_request(params)
-          uid = parsed.delete(:uid) { raise ArgumentError.new("missing required path argument #{_1}") }
+          uid =
+            parsed.delete(:uid) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
           @client.request(
             method: :post,
             path: ["v1/sdks/%1$s/repositories/%2$s/publishing", uid, language],

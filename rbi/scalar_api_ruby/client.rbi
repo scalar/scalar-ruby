@@ -68,6 +68,11 @@ module Scalar
     private def auth_headers
     end
 
+    # @api private
+    sig { override.returns(T::Array[String]) }
+    private def auth_header_keys
+    end
+
     # Creates and returns a new client for interacting with the API.
     sig do
       params(

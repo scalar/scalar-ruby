@@ -110,7 +110,6 @@ Complete reference of every operation, grouped by resource. See [the README](./R
     - [Delete an MCP server](#delete-an-mcp-server)
     - [`Mcp Servers Installations`](#mcp-servers-installations)
       - [List installations](#list-installations)
-      - [Create an installation](#create-an-installation)
       - [Get an installation](#get-an-installation)
       - [Update an installation](#update-an-installation)
       - [Delete an installation](#delete-an-installation)
@@ -503,7 +502,7 @@ Create a login portal for the current team.
 | Response | [`UID`](././lib/scalar_api_ruby/models/uid.rb) |
 
 ```ruby
-response = client.login_portals.create({ email: { "logo" => "", "logoSize" => "100", "buttonText" => "Login", "message" => "Click to access private documentation hosted by scalar.com", "title" => "Private Docs", "mainColor" => "\#2a2f45", "mainBackground" => "\#f6f6f6", "cardColor" => "\#2a2f45", "cardBackground" => "\#fff", "buttonColor" => "\#fff", "buttonBackground" => "\#0f0f0f" }, page: { "title" => "Scalar Private Docs", "description" => "Login to access your documentation", "head" => "", "script" => "", "theme" => "", "companyName" => "", "logo" => "", "logoURL" => "", "favicon" => "", "termsLink" => "", "privacyLink" => "", "formTitle" => "Scalar Private Docs", "formDescription" => "Login to access your documentation", "formImage" => "" }, slug: "acme-login", title: "Acme Private Documentation" })
+response = client.login_portals.create({ email: { "logo" => "", "logoSize" => "100", "buttonText" => "Login", "message" => "Click to access private documentation hosted by scalar.com", "title" => "Private Docs", "mainColor" => "#2a2f45", "mainBackground" => "#f6f6f6", "cardColor" => "#2a2f45", "cardBackground" => "#fff", "buttonColor" => "#fff", "buttonBackground" => "#0f0f0f" }, page: { "title" => "Scalar Private Docs", "description" => "Login to access your documentation", "head" => "", "script" => "", "theme" => "", "companyName" => "", "logo" => "", "logoURL" => "", "favicon" => "", "termsLink" => "", "privacyLink" => "", "formTitle" => "Scalar Private Docs", "formDescription" => "Login to access your documentation", "formImage" => "" }, slug: "acme-login", title: "Acme Private Documentation" })
 
 puts response.inspect
 ```
@@ -750,7 +749,7 @@ Create a team theme.
 | Response | [`UID`](././lib/scalar_api_ruby/models/uid.rb) |
 
 ```ruby
-response = client.themes.create({ document: ":root { --scalar-color-1: \#1f2937; }", name: "Acme Theme", slug: "acme-theme", description: "API for managing Acme products and orders." })
+response = client.themes.create({ document: ":root { --scalar-color-1: #1f2937; }", name: "Acme Theme", slug: "acme-theme", description: "API for managing Acme products and orders." })
 
 puts response.inspect
 ```
@@ -778,7 +777,7 @@ Replace the theme document.
 | Request | [`ThemeReplaceDocumentParams`](././lib/scalar_api_ruby/models/theme_replace_document_params.rb) |
 
 ```ruby
-response = client.themes.replace_document("acme-theme", { document: ":root { --scalar-color-1: \#1f2937; }" })
+response = client.themes.replace_document("acme-theme", { document: ":root { --scalar-color-1: #1f2937; }" })
 
 puts response.inspect
 ```
@@ -1178,7 +1177,7 @@ SDKs
 
 ### List all SDKs
 
-List every SDK on the team.
+List every SDK on the team. `targets` are the languages its config declares, which the next build builds. `current` (the version label per language a request without a version serves) and each version label’s `languages`, highest label first, are what is served, and can include a language a later config dropped: a version keeps the languages its builds produced. Also returns the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1208,7 +1207,7 @@ puts response.inspect
 
 ### Get an SDK
 
-Get a single SDK by its uid.
+Get a single SDK by its uid. `targets` are the languages its config declares, which the next build builds. `current` (the version label per language a request without a version serves) and each version label’s `languages`, highest label first, are what is served, and can include a language a later config dropped: a version keeps the languages its builds produced. Also returns the `currentVersion` and `latestVersion` tags.
 
 | Direction | Type |
 | --- | --- |
@@ -1230,7 +1229,7 @@ Update SDK metadata, its linked API, or its config.
 | Request | [`SdkUpdateParams`](././lib/scalar_api_ruby/models/sdk_update_params.rb) |
 
 ```ruby
-response = client.sdks.update("UakgbKJ5m9gl0JDMbcJqL", { api_uid: "UakgbKJ5m9gl0JDMbcJqL", api_version: "", config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}", is_private: false, slug: "acme-api", title: "Acme SDK" })
+response = client.sdks.update("UakgbKJ5m9gl0JDMbcJqL", { api_uid: "UakgbKJ5m9gl0JDMbcJqL", api_version: {  }, config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}", is_private: false, slug: "acme-api", title: "Acme SDK" })
 
 puts response.inspect
 ```
@@ -1251,7 +1250,7 @@ puts response.inspect
 
 ### Build an SDK
 
-Start a build. Omit `version` to build the current work — the open draft, else the latest version — and the resolved version comes back in the response.
+Start a build with the SDK's saved config. Every input is optional: `version` is the version of the linked API description to build (default: its latest version), `customCodeRef` the branch, tag or commit each language merges as custom code (default: each language's `scalar-next` branch), and `languages` the languages to build (default: every language the config declares). The response names the version built. A 503 means the custom code could not be read from GitHub and nothing was built; try again.
 
 | Direction | Type |
 | --- | --- |
@@ -1259,7 +1258,7 @@ Start a build. Omit `version` to build the current work — the open draft, else
 | Response | [`SdkBuildResponse`](././lib/scalar_api_ruby/models/sdk_build_response.rb) |
 
 ```ruby
-response = client.sdks.build("UakgbKJ5m9gl0JDMbcJqL", { languages: ["typescript"], version: "1.2.0" })
+response = client.sdks.build("UakgbKJ5m9gl0JDMbcJqL", { custom_code_ref: "scalar-next", languages: ["typescript"], version: "1.2.0" })
 
 puts response.inspect
 ```
@@ -1270,21 +1269,21 @@ SDKs
 
 #### Create an SDK version
 
-Create a new SDK version against a specific API version.
+Create a version label from a version of the SDK's API document and start its build. The label is the document version, and it becomes `latestVersion` when it is the highest.
 
 | Direction | Type |
 | --- | --- |
 | Request | [`VersionCreateParams`](././lib/scalar_api_ruby/models/sdks/version_create_params.rb) |
 
 ```ruby
-response = client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", { api_version: "1.2.0", version: "1.2.0" })
+response = client.sdks.versions.create("UakgbKJ5m9gl0JDMbcJqL", { version: "1.2.0", api_version: {  } })
 
 puts response.inspect
 ```
 
 #### Delete an SDK version
 
-Permanently delete one version of an SDK.
+Permanently delete one version label of an SDK and its builds. A label that is the current build of any language promoting manually is refused with 409 and nothing is deleted; promote or roll back to another build for that language first. Each other language whose current build was of that label moves to the active build of the highest remaining label that has one for the language, and has no current build when none has; `currentVersion` shows the result. Each language that moved to another build syncs it to its linked repository unless the repository already holds it. When it was `latestVersion`, that tag moves to the highest remaining label holding an active build. An SDK's last version cannot be deleted.
 
 | Direction | Type |
 | --- | --- |
@@ -1338,7 +1337,7 @@ Toggle publish-on-merge and the release settings for a linked target.
 | Request | [`RepositoryUpdatePublishingParams`](././lib/scalar_api_ruby/models/sdks/repository_update_publishing_params.rb) |
 
 ```ruby
-response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", auth_method: "oidc", tag: "latest" })
+response = client.sdks.repositories.update_publishing("typescript", { uid: "UakgbKJ5m9gl0JDMbcJqL", publish_on_merge: true, access: "public", artifact_id: "scalar-galaxy", auth_method: "oidc", cask: true, registry: "npm", replace_formula: false, tag: "latest", tap_repo: "scalar/homebrew-tap" })
 
 puts response.inspect
 ```
@@ -1404,7 +1403,7 @@ Update MCP server metadata and which tools it exposes.
 | Response | [`Mcp::McpServer`](././lib/scalar_api_ruby/models/mcp/mcp_server.rb) |
 
 ```ruby
-response = client.mcp.servers.update("42", { auto_add_operations: true, docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api" })
+response = client.mcp.servers.update("42", { docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api" })
 
 puts response.inspect
 ```
@@ -1442,24 +1441,9 @@ response = client.mcp.servers.installations.list("42")
 puts response.inspect
 ```
 
-##### Create an installation
-
-Create an installation of an MCP server. `documentAuth` holds the credentials the server presents to the upstream API and is never returned.
-
-| Direction | Type |
-| --- | --- |
-| Request | [`InstallationCreateParams`](././lib/scalar_api_ruby/models/mcp/servers/installation_create_params.rb) |
-| Response | [`Mcp::McpInstallation`](././lib/scalar_api_ruby/models/mcp/mcp_installation.rb) |
-
-```ruby
-response = client.mcp.servers.installations.create("42", { document_auth: {  }, name: "Acme MCP", slug: "acme-api" })
-
-puts response.inspect
-```
-
 ##### Get an installation
 
-Get a single installation of an MCP server.
+Get a single installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1474,7 +1458,7 @@ puts response.inspect
 
 ##### Update an installation
 
-Update an installation. Set `isPrivate` and add access groups to put it behind a login.
+Update an installation. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1482,14 +1466,14 @@ Update an installation. Set `isPrivate` and add access groups to put it behind a
 | Response | [`Mcp::McpInstallation`](././lib/scalar_api_ruby/models/mcp/mcp_installation.rb) |
 
 ```ruby
-response = client.mcp.servers.installations.update("84", { id: "42", document_auth: {  }, is_private: false, login_portal_uid: "", mcp_version: "", name: "Acme MCP", slug: "acme-api" })
+response = client.mcp.servers.installations.update("84", { id: "42", mcp_version: "", name: "Acme MCP", slug: "acme-api" })
 
 puts response.inspect
 ```
 
 ##### Delete an installation
 
-Delete an installation of an MCP server.
+Delete an installation of an MCP server. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1503,7 +1487,7 @@ puts response.inspect
 
 ##### Add an access group
 
-Let an access group reach a private installation.
+Let an access group reach a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
@@ -1517,7 +1501,7 @@ puts response.inspect
 
 ##### Remove an access group
 
-Stop an access group reaching a private installation.
+Stop an access group reaching a private installation. Requires a team admin. Deprecated: address the environment by slug with the `/environments/:environment` form.
 
 | Direction | Type |
 | --- | --- |
