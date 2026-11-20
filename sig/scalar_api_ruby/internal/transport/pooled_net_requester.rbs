@@ -19,6 +19,8 @@ module Scalar
 
         MAX_POOLS: 16
 
+        attr_reader cert_store: OpenSSL::X509::Store
+
         def self.connect: (
           cert_store: OpenSSL::X509::Store,
           url: URI::Generic
