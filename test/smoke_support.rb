@@ -38,7 +38,7 @@ module ScalarSmokeTest
   # Fingerprint of the case list the generator's smoke runner checks this suite against (written
   # only for generator tooling). The runner refuses a list whose digest differs, so a list left by
   # an earlier generation is never trusted.
-  SMOKE_CASE_LIST_DIGEST = "8d13d01f046bde25"
+  SMOKE_CASE_LIST_DIGEST = "8fb527392675deb6"
 
   BASE_URL = ENV.fetch("TEST_API_BASE_URL", "").then { |value| value.empty? ? nil : value }
 
