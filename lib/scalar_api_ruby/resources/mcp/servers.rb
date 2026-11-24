@@ -5,12 +5,9 @@ module Scalar
     class Mcp
       # MCP
       class Servers
-        # MCP
-        # @return [Scalar::Resources::Mcp::Servers::Installations]
-        attr_reader :installations
-
-        # Create an MCP server over one or more API document versions. The response
-        # carries the server and its first installation.
+        # Create an MCP server linking the API documents of the named versions and the
+        # named docs projects. The server builds from each linked document’s versions, not
+        # only the version named.
         #
         # @overload create(name:, project_uids: nil, slug: nil, version_uids: nil, request_options: {})
         #
@@ -34,83 +31,21 @@ module Scalar
           )
         end
 
-        # Get a single MCP server by its id.
-        #
-        # @overload retrieve(id, request_options: {})
-        #
-        # @param id [String]
-        # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
-        #
-        # @return [Scalar::Models::Mcp::McpServer]
-        #
-        # @see Scalar::Models::Mcp::ServerRetrieveParams
-        def retrieve(id, params = {})
-          @client.request(
-            method: :get,
-            path: ["v1/mcp/servers/%1$s", id],
-            model: Scalar::Mcp::McpServer,
-            options: params[:request_options]
-          )
-        end
-
-        # Update MCP server metadata and which tools it exposes.
-        #
-        # @overload update(id, docs_pages: nil, name: nil, operations: nil, slug: nil, request_options: {})
-        #
-        # @param id [String]
-        # @param docs_pages [Array<String>]
-        # @param name [String]
-        # @param operations [Array<String>]
-        # @param slug [String]
-        # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
-        #
-        # @return [Scalar::Models::Mcp::McpServer]
-        #
-        # @see Scalar::Models::Mcp::ServerUpdateParams
-        def update(id, params = {})
-          parsed, options = Scalar::Mcp::ServerUpdateParams.dump_request(params)
-          @client.request(
-            method: :patch,
-            path: ["v1/mcp/servers/%1$s", id],
-            body: parsed,
-            model: Scalar::Mcp::McpServer,
-            options: options
-          )
-        end
-
-        # List every MCP server on the team.
+        # List every MCP server on the team, each with its environments and the version
+        # tag a request that names no version gets there.
         #
         # @overload list(request_options: {})
         #
         # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
         #
-        # @return [Array<Scalar::Models::Mcp::McpServer>]
+        # @return [Array<Scalar::Models::Mcp::ServerListResponseItem>]
         #
         # @see Scalar::Models::Mcp::ServerListParams
         def list(params = {})
           @client.request(
             method: :get,
             path: "v1/mcp/servers",
-            model: Scalar::Internal::Type::ArrayOf[Scalar::Mcp::McpServer],
-            options: params[:request_options]
-          )
-        end
-
-        # Delete an MCP server and every installation it serves.
-        #
-        # @overload delete(id, request_options: {})
-        #
-        # @param id [String]
-        # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
-        #
-        # @return [Object]
-        #
-        # @see Scalar::Models::Mcp::ServerDeleteParams
-        def delete(id, params = {})
-          @client.request(
-            method: :delete,
-            path: ["v1/mcp/servers/%1$s", id],
-            model: Scalar::Internal::Type::Unknown,
+            model: Scalar::Internal::Type::ArrayOf[Scalar::Models::Mcp::ServerListResponseItem],
             options: params[:request_options]
           )
         end
@@ -120,7 +55,6 @@ module Scalar
         # @param client [Scalar::Client]
         def initialize(client:)
           @client = client
-          @installations = Scalar::Resources::Mcp::Servers::Installations.new(client: client)
         end
       end
     end

@@ -11,41 +11,59 @@ module Scalar
             T.any(Scalar::Mcp::McpServer, Scalar::Internal::AnyHash)
           end
 
-        sig { returns(String) }
-        attr_accessor :id
-
-        sig { returns(String) }
+        sig { returns(Integer) }
         attr_accessor :created_at
+
+        sig { returns(T.nilable(String)) }
+        attr_accessor :domain
 
         sig { returns(String) }
         attr_accessor :name
 
         sig { returns(String) }
+        attr_accessor :namespace
+
+        sig { returns(String) }
         attr_accessor :slug
 
         sig { returns(String) }
+        attr_accessor :uid
+
+        sig { returns(Integer) }
         attr_accessor :updated_at
 
         sig do
           params(
-            id: String,
-            created_at: String,
+            created_at: Integer,
+            domain: T.nilable(String),
             name: String,
+            namespace: String,
             slug: String,
-            updated_at: String
+            uid: String,
+            updated_at: Integer
           ).returns(T.attached_class)
         end
-        def self.new(id:, created_at:, name:, slug:, updated_at:)
+        def self.new(
+          created_at:,
+          domain:,
+          name:,
+          namespace:,
+          slug:,
+          uid:,
+          updated_at:
+        )
         end
 
         sig do
           override.returns(
             {
-              id: String,
-              created_at: String,
+              created_at: Integer,
+              domain: T.nilable(String),
               name: String,
+              namespace: String,
               slug: String,
-              updated_at: String
+              uid: String,
+              updated_at: Integer
             }
           )
         end

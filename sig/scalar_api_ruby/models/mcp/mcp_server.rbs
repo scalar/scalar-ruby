@@ -5,38 +5,48 @@ module Scalar
     module Mcp
       type mcp_server =
         {
-          id: String,
-          created_at: String,
+          created_at: Integer,
+          domain: String?,
           name: String,
+          namespace: String,
           slug: String,
-          updated_at: String
+          uid: String,
+          updated_at: Integer
         }
 
       class McpServer < Scalar::Internal::Type::BaseModel
-        attr_accessor id: String
+        attr_accessor created_at: Integer
 
-        attr_accessor created_at: String
+        attr_accessor domain: String?
 
         attr_accessor name: String
 
+        attr_accessor namespace: String
+
         attr_accessor slug: String
 
-        attr_accessor updated_at: String
+        attr_accessor uid: String
+
+        attr_accessor updated_at: Integer
 
         def initialize: (
-          id: String,
-          created_at: String,
+          created_at: Integer,
+          domain: String?,
           name: String,
+          namespace: String,
           slug: String,
-          updated_at: String
+          uid: String,
+          updated_at: Integer
         ) -> void
 
         def to_hash: -> {
-          id: String,
-          created_at: String,
+          created_at: Integer,
+          domain: String?,
           name: String,
+          namespace: String,
           slug: String,
-          updated_at: String
+          uid: String,
+          updated_at: Integer
         }
       end
     end

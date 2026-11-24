@@ -5,12 +5,9 @@ module Scalar
     class Mcp
       # MCP
       class Servers
-        # MCP
-        sig { returns(Scalar::Resources::Mcp::Servers::Installations) }
-        attr_reader :installations
-
-        # Create an MCP server over one or more API document versions. The response
-        # carries the server and its first installation.
+        # Create an MCP server linking the API documents of the named versions and the
+        # named docs projects. The server builds from each linked document’s versions, not
+        # only the version named.
         sig do
           params(
             name: String,
@@ -29,54 +26,14 @@ module Scalar
         )
         end
 
-        # Get a single MCP server by its id.
-        sig do
-          params(
-            id: String,
-            request_options: Scalar::RequestOptions::OrHash
-          ).returns(Scalar::Mcp::McpServer)
-        end
-        def retrieve(id, request_options: {})
-        end
-
-        # Update MCP server metadata and which tools it exposes.
-        sig do
-          params(
-            id: String,
-            docs_pages: T::Array[String],
-            name: String,
-            operations: T::Array[String],
-            slug: String,
-            request_options: Scalar::RequestOptions::OrHash
-          ).returns(Scalar::Mcp::McpServer)
-        end
-        def update(
-          id,
-          docs_pages: nil,
-          name: nil,
-          operations: nil,
-          slug: nil,
-          request_options: {}
-        )
-        end
-
-        # List every MCP server on the team.
+        # List every MCP server on the team, each with its environments and the version
+        # tag a request that names no version gets there.
         sig do
           params(request_options: Scalar::RequestOptions::OrHash).returns(
-            T::Array[Scalar::Mcp::McpServer]
+            T::Array[Scalar::Models::Mcp::ServerListResponseItem]
           )
         end
         def list(request_options: {})
-        end
-
-        # Delete an MCP server and every installation it serves.
-        sig do
-          params(
-            id: String,
-            request_options: Scalar::RequestOptions::OrHash
-          ).returns(T.anything)
-        end
-        def delete(id, request_options: {})
         end
 
         # @api private

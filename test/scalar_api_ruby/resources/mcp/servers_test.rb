@@ -32,47 +32,11 @@ class ScalarSmokeTest::Resources::Mcp::ServersTest < ScalarSmokeTest::ResourceTe
   end
 
   smoke_case(
-    "mcp.servers.retrieve:single",
-    operation: "retrieve",
-    path: "/v1/mcp/servers/{id}",
-    name: "retrieve"
-  ) do
-    client.mcp.servers.retrieve("42")
-  end
-
-  smoke_case(
-    "mcp.servers.update:required",
-    operation: "update",
-    path: "/v1/mcp/servers/{id}",
-    name: "update: only required params"
-  ) do
-    client.mcp.servers.update("42")
-  end
-
-  smoke_case(
-    "mcp.servers.update:all",
-    operation: "update",
-    path: "/v1/mcp/servers/{id}",
-    name: "update: required and optional params"
-  ) do
-    client.mcp.servers.update("42", {docs_pages: [""], name: "Acme MCP", operations: [""], slug: "acme-api"})
-  end
-
-  smoke_case(
     "mcp.servers.list:single",
     operation: "list",
     path: "/v1/mcp/servers",
     name: "list"
   ) do
     client.mcp.servers.list
-  end
-
-  smoke_case(
-    "mcp.servers.delete:single",
-    operation: "delete",
-    path: "/v1/mcp/servers/{id}",
-    name: "delete"
-  ) do
-    client.mcp.servers.delete("42")
   end
 end
