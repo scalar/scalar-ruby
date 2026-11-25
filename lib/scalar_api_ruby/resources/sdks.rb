@@ -12,16 +12,25 @@ module Scalar
       # @return [Scalar::Resources::Sdks::Repositories]
       attr_reader :repositories
 
-      # Create an SDK from an API document, targeting one or more languages.
+      # Create an SDK from an existing API document on the team. Its current version
+      # must have content. Send languages or a config declaring targets; omit languages
+      # to derive them from config. SDK and target counts must fit the team plan. Config
+      # is a JSON string.
       #
-      # @overload create(api_uid:, languages:, class_name: nil, config: nil, slug: nil, title: nil, request_options: {})
+      # @overload create(api_uid:, class_name: nil, config: nil, languages: nil, slug: nil, title: nil, request_options: {})
       #
       # @param api_uid [String]
-      # @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>]
+      #
       # @param class_name [String]
+      #
       # @param config [String]
+      #
+      # @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>] Languages to create. Defaults to the targets declared by config.
+      #
       # @param slug [String]
+      #
       # @param title [String]
+      #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Scalar::Models::UID]
@@ -32,7 +41,12 @@ module Scalar
         @client.request(method: :post, path: "v1/sdks", body: parsed, model: Scalar::UID, options: options)
       end
 
-      # Get a single SDK by its uid.
+      # Get a single SDK by its uid. `targets` are the languages its config declares,
+      # which the next build builds. `current` (the version label per language a request
+      # without a version serves) and each version label’s `languages`, highest label
+      # first, are what is served, and can include a language a later config dropped: a
+      # version keeps the languages its builds produced. Also returns the
+      # `currentVersion` and `latestVersion` tags.
       #
       # @overload retrieve(uid, request_options: {})
       #
@@ -51,17 +65,27 @@ module Scalar
         )
       end
 
-      # Update SDK metadata, its linked API, or its config.
+      # Update SDK metadata, its linked API, or its JSON-string config. Targets using
+      # native GitHub delivery need separate repositories; delivery writes each package
+      # at the repository root. Sharing a repository across language targets in this SDK
+      # and using reserved promote branches are rejected before config saves.
       #
       # @overload update(uid, api_uid: nil, api_version: nil, config: nil, is_private: nil, slug: nil, title: nil, request_options: {})
       #
       # @param uid [String]
+      #
       # @param api_uid [String, nil]
-      # @param api_version [String, nil]
+      #
+      # @param api_version [Object] Removed. A request that carries it is refused with a 400.
+      #
       # @param config [String]
+      #
       # @param is_private [Boolean]
+      #
       # @param slug [String]
+      #
       # @param title [String]
+      #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Object]
@@ -78,7 +102,12 @@ module Scalar
         )
       end
 
-      # List every SDK on the team.
+      # List every SDK on the team. `targets` are the languages its config declares,
+      # which the next build builds. `current` (the version label per language a request
+      # without a version serves) and each version label’s `languages`, highest label
+      # first, are what is served, and can include a language a later config dropped: a
+      # version keeps the languages its builds produced. Also returns the
+      # `currentVersion` and `latestVersion` tags.
       #
       # @overload list(limit: nil, request_options: {})
       #
@@ -119,12 +148,18 @@ module Scalar
         )
       end
 
-      # Start a build. Omit `version` to build the current work — the open draft, else
-      # the latest version — and the resolved version comes back in the response.
+      # Start a build with the SDK's saved config. Every input is optional: `version` is
+      # the version of the linked API description to build (default: its latest
+      # version), `customCodeRef` the branch, tag or commit each language merges as
+      # custom code (default: each language's `scalar-next` branch), and `languages` the
+      # languages to build (default: every language the config declares). The response
+      # names the version built. A 503 means the custom code could not be read from
+      # GitHub and nothing was built; try again.
       #
-      # @overload build(uid, languages: nil, version: nil, request_options: {})
+      # @overload build(uid, custom_code_ref: nil, languages: nil, version: nil, request_options: {})
       #
       # @param uid [String]
+      # @param custom_code_ref [String]
       # @param languages [Array<Symbol, Scalar::Models::SdkBuildParams::Language>]
       # @param version [String]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]

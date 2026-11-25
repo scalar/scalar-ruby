@@ -12,11 +12,6 @@ module Scalar
       #   @return [String]
       required :api_uid, String, api_name: :apiUid
 
-      # @!attribute languages
-      #
-      #   @return [Array<Symbol, Scalar::Models::SdkCreateParams::Language>]
-      required :languages, -> { Scalar::Internal::Type::ArrayOf[enum: Scalar::SdkCreateParams::Language] }
-
       # @!attribute class_name
       #
       #   @return [String, nil]
@@ -26,6 +21,12 @@ module Scalar
       #
       #   @return [String, nil]
       optional :config, String
+
+      # @!attribute languages
+      #   Languages to create. Defaults to the targets declared by config.
+      #
+      #   @return [Array<Symbol, Scalar::Models::SdkCreateParams::Language>, nil]
+      optional :languages, -> { Scalar::Internal::Type::ArrayOf[enum: Scalar::SdkCreateParams::Language] }
 
       # @!attribute slug
       #
@@ -37,13 +38,19 @@ module Scalar
       #   @return [String, nil]
       optional :title, String
 
-      # @!method initialize(api_uid:, languages:, class_name: nil, config: nil, slug: nil, title: nil, request_options: {})
+      # @!method initialize(api_uid:, class_name: nil, config: nil, languages: nil, slug: nil, title: nil, request_options: {})
       #   @param api_uid [String]
-      #   @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>]
+      #
       #   @param class_name [String]
+      #
       #   @param config [String]
+      #
+      #   @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>] Languages to create. Defaults to the targets declared by config.
+      #
       #   @param slug [String]
+      #
       #   @param title [String]
+      #
       #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
 
       module Language

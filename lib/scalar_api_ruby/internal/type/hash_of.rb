@@ -126,7 +126,9 @@ module Scalar
         def dump(value, state:)
           target = item_type
           if value.is_a?(Hash)
-            value.transform_values { Scalar::Internal::Type::Converter.dump(target, _1, state: state) }
+            value.transform_values do
+              Scalar::Internal::Type::Converter.dump(target, _1, state: state)
+            end
           else
             super
           end

@@ -3,26 +3,31 @@ module Scalar
     type sdk =
       {
         api_uid: String?,
+        current: ::Hash[Symbol, String],
         current_version: String,
         description: String,
         is_private: bool,
+        latest_version: String?,
         namespace: String,
         slug: String,
         targets: ::Array[Scalar::SdkTargetSummary],
         title: String,
         uid: String,
-        versions: ::Array[Scalar::SdkVersion],
-        api_version: String?
+        versions: ::Array[Scalar::SdkVersion]
       }
 
     class Sdk < Scalar::Internal::Type::BaseModel
       attr_accessor api_uid: String?
+
+      attr_accessor current: ::Hash[Symbol, String]
 
       attr_accessor current_version: String
 
       attr_accessor description: String
 
       attr_accessor is_private: bool
+
+      attr_accessor latest_version: String?
 
       attr_accessor namespace: String
 
@@ -36,34 +41,34 @@ module Scalar
 
       attr_accessor versions: ::Array[Scalar::SdkVersion]
 
-      attr_accessor api_version: String?
-
       def initialize: (
         api_uid: String?,
+        current: ::Hash[Symbol, String],
         current_version: String,
         description: String,
         is_private: bool,
+        latest_version: String?,
         namespace: String,
         slug: String,
         targets: ::Array[Scalar::SdkTargetSummary],
         title: String,
         uid: String,
-        versions: ::Array[Scalar::SdkVersion],
-        ?api_version: String?
+        versions: ::Array[Scalar::SdkVersion]
       ) -> void
 
       def to_hash: -> {
         api_uid: String?,
+        current: ::Hash[Symbol, String],
         current_version: String,
         description: String,
         is_private: bool,
+        latest_version: String?,
         namespace: String,
         slug: String,
         targets: ::Array[Scalar::SdkTargetSummary],
         title: String,
         uid: String,
-        versions: ::Array[Scalar::SdkVersion],
-        api_version: String?
+        versions: ::Array[Scalar::SdkVersion]
       }
     end
   end

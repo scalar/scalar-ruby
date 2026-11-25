@@ -9,6 +9,11 @@ module Scalar
       #   @return [String, nil]
       required :api_uid, String, api_name: :apiUid, nil?: true
 
+      # @!attribute current
+      #
+      #   @return [Hash{Symbol=>String}]
+      required :current, Scalar::Internal::Type::HashOf[String]
+
       # @!attribute current_version
       #
       #   @return [String]
@@ -23,6 +28,11 @@ module Scalar
       #
       #   @return [Boolean]
       required :is_private, Scalar::Internal::Type::Boolean, api_name: :isPrivate
+
+      # @!attribute latest_version
+      #
+      #   @return [String, nil]
+      required :latest_version, String, api_name: :latestVersion, nil?: true
 
       # @!attribute namespace
       #
@@ -54,23 +64,19 @@ module Scalar
       #   @return [Array<Scalar::Models::SdkVersion>]
       required :versions, -> { Scalar::Internal::Type::ArrayOf[Scalar::SdkVersion] }
 
-      # @!attribute api_version
-      #
-      #   @return [String, nil]
-      optional :api_version, String, api_name: :apiVersion, nil?: true
-
-      # @!method initialize(api_uid:, current_version:, description:, is_private:, namespace:, slug:, targets:, title:, uid:, versions:, api_version: nil)
+      # @!method initialize(api_uid:, current:, current_version:, description:, is_private:, latest_version:, namespace:, slug:, targets:, title:, uid:, versions:)
       #   @param api_uid [String, nil]
+      #   @param current [Hash{Symbol=>String}]
       #   @param current_version [String]
       #   @param description [String]
       #   @param is_private [Boolean]
+      #   @param latest_version [String, nil]
       #   @param namespace [String]
       #   @param slug [String]
       #   @param targets [Array<Scalar::Models::SdkTargetSummary>]
       #   @param title [String]
       #   @param uid [String]
       #   @param versions [Array<Scalar::Models::SdkVersion>]
-      #   @param api_version [String, nil]
     end
   end
 end

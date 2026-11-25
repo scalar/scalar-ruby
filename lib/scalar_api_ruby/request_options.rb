@@ -26,8 +26,8 @@ module Scalar
     end
 
     # @!attribute idempotency_key
-    #   Idempotency key to send with request and all associated retries. Will only be
-    #   sent for write requests.
+    #   Idempotency key to send with this request and its retries when the client
+    #   has an idempotency header configured.
     #
     #   @return [String, nil]
     optional :idempotency_key, String
@@ -37,7 +37,10 @@ module Scalar
     #   `query` given at the client level.
     #
     #   @return [Hash{String=>Array<String>, String, nil}, nil]
-    optional :extra_query, Scalar::Internal::Type::HashOf[Scalar::Internal::Type::ArrayOf[String]]
+    optional :extra_query,
+             Scalar::Internal::Type::HashOf[
+               Scalar::Internal::Type::ArrayOf[String]
+             ]
 
     # @!attribute extra_headers
     #   Extra headers to send with the request. These are `.merged`’d into any
@@ -51,7 +54,10 @@ module Scalar
     #   generated as part of the normal request.
     #
     #   @return [Object, nil]
-    optional :extra_body, Scalar::Internal::Type::HashOf[Scalar::Internal::Type::Unknown]
+    optional :extra_body,
+             Scalar::Internal::Type::HashOf[
+               Scalar::Internal::Type::Unknown
+             ]
 
     # @!attribute max_retries
     #   Maximum number of retries to attempt after a failed initial request.
@@ -71,7 +77,9 @@ module Scalar
     #   @param values [Hash{Symbol=>Object}]
 
     define_sorbet_constant!(:OrHash) do
-      T.type_alias { T.any(Scalar::RequestOptions, Scalar::Internal::AnyHash) }
+      T.type_alias do
+        T.any(Scalar::RequestOptions, Scalar::Internal::AnyHash)
+      end
     end
   end
 end

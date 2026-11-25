@@ -7,7 +7,8 @@ module Scalar
           base_branch: String,
           language: Scalar::Models::Sdks::RepositoryLinkParams::language,
           repository_id: Integer,
-          prerelease_type: String
+          prerelease_type: String,
+          promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion
         }
         & Scalar::Internal::Type::request_parameters
 
@@ -27,12 +28,19 @@ module Scalar
 
         def prerelease_type=: (String) -> String
 
+        attr_reader promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion?
+
+        def promotion=: (
+          Scalar::Models::Sdks::RepositoryLinkParams::promotion
+        ) -> Scalar::Models::Sdks::RepositoryLinkParams::promotion
+
         def initialize: (
           uid: String,
           base_branch: String,
           language: Scalar::Models::Sdks::RepositoryLinkParams::language,
           repository_id: Integer,
           ?prerelease_type: String,
+          ?promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion,
           ?request_options: Scalar::request_opts
         ) -> void
 
@@ -42,6 +50,7 @@ module Scalar
           language: Scalar::Models::Sdks::RepositoryLinkParams::language,
           repository_id: Integer,
           prerelease_type: String,
+          promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion,
           request_options: Scalar::RequestOptions
         }
 
@@ -78,6 +87,17 @@ module Scalar
           DART: :dart
 
           def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryLinkParams::language]
+        end
+
+        type promotion = :automatic | :manual
+
+        module Promotion
+          extend Scalar::Internal::Type::Enum
+
+          AUTOMATIC: :automatic
+          MANUAL: :manual
+
+          def self?.values: -> ::Array[Scalar::Models::Sdks::RepositoryLinkParams::promotion]
         end
       end
     end

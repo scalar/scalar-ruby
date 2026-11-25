@@ -6,59 +6,31 @@ module Scalar
       OrHash =
         T.type_alias { T.any(Scalar::SdkVersion, Scalar::Internal::AnyHash) }
 
-      sig { returns(String) }
-      attr_accessor :api_version
+      sig { returns(Integer) }
+      attr_accessor :created_at
 
       sig { returns(T::Array[Scalar::SdkVersion::Language::TaggedSymbol]) }
       attr_accessor :languages
 
-      sig { returns(Scalar::SdkVersion::Status::TaggedSymbol) }
-      attr_accessor :status
-
       sig { returns(String) }
       attr_accessor :version
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :created_at
-
-      sig { params(created_at: Integer).void }
-      attr_writer :created_at
-
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :published_at
-
-      sig { params(published_at: Integer).void }
-      attr_writer :published_at
-
       sig do
         params(
-          api_version: String,
-          languages: T::Array[Scalar::SdkVersion::Language::OrSymbol],
-          status: Scalar::SdkVersion::Status::OrSymbol,
-          version: String,
           created_at: Integer,
-          published_at: Integer
+          languages: T::Array[Scalar::SdkVersion::Language::OrSymbol],
+          version: String
         ).returns(T.attached_class)
       end
-      def self.new(
-        api_version:,
-        languages:,
-        status:,
-        version:,
-        created_at: nil,
-        published_at: nil
-      )
+      def self.new(created_at:, languages:, version:)
       end
 
       sig do
         override.returns(
           {
-            api_version: String,
-            languages: T::Array[Scalar::SdkVersion::Language::TaggedSymbol],
-            status: Scalar::SdkVersion::Status::TaggedSymbol,
-            version: String,
             created_at: Integer,
-            published_at: Integer
+            languages: T::Array[Scalar::SdkVersion::Language::TaggedSymbol],
+            version: String
           }
         )
       end
@@ -89,23 +61,6 @@ module Scalar
 
         sig do
           override.returns(T::Array[Scalar::SdkVersion::Language::TaggedSymbol])
-        end
-        def self.values
-        end
-      end
-
-      module Status
-        extend Scalar::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Scalar::SdkVersion::Status) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        DRAFT = T.let(:draft, Scalar::SdkVersion::Status::TaggedSymbol)
-        PUBLISHED = T.let(:published, Scalar::SdkVersion::Status::TaggedSymbol)
-
-        sig do
-          override.returns(T::Array[Scalar::SdkVersion::Status::TaggedSymbol])
         end
         def self.values
         end

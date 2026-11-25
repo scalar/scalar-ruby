@@ -8,6 +8,7 @@ module Scalar
           language: Scalar::Models::Sdks::RepositoryLinkParams::language,
           repository_id: Integer,
           ?prerelease_type: String,
+          ?promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion,
           ?request_options: Scalar::request_opts
         ) -> Scalar::Models::Sdks::RepositoryLinkResponse
 
@@ -22,8 +23,13 @@ module Scalar
           uid: String,
           publish_on_merge: bool,
           ?access: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::access,
+          ?artifact_id: String,
           ?auth_method: Scalar::Models::Sdks::RepositoryUpdatePublishingParams::auth_method,
+          ?cask: bool,
+          ?registry: String,
+          ?replace_formula: bool,
           ?tag: String,
+          ?tap_repo: String,
           ?request_options: Scalar::request_opts
         ) -> top
 

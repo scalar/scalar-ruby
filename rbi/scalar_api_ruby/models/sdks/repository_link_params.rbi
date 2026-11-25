@@ -15,6 +15,8 @@ module Scalar
         sig { returns(String) }
         attr_accessor :uid
 
+        # Release promote branch. Platform-managed branches such as scalar-next and
+        # scalar-generated are reserved.
         sig { returns(String) }
         attr_accessor :base_branch
 
@@ -30,6 +32,22 @@ module Scalar
         sig { params(prerelease_type: String).void }
         attr_writer :prerelease_type
 
+        # Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+        # saved policy.
+        sig do
+          returns(
+            T.nilable(Scalar::Sdks::RepositoryLinkParams::Promotion::OrSymbol)
+          )
+        end
+        attr_reader :promotion
+
+        sig do
+          params(
+            promotion: Scalar::Sdks::RepositoryLinkParams::Promotion::OrSymbol
+          ).void
+        end
+        attr_writer :promotion
+
         sig do
           params(
             uid: String,
@@ -37,15 +55,21 @@ module Scalar
             language: Scalar::Sdks::RepositoryLinkParams::Language::OrSymbol,
             repository_id: Integer,
             prerelease_type: String,
+            promotion: Scalar::Sdks::RepositoryLinkParams::Promotion::OrSymbol,
             request_options: Scalar::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
           uid:,
+          # Release promote branch. Platform-managed branches such as scalar-next and
+          # scalar-generated are reserved.
           base_branch:,
           language:,
           repository_id:,
           prerelease_type: nil,
+          # Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+          # saved policy.
+          promotion: nil,
           request_options: {}
         )
         end
@@ -58,6 +82,8 @@ module Scalar
               language: Scalar::Sdks::RepositoryLinkParams::Language::OrSymbol,
               repository_id: Integer,
               prerelease_type: String,
+              promotion:
+                Scalar::Sdks::RepositoryLinkParams::Promotion::OrSymbol,
               request_options: Scalar::RequestOptions
             }
           )
@@ -144,6 +170,39 @@ module Scalar
             override.returns(
               T::Array[
                 Scalar::Sdks::RepositoryLinkParams::Language::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+
+        # Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+        # saved policy.
+        module Promotion
+          extend Scalar::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, Scalar::Sdks::RepositoryLinkParams::Promotion)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AUTOMATIC =
+            T.let(
+              :automatic,
+              Scalar::Sdks::RepositoryLinkParams::Promotion::TaggedSymbol
+            )
+          MANUAL =
+            T.let(
+              :manual,
+              Scalar::Sdks::RepositoryLinkParams::Promotion::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                Scalar::Sdks::RepositoryLinkParams::Promotion::TaggedSymbol
               ]
             )
           end

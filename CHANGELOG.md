@@ -1,5 +1,76 @@
 # Changelog
 
+## [0.3.0](https://github.com/scalar/scalar-ruby/compare/v0.2.0...v0.3.0) (2026-11-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** request-shape POST v1/sdks.languages — required in before only (review: direction-dependent; read the hunk)
+* **api:** 18 breaking changes to the SDK surface.
+    - operation-coverage DELETE v1/mcp/servers/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage DELETE v1/mcp/servers/{p}/installations/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage DELETE v1/mcp/servers/{p}/installations/{p}/access-group — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage GET v1/mcp/servers/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage GET v1/mcp/servers/{p}/installations — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage GET v1/mcp/servers/{p}/installations/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage PATCH v1/mcp/servers/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage PATCH v1/mcp/servers/{p}/installations/{p} — operation only in before (breaking: the new snapshot no longer has it)
+    - operation-coverage POST v1/mcp/servers/{p}/installations/{p}/access-group — operation only in before (breaking: the new snapshot no longer has it)
+    - response-shape POST v1/mcp/servers→.server.id — field only in before (breaking: removed; uid, domain, namespace appeared in its place, likely a rename)
+    - response-shape POST v1/mcp/servers→.installation — field only in before (breaking: the new snapshot no longer has it)
+    - types-files Mcp::Servers — type file only in before (8 members: 0 matched by name and kind elsewhere in after, 8 not found) (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+    - types-classes (top-level):McpInstallation — alias only in before (breaking: the new snapshot no longer has it)
+    - types-classes Mcp:McpInstallation — class only in before (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+    - types-classes Mcp:ServerDeleteParams — class only in before (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+    - types-classes Mcp:ServerRetrieveParams — class only in before (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+    - types-classes Mcp:ServerUpdateParams — class only in before (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+    - types-classes Mcp:Servers — module only in before (breaking: removed; ServerListResponseItem appeared in its place, likely a rename)
+* **api:** 9 breaking changes to the SDK surface.
+    - Added required property `sdk.current`.
+    - Property `sdk.currentVersion` type changed from `version` to `string`.
+    - Added required property `sdk.latestVersion`.
+    - Removed optional property `sdk.apiVersion`.
+    - Property `sdk_version.version` type changed from `version` to `string`.
+    - Property `sdk_version.createdAt` is now required.
+    - Removed required property `sdk_version.apiVersion`.
+    - Removed required property `sdk_version.status`.
+    - Removed optional property `sdk_version.publishedAt`.
+* **api:** Added required property `github_project.chatInsightsEnabled`.
+* **api:** 3 breaking changes to the SDK surface.
+    - Property `api_document.tags` type changed from `string` to `unknown`.
+    - Property `github_project.accessGroups` type changed from `string` to `unknown`.
+    - Property `docs_project.accessGroups` type changed from `string` to `unknown`.
+* **api:** 8 breaking changes to the SDK surface.
+    - Removed body field `autoAddOperations` from `mcp.servers.update`.
+    - Removed body field `isPrivate` from `mcp.servers.installations.update`.
+    - Removed body field `loginPortalUid` from `mcp.servers.installations.update`.
+    - Removed body field `documentAuth` from `mcp.servers.installations.update`.
+    - Removed operation `mcp.servers.installations.create` (`POST /v1/mcp/servers/{id}/installations`).
+    - Removed required property `mcp_server.autoAddOperations`.
+    - Removed required property `mcp_installation.isPrivate`.
+    - Removed required property `mcp_installation_list_item.isPrivate`.
+
+### Features
+
+* **api:** add property github_project.chatInsightsEnabled ([1acf1ad](https://github.com/scalar/scalar-ruby/commit/1acf1adc46ed34f558192d2f390a91c65e81b002))
+* **api:** add property sdk.current (+9 more changes) ([08ed34e](https://github.com/scalar/scalar-ruby/commit/08ed34e0346e39f3c974c0e397f20571c2731830))
+* **api:** update property api_document.tags (+3 more changes) ([cc500dd](https://github.com/scalar/scalar-ruby/commit/cc500dd9100311ce4fc7c9bc3324b376660b0dd2))
+* **api:** update SDK surface (14 changes) ([637c4b1](https://github.com/scalar/scalar-ruby/commit/637c4b1ec12d07468051b91ce9d3e2f2a7a65cd9))
+* **api:** update SDK surface (23 changes) ([b6bf4a4](https://github.com/scalar/scalar-ruby/commit/b6bf4a4f27d8588e61e7039527051317486c8356))
+* **api:** update SDK surface (3 changes) ([5959802](https://github.com/scalar/scalar-ruby/commit/59598020add7766641907d6d9e55c240b8224b2f))
+* **api:** update SDK surface (3 changes) ([b55255e](https://github.com/scalar/scalar-ruby/commit/b55255e63fc83b1c04db02d958734e018c5fcd46))
+* **api:** update SDK surface (4 changes) ([3d717a5](https://github.com/scalar/scalar-ruby/commit/3d717a527d015d58902aa90c23acf4b9a2ef676c))
+
+
+### Chores
+
+* **api:** regenerate SDK ([10173ff](https://github.com/scalar/scalar-ruby/commit/10173ffe92ca9e057ea40860775b8532d8bef22a))
+* **api:** regenerate SDK ([32b876c](https://github.com/scalar/scalar-ruby/commit/32b876c3d61a1931678d3b30de1a5608d324ebfe))
+* **api:** regenerate SDK ([5834062](https://github.com/scalar/scalar-ruby/commit/58340624e19ec64e59b11426a79d5ff2eedf96fc))
+* **api:** regenerate SDK ([ef2020a](https://github.com/scalar/scalar-ruby/commit/ef2020a155d2a459c1d5681803fb7ae27e32d6ab))
+* **api:** update generated SDK content ([447bdd1](https://github.com/scalar/scalar-ruby/commit/447bdd11d61070d4bbb4a34a250240e4291cdd74))
+* **api:** update generated SDK content ([c0790e6](https://github.com/scalar/scalar-ruby/commit/c0790e6e73dcebdfe0b1e74fbe618e19a610dfc7))
+
 ## [0.2.0](https://github.com/scalar/scalar-ruby/compare/v0.1.1...v0.2.0) (2026-10-09)
 
 

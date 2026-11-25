@@ -3,45 +3,50 @@
 module Scalar
   module Models
     module Mcp
-      # @see Scalar::Resources::Mcp::Servers#retrieve
       class McpServer < Scalar::Internal::Type::BaseModel
-        # @!attribute id
-        #
-        #   @return [String]
-        required :id, String
-
-        # @!attribute auto_add_operations
-        #
-        #   @return [Boolean]
-        required :auto_add_operations, Scalar::Internal::Type::Boolean, api_name: :autoAddOperations
-
         # @!attribute created_at
         #
-        #   @return [String]
-        required :created_at, String, api_name: :createdAt
+        #   @return [Integer]
+        required :created_at, Integer, api_name: :createdAt
+
+        # @!attribute domain
+        #
+        #   @return [String, nil]
+        required :domain, String, nil?: true
 
         # @!attribute name
         #
         #   @return [String]
         required :name, String
 
+        # @!attribute namespace
+        #
+        #   @return [String]
+        required :namespace, String
+
         # @!attribute slug
         #
         #   @return [String]
         required :slug, String
 
-        # @!attribute updated_at
+        # @!attribute uid
         #
         #   @return [String]
-        required :updated_at, String, api_name: :updatedAt
+        required :uid, String
 
-        # @!method initialize(id:, auto_add_operations:, created_at:, name:, slug:, updated_at:)
-        #   @param id [String]
-        #   @param auto_add_operations [Boolean]
-        #   @param created_at [String]
+        # @!attribute updated_at
+        #
+        #   @return [Integer]
+        required :updated_at, Integer, api_name: :updatedAt
+
+        # @!method initialize(created_at:, domain:, name:, namespace:, slug:, uid:, updated_at:)
+        #   @param created_at [Integer]
+        #   @param domain [String, nil]
         #   @param name [String]
+        #   @param namespace [String]
         #   @param slug [String]
-        #   @param updated_at [String]
+        #   @param uid [String]
+        #   @param updated_at [Integer]
       end
     end
 

@@ -14,21 +14,12 @@ module Scalar
             {
               method: Symbol,
               path: T.any(String, T::Array[String]),
-              query:
-                T.nilable(
-                  T::Hash[String, T.nilable(T.any(T::Array[String], String))]
-                ),
+              query: T.nilable(T::Hash[String, T.nilable(T.any(T::Array[String], String))]),
               headers:
                 T.nilable(
                   T::Hash[
                     String,
-                    T.nilable(
-                      T.any(
-                        String,
-                        Integer,
-                        T::Array[T.nilable(T.any(String, Integer))]
-                      )
-                    )
+                    T.nilable(T.any(String, Integer, T::Array[T.nilable(T.any(String, Integer))]))
                   ]
                 ),
               body: T.nilable(T.anything),
@@ -51,6 +42,7 @@ module Scalar
                 ),
               stream: T.nilable(T::Class[T.anything]),
               model: T.nilable(Scalar::Internal::Type::Converter::Input),
+              security: T.nilable(T::Array[T::Array[String]]),
               options: T.nilable(Scalar::RequestOptions::OrHash)
             }
           end
@@ -70,25 +62,36 @@ module Scalar
         # from whatwg fetch spec
         MAX_REDIRECTS = 20
 
+        # Longest wait, in seconds, a `retry-after-ms` or `Retry-After` header may ask
+        # for before the client's own backoff is used instead.
+        MAX_RETRY_AFTER = 60
+
         PLATFORM_HEADERS = T::Hash[String, String]
 
         class << self
           # @api private
           sig do
-            params(
-              req: Scalar::Internal::Transport::BaseClient::RequestComponents
-            ).void
+            params(req: Scalar::Internal::Transport::BaseClient::RequestComponents).void
           end
           def validate!(req)
           end
 
           # @api private
-          sig do
-            params(status: Integer, headers: T::Hash[String, String]).returns(
-              T::Boolean
-            )
-          end
+          sig { params(status: Integer, headers: T::Hash[String, String]).returns(T::Boolean) }
           def should_retry?(status, headers:)
+          end
+
+          # @api private
+          #
+          # The wait in seconds a `retry-after-ms` or `Retry-After` header asks for,
+          # when it is a finite value over zero and at most `MAX_RETRY_AFTER`.
+          sig { params(headers: T.any(T::Hash[String, String], Net::HTTPResponse)).returns(T.nilable(Float)) }
+          def retry_after(headers)
+          end
+
+          # @api private
+          sig { params(status: Integer, headers: T::Hash[String, String]).returns(T::Boolean) }
+          def redirect?(status, headers:)
           end
 
           # @api private
@@ -96,10 +99,12 @@ module Scalar
             params(
               request: Scalar::Internal::Transport::BaseClient::RequestInput,
               status: Integer,
-              response_headers: T::Hash[String, String]
+              response_headers: T::Hash[String, String],
+              base_url: URI::Generic,
+              credential_headers: T::Array[String]
             ).returns(Scalar::Internal::Transport::BaseClient::RequestInput)
           end
-          def follow_redirect(request, status:, response_headers:)
+          def follow_redirect(request, status:, response_headers:, base_url:, credential_headers:)
           end
 
           # @api private
@@ -147,16 +152,7 @@ module Scalar
             initial_retry_delay: Float,
             max_retry_delay: Float,
             headers:
-              T::Hash[
-                String,
-                T.nilable(
-                  T.any(
-                    String,
-                    Integer,
-                    T::Array[T.nilable(T.any(String, Integer))]
-                  )
-                )
-              ],
+              T::Hash[String, T.nilable(T.any(String, Integer, T::Array[T.nilable(T.any(String, Integer))]))],
             idempotency_header: T.nilable(String)
           ).returns(T.attached_class)
         end
@@ -174,6 +170,20 @@ module Scalar
         # @api private
         sig { overridable.returns(T::Hash[String, String]) }
         private def auth_headers
+        end
+
+        # @api private
+        sig do
+          overridable
+            .params(_security: T.nilable(T::Array[T::Array[String]]))
+            .returns(T::Hash[String, String])
+        end
+        private def auth_headers_for(_security)
+        end
+
+        # @api private
+        sig { overridable.returns(T::Array[String]) }
+        private def auth_header_keys
         end
 
         # @api private
@@ -199,12 +209,7 @@ module Scalar
         end
 
         # @api private
-        sig do
-          params(
-            headers: T::Hash[String, String],
-            retry_count: Integer
-          ).returns(Float)
-        end
+        sig { params(headers: T::Hash[String, String], retry_count: Integer).returns(Float) }
         private def retry_delay(headers, retry_count:)
         end
 
@@ -217,12 +222,7 @@ module Scalar
             send_retry_header: T::Boolean
           ).returns([Integer, Net::HTTPResponse, T::Enumerable[String]])
         end
-        def send_request(
-          request,
-          redirect_count:,
-          retry_count:,
-          send_retry_header:
-        )
+        def send_request(request, redirect_count:, retry_count:, send_retry_header:)
         end
 
         # Execute the request specified by `req`. This is the method that all resource
@@ -233,21 +233,12 @@ module Scalar
           params(
             method: Symbol,
             path: T.any(String, T::Array[String]),
-            query:
-              T.nilable(
-                T::Hash[String, T.nilable(T.any(T::Array[String], String))]
-              ),
+            query: T.nilable(T::Hash[String, T.nilable(T.any(T::Array[String], String))]),
             headers:
               T.nilable(
                 T::Hash[
                   String,
-                  T.nilable(
-                    T.any(
-                      String,
-                      Integer,
-                      T::Array[T.nilable(T.any(String, Integer))]
-                    )
-                  )
+                  T.nilable(T.any(String, Integer, T::Array[T.nilable(T.any(String, Integer))]))
                 ]
               ),
             body: T.nilable(T.anything),
