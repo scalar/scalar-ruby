@@ -14,9 +14,6 @@ module Scalar
       sig { returns(String) }
       attr_accessor :api_uid
 
-      sig { returns(T::Array[Scalar::SdkCreateParams::Language::OrSymbol]) }
-      attr_accessor :languages
-
       sig { returns(T.nilable(String)) }
       attr_reader :class_name
 
@@ -28,6 +25,21 @@ module Scalar
 
       sig { params(config: String).void }
       attr_writer :config
+
+      # Languages to create. Defaults to the targets declared by config.
+      sig do
+        returns(
+          T.nilable(T::Array[Scalar::SdkCreateParams::Language::OrSymbol])
+        )
+      end
+      attr_reader :languages
+
+      sig do
+        params(
+          languages: T::Array[Scalar::SdkCreateParams::Language::OrSymbol]
+        ).void
+      end
+      attr_writer :languages
 
       sig { returns(T.nilable(String)) }
       attr_reader :slug
@@ -44,9 +56,9 @@ module Scalar
       sig do
         params(
           api_uid: String,
-          languages: T::Array[Scalar::SdkCreateParams::Language::OrSymbol],
           class_name: String,
           config: String,
+          languages: T::Array[Scalar::SdkCreateParams::Language::OrSymbol],
           slug: String,
           title: String,
           request_options: Scalar::RequestOptions::OrHash
@@ -54,9 +66,10 @@ module Scalar
       end
       def self.new(
         api_uid:,
-        languages:,
         class_name: nil,
         config: nil,
+        # Languages to create. Defaults to the targets declared by config.
+        languages: nil,
         slug: nil,
         title: nil,
         request_options: {}
@@ -67,9 +80,9 @@ module Scalar
         override.returns(
           {
             api_uid: String,
-            languages: T::Array[Scalar::SdkCreateParams::Language::OrSymbol],
             class_name: String,
             config: String,
+            languages: T::Array[Scalar::SdkCreateParams::Language::OrSymbol],
             slug: String,
             title: String,
             request_options: Scalar::RequestOptions

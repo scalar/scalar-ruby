@@ -27,6 +27,9 @@ module Scalar
         # Most origins the requester keeps a connection pool for at once.
         MAX_POOLS = 16
 
+        # Seconds each socket wait gets once the deadline has passed between two body chunks.
+        ELAPSED_SOCKET_TIMEOUT = T.let(0.001, Float)
+
         # @api private
         sig { returns(OpenSSL::X509::Store) }
         attr_reader :cert_store
@@ -38,8 +41,8 @@ module Scalar
           end
 
           # @api private
-          sig { params(conn: Net::HTTP, deadline: Float).void }
-          def calibrate_socket_timeout(conn, deadline)
+          sig { params(conn: Net::HTTP, deadline: Float, finishing: T::Boolean).void }
+          def calibrate_socket_timeout(conn, deadline, finishing: false)
           end
 
           # @api private

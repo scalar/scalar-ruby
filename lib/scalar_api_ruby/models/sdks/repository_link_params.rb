@@ -14,6 +14,8 @@ module Scalar
         required :uid, String
 
         # @!attribute base_branch
+        #   Release promote branch. Platform-managed branches such as scalar-next and
+        #   scalar-generated are reserved.
         #
         #   @return [String]
         required :base_branch, String, api_name: :baseBranch
@@ -33,12 +35,29 @@ module Scalar
         #   @return [String, nil]
         optional :prerelease_type, String, api_name: :prereleaseType
 
-        # @!method initialize(uid:, base_branch:, language:, repository_id:, prerelease_type: nil, request_options: {})
+        # @!attribute promotion
+        #   Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+        #   saved policy.
+        #
+        #   @return [Symbol, Scalar::Models::Sdks::RepositoryLinkParams::Promotion, nil]
+        optional :promotion, enum: -> { Scalar::Sdks::RepositoryLinkParams::Promotion }
+
+        # @!method initialize(uid:, base_branch:, language:, repository_id:, prerelease_type: nil, promotion: nil, request_options: {})
+        #   Some parameter documentations has been truncated, see
+        #   {Scalar::Models::Sdks::RepositoryLinkParams} for more details.
+        #
         #   @param uid [String]
-        #   @param base_branch [String]
+        #
+        #   @param base_branch [String] Release promote branch. Platform-managed branches such as scalar-next and scalar
+        #
         #   @param language [Symbol, Scalar::Models::Sdks::RepositoryLinkParams::Language]
+        #
         #   @param repository_id [Integer]
+        #
         #   @param prerelease_type [String]
+        #
+        #   @param promotion [Symbol, Scalar::Models::Sdks::RepositoryLinkParams::Promotion] Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+        #
         #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
 
         module Language
@@ -57,6 +76,18 @@ module Scalar
           SWIFT = :swift
           CPP = :cpp
           DART = :dart
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+
+        # Controls when a build becomes current and syncs to GitHub. Omit to preserve the
+        # saved policy.
+        module Promotion
+          extend Scalar::Internal::Type::Enum
+
+          AUTOMATIC = :automatic
+          MANUAL = :manual
 
           # @!method self.values
           #   @return [Array<Symbol>]

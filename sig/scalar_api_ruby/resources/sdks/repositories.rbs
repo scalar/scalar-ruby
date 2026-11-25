@@ -8,6 +8,7 @@ module Scalar
           language: Scalar::Models::Sdks::RepositoryLinkParams::language,
           repository_id: Integer,
           ?prerelease_type: String,
+          ?promotion: Scalar::Models::Sdks::RepositoryLinkParams::promotion,
           ?request_options: Scalar::request_opts
         ) -> Scalar::Models::Sdks::RepositoryLinkResponse
 
