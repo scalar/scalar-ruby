@@ -12,16 +12,25 @@ module Scalar
       # @return [Scalar::Resources::Sdks::Repositories]
       attr_reader :repositories
 
-      # Create an SDK from an API document, targeting one or more languages.
+      # Create an SDK from an existing API document on the team. Its current version
+      # must have content. Send languages or a config declaring targets; omit languages
+      # to derive them from config. SDK and target counts must fit the team plan. Config
+      # is a JSON string.
       #
-      # @overload create(api_uid:, languages:, class_name: nil, config: nil, slug: nil, title: nil, request_options: {})
+      # @overload create(api_uid:, class_name: nil, config: nil, languages: nil, slug: nil, title: nil, request_options: {})
       #
       # @param api_uid [String]
-      # @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>]
+      #
       # @param class_name [String]
+      #
       # @param config [String]
+      #
+      # @param languages [Array<Symbol, Scalar::Models::SdkCreateParams::Language>] Languages to create. Defaults to the targets declared by config.
+      #
       # @param slug [String]
+      #
       # @param title [String]
+      #
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Scalar::Models::UID]
@@ -56,7 +65,10 @@ module Scalar
         )
       end
 
-      # Update SDK metadata, its linked API, or its config.
+      # Update SDK metadata, its linked API, or its JSON-string config. Targets using
+      # native GitHub delivery need separate repositories; delivery writes each package
+      # at the repository root. Sharing a repository across language targets in this SDK
+      # and using reserved promote branches are rejected before config saves.
       #
       # @overload update(uid, api_uid: nil, api_version: nil, config: nil, is_private: nil, slug: nil, title: nil, request_options: {})
       #

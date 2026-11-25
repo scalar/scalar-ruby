@@ -7,9 +7,9 @@ module Scalar
 
       def create: (
         api_uid: String,
-        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         ?class_name: String,
         ?config: String,
+        ?languages: ::Array[Scalar::Models::SdkCreateParams::language],
         ?slug: String,
         ?title: String,
         ?request_options: Scalar::request_opts

@@ -33,7 +33,13 @@ class ScalarSmokeTest::Resources::Sdks::RepositoriesTest < ScalarSmokeTest::Reso
   ) do
     client.sdks.repositories.link(
       "UakgbKJ5m9gl0JDMbcJqL",
-      {base_branch: "main", language: "typescript", repository_id: 123456789, prerelease_type: "beta"}
+      {
+        base_branch: "main",
+        language: "typescript",
+        repository_id: 123456789,
+        prerelease_type: "beta",
+        promotion: "automatic"
+      }
     )
   end
 

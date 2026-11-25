@@ -3,9 +3,9 @@ module Scalar
     type sdk_create_params =
       {
         api_uid: String,
-        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         class_name: String,
         config: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         slug: String,
         title: String
       }
@@ -17,8 +17,6 @@ module Scalar
 
       attr_accessor api_uid: String
 
-      attr_accessor languages: ::Array[Scalar::Models::SdkCreateParams::language]
-
       attr_reader class_name: String?
 
       def class_name=: (String) -> String
@@ -26,6 +24,12 @@ module Scalar
       attr_reader config: String?
 
       def config=: (String) -> String
+
+      attr_reader languages: ::Array[Scalar::Models::SdkCreateParams::language]?
+
+      def languages=: (
+        ::Array[Scalar::Models::SdkCreateParams::language]
+      ) -> ::Array[Scalar::Models::SdkCreateParams::language]
 
       attr_reader slug: String?
 
@@ -37,9 +41,9 @@ module Scalar
 
       def initialize: (
         api_uid: String,
-        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         ?class_name: String,
         ?config: String,
+        ?languages: ::Array[Scalar::Models::SdkCreateParams::language],
         ?slug: String,
         ?title: String,
         ?request_options: Scalar::request_opts
@@ -47,9 +51,9 @@ module Scalar
 
       def to_hash: -> {
         api_uid: String,
-        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         class_name: String,
         config: String,
+        languages: ::Array[Scalar::Models::SdkCreateParams::language],
         slug: String,
         title: String,
         request_options: Scalar::RequestOptions

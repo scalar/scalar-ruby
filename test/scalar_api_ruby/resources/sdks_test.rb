@@ -17,7 +17,7 @@ class ScalarSmokeTest::Resources::SdksTest < ScalarSmokeTest::ResourceTest
     path: "/v1/sdks",
     name: "create: only required params"
   ) do
-    client.sdks.create({api_uid: "UakgbKJ5m9gl0JDMbcJqL", languages: ["typescript"]})
+    client.sdks.create({api_uid: "UakgbKJ5m9gl0JDMbcJqL"})
   end
 
   smoke_case(
@@ -29,9 +29,9 @@ class ScalarSmokeTest::Resources::SdksTest < ScalarSmokeTest::ResourceTest
     client.sdks.create(
       {
         api_uid: "UakgbKJ5m9gl0JDMbcJqL",
-        languages: ["typescript"],
         class_name: "Acme",
         config: "{\"targets\":{\"typescript\":{\"packageName\":\"@acme/sdk\"}}}",
+        languages: ["typescript"],
         slug: "acme-api",
         title: "Acme SDK"
       }
