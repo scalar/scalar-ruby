@@ -206,7 +206,7 @@ module Scalar
       # @overload publish_project(slug, commit_sha: nil, config_path: nil, preview: nil, request_options: {})
       #
       # @param slug [String]
-      # @param commit_sha [String]
+      # @param commit_sha [Symbol, String]
       # @param config_path [String]
       # @param preview [Boolean]
       # @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}, nil]

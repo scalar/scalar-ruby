@@ -1,7 +1,12 @@
 module Scalar
   module Models
     type scalar_doc_publish_project_params =
-      { slug: String, commit_sha: String, config_path: String, preview: bool }
+      {
+        slug: String,
+        commit_sha: Scalar::Models::ScalarDocPublishProjectParams::commit_sha,
+        config_path: String,
+        preview: bool
+      }
       & Scalar::Internal::Type::request_parameters
 
     class ScalarDocPublishProjectParams < Scalar::Internal::Type::BaseModel
@@ -10,9 +15,11 @@ module Scalar
 
       attr_accessor slug: String
 
-      attr_reader commit_sha: String?
+      attr_reader commit_sha: Scalar::Models::ScalarDocPublishProjectParams::commit_sha?
 
-      def commit_sha=: (String) -> String
+      def commit_sha=: (
+        Scalar::Models::ScalarDocPublishProjectParams::commit_sha
+      ) -> Scalar::Models::ScalarDocPublishProjectParams::commit_sha
 
       attr_reader config_path: String?
 
@@ -24,7 +31,7 @@ module Scalar
 
       def initialize: (
         slug: String,
-        ?commit_sha: String,
+        ?commit_sha: Scalar::Models::ScalarDocPublishProjectParams::commit_sha,
         ?config_path: String,
         ?preview: bool,
         ?request_options: Scalar::request_opts
@@ -32,11 +39,19 @@ module Scalar
 
       def to_hash: -> {
         slug: String,
-        commit_sha: String,
+        commit_sha: Scalar::Models::ScalarDocPublishProjectParams::commit_sha,
         config_path: String,
         preview: bool,
         request_options: Scalar::RequestOptions
       }
+
+      type commit_sha = :"" | String
+
+      module CommitSha
+        extend Scalar::Internal::Type::Union
+
+        def self?.variants: -> ::Array[Scalar::Models::ScalarDocPublishProjectParams::commit_sha]
+      end
     end
   end
 end

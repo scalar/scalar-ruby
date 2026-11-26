@@ -132,7 +132,8 @@ module Scalar
       sig do
         params(
           slug: String,
-          commit_sha: String,
+          commit_sha:
+            Scalar::ScalarDocPublishProjectParams::CommitSha::Variants,
           config_path: String,
           preview: T::Boolean,
           request_options: Scalar::RequestOptions::OrHash

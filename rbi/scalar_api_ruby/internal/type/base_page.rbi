@@ -36,6 +36,11 @@ module Scalar
         end
         def initialize(client:, req:, headers:, page_data:)
         end
+
+        # The page's own fields, without the client, for ActiveSupport's `to_json`.
+        sig { params(_: T.anything).returns(T::Hash[String, T.anything]) }
+        def as_json(*_)
+        end
       end
     end
   end
