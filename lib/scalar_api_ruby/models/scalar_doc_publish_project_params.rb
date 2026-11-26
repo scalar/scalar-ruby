@@ -14,8 +14,10 @@ module Scalar
 
       # @!attribute commit_sha
       #
-      #   @return [String, nil]
-      optional :commit_sha, String, api_name: :commitSha
+      #   @return [Symbol, String, nil]
+      optional :commit_sha,
+               union: -> { Scalar::ScalarDocPublishProjectParams::CommitSha },
+               api_name: :commitSha
 
       # @!attribute config_path
       #
@@ -29,10 +31,21 @@ module Scalar
 
       # @!method initialize(slug:, commit_sha: nil, config_path: nil, preview: nil, request_options: {})
       #   @param slug [String]
-      #   @param commit_sha [String]
+      #   @param commit_sha [Symbol, String]
       #   @param config_path [String]
       #   @param preview [Boolean]
       #   @param request_options [Scalar::RequestOptions, Hash{Symbol=>Object}]
+
+      module CommitSha
+        extend Scalar::Internal::Type::Union
+
+        variant const: :""
+
+        variant String
+
+        # @!method self.variants
+        #   @return [Array(Symbol, String)]
+      end
     end
   end
 end

@@ -398,8 +398,11 @@ module Scalar
           headers =
             Scalar::Internal::Util.normalized_headers(merged, opts[:extra_headers].to_h)
 
+          # A generated key goes on every method but `GET`, the HTTP-idempotent ones included: that a
+          # method is idempotent by RFC does not make a server's side effects safe to replay. A
+          # caller's own key is sent on any method, `GET` too. Built once here, it is resent on retries.
           if @idempotency_header && !headers.key?(@idempotency_header) &&
-             (!Net::HTTP::IDEMPOTENT_METHODS_.include?(method.to_s.upcase) || opts.key?(:idempotency_key))
+             (method.to_s.downcase != "get" || opts.key?(:idempotency_key))
             headers[@idempotency_header] = opts.fetch(:idempotency_key) { generate_idempotency_key }
           end
 

@@ -17,10 +17,14 @@ module Scalar
       sig { returns(String) }
       attr_accessor :slug
 
-      sig { returns(T.nilable(String)) }
+      sig { returns(T.nilable(T.any(Symbol, String))) }
       attr_reader :commit_sha
 
-      sig { params(commit_sha: String).void }
+      sig do
+        params(
+          commit_sha: Scalar::ScalarDocPublishProjectParams::CommitSha::Variants
+        ).void
+      end
       attr_writer :commit_sha
 
       sig { returns(T.nilable(String)) }
@@ -38,7 +42,8 @@ module Scalar
       sig do
         params(
           slug: String,
-          commit_sha: String,
+          commit_sha:
+            Scalar::ScalarDocPublishProjectParams::CommitSha::Variants,
           config_path: String,
           preview: T::Boolean,
           request_options: Scalar::RequestOptions::OrHash
@@ -57,7 +62,7 @@ module Scalar
         override.returns(
           {
             slug: String,
-            commit_sha: String,
+            commit_sha: T.any(Symbol, String),
             config_path: String,
             preview: T::Boolean,
             request_options: Scalar::RequestOptions
@@ -65,6 +70,20 @@ module Scalar
         )
       end
       def to_hash
+      end
+
+      module CommitSha
+        extend Scalar::Internal::Type::Union
+
+        Variants = T.type_alias { T.any(Symbol, String) }
+
+        sig do
+          override.returns(
+            T::Array[Scalar::ScalarDocPublishProjectParams::CommitSha::Variants]
+          )
+        end
+        def self.variants
+        end
       end
     end
   end
