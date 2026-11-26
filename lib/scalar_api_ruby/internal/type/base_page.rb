@@ -48,6 +48,20 @@ module Scalar
           super()
         end
 
+        # @api public
+        #
+        # The page's own fields, which is what ActiveSupport's `to_json` (and Rails' `render json:`)
+        # serializes. Its default walks every instance variable, so a page would otherwise carry the
+        # client along, its configuration and credentials included, or loop through the client's
+        # resources back to the client until the stack runs out.
+        #
+        # @return [Hash{String=>Object}]
+        def as_json(*)
+          (instance_variables - %i[@client @req @model]).to_h do |name|
+            [name.to_s.delete_prefix("@"), instance_variable_get(name)]
+          end
+        end
+
         # rubocop:enable Lint/UnusedMethodArgument
       end
     end

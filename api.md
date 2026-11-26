@@ -1044,7 +1044,7 @@ Start a build and deploy. The returned `publishUid` identifies the publish recor
 | Response | [`ScalarDocPublishProjectResponse`](././lib/scalar_api_ruby/models/scalar_doc_publish_project_response.rb) |
 
 ```ruby
-response = client.scalar_docs.publish_project("acme-docs", { commit_sha: "0123456789abcdef0123456789abcdef01234567", config_path: "scalar.config.json", preview: false })
+response = client.scalar_docs.publish_project("acme-docs", { commit_sha: "", config_path: "scalar.config.json", preview: false })
 
 puts response.inspect
 ```

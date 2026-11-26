@@ -168,11 +168,7 @@ class ScalarSmokeTest::Resources::ScalarDocsTest < ScalarSmokeTest::ResourceTest
   ) do
     client.scalar_docs.publish_project(
       "acme-docs",
-      {
-        commit_sha: "0123456789abcdef0123456789abcdef01234567",
-        config_path: "scalar.config.json",
-        preview: false
-      }
+      {commit_sha: "", config_path: "scalar.config.json", preview: false}
     )
   end
 

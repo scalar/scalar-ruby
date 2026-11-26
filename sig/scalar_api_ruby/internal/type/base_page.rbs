@@ -18,6 +18,8 @@ module Scalar
           headers: ::Hash[String, String],
           page_data: top
         ) -> void
+
+        def as_json: (*top) -> ::Hash[String, top]
       end
     end
   end

@@ -58,7 +58,7 @@ module Scalar
 
       def publish_project: (
         String slug,
-        ?commit_sha: String,
+        ?commit_sha: Scalar::Models::ScalarDocPublishProjectParams::commit_sha,
         ?config_path: String,
         ?preview: bool,
         ?request_options: Scalar::request_opts

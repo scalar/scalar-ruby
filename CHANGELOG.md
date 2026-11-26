@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.0](https://github.com/scalar/scalar-ruby/compare/v0.3.0...v0.4.0) (2026-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** request-shape POST v1/docs/{p}/publish.commitSha — union on one side only (review: direction-dependent; read the hunk)
+
+### Features
+
+* **api:** update SDK surface (2 changes) ([129ef8b](https://github.com/scalar/scalar-ruby/commit/129ef8b240223f8facd021e412c999ce45cc1739))
+
 ## [0.3.0](https://github.com/scalar/scalar-ruby/compare/v0.2.0...v0.3.0) (2026-11-25)
 
 
